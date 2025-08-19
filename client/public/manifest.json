@@ -1,0 +1,26 @@
+{
+  "name": "Compleo Health - Medical Imaging Solutions",
+  "short_name": "Compleo Health",
+  "description": "Leading provider of MRI and CT scanner equipment rental and clinical services",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f2e2e",
+  "theme_color": "#0f2e2e",
+  "orientation": "portrait-primary",
+  "categories": ["medical", "healthcare", "business"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-192x192.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

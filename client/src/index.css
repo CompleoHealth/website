@@ -1,0 +1,1351 @@
+/* Design System Tokens - Inline for reliability */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: rgb(0, 169, 144);
+  --primary-foreground: rgb(255, 255, 255);
+  --secondary: rgb(247, 249, 228);
+  --secondary-foreground: rgb(15, 46, 46);
+  --accent: rgb(242, 237, 230);
+  --accent-foreground: rgb(15, 46, 46);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: rgb(0, 169, 144);
+  --radius: 0.5rem;
+
+  /* Compleo Health Brand Colors */
+  --compleo-deep-teal: rgb(15, 46, 46);
+  --compleo-teal: rgb(0, 169, 144);
+  --compleo-yellow: rgb(247, 249, 228);
+  --compleo-white: rgb(255, 255, 255);
+  --compleo-beige: rgb(242, 237, 230);
+  --compleo-cream: rgb(252, 252, 248);
+  --compleo-gray: hsl(220, 9%, 46%);
+  --compleo-jade-wash: rgb(240, 248, 247);
+
+  /* News & Views Page Exclusive Colors */
+  --compleo-gold: rgb(255, 193, 7);
+  --compleo-navy: rgb(25, 42, 86);
+}
+
+/* Subtle Logo Growth Animation for Loading Page */
+@keyframes logo-grow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(0.9);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+}
+
+.animate-logo-grow {
+  animation: logo-grow 2s ease-out forwards;
+}
+
+/* Contact Slide-out Backdrop Blur Effect with smooth fade */
+.contact-overlay-blur {
+  backdrop-filter: blur(8px) saturate(180%) brightness(0.7);
+  -webkit-backdrop-filter: blur(8px) saturate(180%) brightness(0.7);
+  background: rgba(0, 0, 0, 0.4) !important;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.contact-overlay-blur.active {
+  opacity: 1;
+}
+
+.contact-panel-blur {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+}
+
+/* Smooth staged blur effect on page wrapper */
+.contact-overlay-active #page-wrapper {
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+  transition: filter 0.6s ease;
+}
+
+.contact-overlay-active #page-wrapper.active-blur {
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+}
+
+/* Leaflet Map Country Shading - Reduced opacity */
+.leaflet-container .leaflet-overlay-pane svg path {
+  stroke: #00a990;
+  fill: #88F2DD;
+  fill-opacity: 0.15;
+  stroke-width: 1;
+  stroke-opacity: 0.4;
+}
+
+/* Enhanced location markers */
+.custom-marker:hover div {
+  transform: scale(1.1);
+}
+
+/* Popup styling */
+.compleo-location-popup .leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.compleo-location-popup .leaflet-popup-content {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.compleo-location-popup .leaflet-popup-tip {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Ensure country layers are above tiles */
+.leaflet-container .leaflet-overlay-pane {
+  z-index: 200;
+}
+
+/* Ensure tiles load properly */
+.leaflet-container {
+  background: #f0f0f0;
+}
+
+/* Ensure contact panel container never gets blurred */
+#contact-panel-container,
+#contact-panel-container * {
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* Contact panel with smooth slide animation and subtle scaling */
+.contact-panel {
+  transform: scale(0.98) translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.contact-panel.slide-in {
+  transform: scale(1) translateX(0);
+  transition-delay: 0.2s;
+}
+
+.contact-panel.slide-out {
+  transform: scale(0.98) translateX(100%);
+  transition-delay: 0s;
+}
+
+/* Force backdrop blur support */
+@supports (backdrop-filter: blur(1px)) {
+  .contact-overlay-blur {
+    backdrop-filter: blur(8px) saturate(180%) brightness(0.7);
+    -webkit-backdrop-filter: blur(8px) saturate(180%) brightness(0.7);
+  }
+}
+
+/* Fixed Header Layout Fix */
+body {
+  padding-top: 68px; /* Account for fixed header height + progress bar */
+}
+
+/* Mobile Layout - Account for "Enquire Now" banner + header */
+@media (max-width: 1199px) {
+  body {
+    padding-top: 128px; /* 64px for "Enquire Now" banner + 64px for header */
+  }
+  
+  /* Force mobile banner to stay at top */
+  .mobile-enquire-banner {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 61 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+  
+  /* Mobile menu controls stay in header */
+  .mobile-nav-1200 {
+    position: static !important;
+  }
+  
+  /* Force header to stay below banner */
+  header[role="banner"] {
+    position: fixed !important;
+    top: 64px !important; /* Position below "Enquire Now" banner */
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    z-index: 60 !important;
+  }
+  
+  /* Force scroll progress to stay at very top */
+  .scroll-progress {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 62 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+  
+  /* Override any scroll-based hiding */
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* Force elements to stay visible on scroll */
+  .mobile-nav-1200,
+  header[role="banner"],
+  .scroll-progress {
+    will-change: auto !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    transform3d: translate3d(0, 0, 0) !important;
+    -webkit-transform3d: translate3d(0, 0, 0) !important;
+  }
+  
+  /* FORCE MOBILE MENU WHITE BACKGROUND - ABSOLUTE NUCLEAR OPTION */
+  .mobile-nav-1200 .fixed,
+  .mobile-nav-1200 > div,
+  .mobile-nav-1200 div,
+  div[style*="top: 128px"],
+  [style*="top: 128px"] {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Target any div inside mobile navigation container - EXCEPT burger icon */
+  .mobile-nav-1200 *:not(.burger-icon):not(.burger-icon *) {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Force white background on mobile menu and override active states */
+  .mobile-nav-1200 div[class*="fixed"] * {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  
+  /* Specifically target the mobile menu container */
+  .mobile-nav-1200 div[class*="fixed"] {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* Optimized Typography & Spacing System */
+.heading-1 {
+  @apply text-4xl md:text-5xl lg:text-6xl font-black tracking-tight;
+}
+
+.heading-2 {
+  @apply text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight;
+}
+
+.heading-3 {
+  @apply text-xl md:text-2xl lg:text-3xl font-bold;
+}
+
+.heading-4 {
+  @apply text-lg md:text-xl font-semibold;
+}
+
+.body-large {
+  @apply text-base md:text-lg leading-relaxed;
+}
+
+.body-base {
+  @apply text-sm md:text-base leading-relaxed;
+}
+
+.body-small {
+  @apply text-xs md:text-sm leading-relaxed;
+}
+
+/* Optimized Container & Section Spacing */
+.container-padding {
+  @apply px-3 sm:px-4 lg:px-6;
+}
+
+.section-padding {
+  @apply py-8 md:py-12;
+}
+
+.section-padding-lg {
+  @apply py-12 md:py-16;
+}
+
+.card-padding {
+  @apply p-4 md:p-6;
+}
+
+.card-padding-lg {
+  @apply p-6 md:p-8;
+}
+
+.card-standard {
+  @apply shadow-lg hover:shadow-xl transition-all duration-300;
+}
+
+.btn-lg {
+  @apply text-sm md:text-base font-semibold px-6 py-3 md:px-8 md:py-4;
+}
+
+.hover-scale {
+  @apply transform hover:scale-105 transition-all duration-300;
+}
+
+/* Professional Animations & Interactions */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+/* Animation Classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 0.7s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.7s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s infinite;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--compleo-teal), var(--compleo-deep-teal));
+  transform-origin: 0%;
+  z-index: 9999;
+  transition: transform 0.1s ease-out;
+}
+
+/* Grid Pattern Background */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Shadow Variants */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Premium Card Design System */
+.premium-card {
+  @apply bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm;
+  @apply border border-white/10 rounded-2xl shadow-2xl;
+  @apply hover:scale-105 transition-all duration-500;
+  @apply hover:border-white/20;
+}
+
+.premium-card:hover {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.premium-card-content {
+  @apply p-8 text-white;
+}
+
+.premium-card-header {
+  @apply flex items-center justify-between mb-6;
+}
+
+.premium-card-title {
+  @apply text-2xl font-bold text-white group-hover:text-compleo-yellow transition-colors;
+}
+
+.premium-card-description {
+  @apply text-gray-200 mb-6 leading-relaxed;
+}
+
+.premium-badge {
+  @apply px-4 py-2 rounded-full text-sm font-medium border backdrop-blur-sm;
+}
+
+.premium-badge-carbon {
+  @apply bg-gradient-to-r from-emerald-500/20 to-green-500/20 text-emerald-100 border-emerald-500/30;
+}
+
+.premium-badge-social {
+  @apply bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-100 border-blue-500/30;
+}
+
+/* Enhanced Hover Effects */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(15, 46, 46, 0.15);
+}
+
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Professional Loading States */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced Focus States */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all duration-200;
+}
+
+/* Professional Typography */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Enhanced Button Interactions */
+.btn-primary {
+  @apply bg-compleo-teal hover:bg-compleo-deep-teal text-white font-medium px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 focus-ring;
+}
+
+.btn-secondary {
+  @apply bg-white hover:bg-compleo-beige text-compleo-deep-teal border-2 border-compleo-teal font-medium px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-lg focus-ring;
+}
+
+/* Professional Card Interactions */
+.card-interactive {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2 cursor-pointer;
+}
+
+/* Intersection Observer Animation Delays */
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(174, 85%, 32%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom Compleo Health utility classes */
+@layer utilities {
+  .bg-compleo-deep-teal {
+    background-color: var(--compleo-deep-teal);
+  }
+  
+  .bg-compleo-teal {
+    background-color: var(--compleo-teal);
+  }
+  
+  .bg-compleo-yellow {
+    background-color: var(--compleo-yellow);
+  }
+  
+  .bg-compleo-white {
+    background-color: var(--compleo-white);
+  }
+  
+  .bg-compleo-beige {
+    background-color: var(--compleo-beige);
+  }
+  
+  .text-compleo-deep-teal {
+    color: var(--compleo-deep-teal);
+  }
+  
+  .text-compleo-teal {
+    color: var(--compleo-teal);
+  }
+  
+  .text-compleo-yellow {
+    color: var(--compleo-yellow);
+  }
+  
+  .text-compleo-white {
+    color: var(--compleo-white);
+  }
+  
+  .text-compleo-gray {
+    color: hsl(var(--compleo-gray));
+  }
+  
+  .border-compleo-teal {
+    border-color: var(--compleo-teal);
+  }
+  
+  .border-compleo-beige {
+    border-color: var(--compleo-beige);
+  }
+  
+  .hover\:bg-compleo-teal:hover {
+    background-color: var(--compleo-teal);
+  }
+  
+  .hover\:bg-compleo-yellow:hover {
+    background-color: var(--compleo-yellow);
+  }
+  
+  .hover\:text-compleo-yellow:hover {
+    color: var(--compleo-yellow);
+  }
+  
+  .focus\:ring-compleo-teal:focus {
+    --tw-ring-color: var(--compleo-teal);
+  }
+  
+  .focus\:ring-compleo-yellow:focus {
+    --tw-ring-color: var(--compleo-yellow);
+  }
+}
+
+/* Menu Toggle Animation - Enhanced 3-Line Structure */
+.menutoggle {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-left,
+.icon-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 3px;
+  background-color: rgb(15, 46, 46);
+  transition: all 0.5s ease;
+}
+
+.icon-left::before,
+.icon-left::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background-color: rgb(15, 46, 46);
+  transition: all 0.5s ease;
+  left: 0;
+}
+
+/* Create the 3-line burger */
+.icon-left::before {
+  top: -8px;
+}
+
+.icon-left::after {
+  top: 8px;
+}
+
+/* Hide the right icon initially */
+.icon-right {
+  opacity: 0;
+}
+
+/* Transform to ❌ when open */
+.icon-left.open {
+  background-color: transparent;
+}
+
+.icon-left.open::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.icon-left.open::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.icon-right.open {
+  opacity: 0;
+}
+
+/* Animation enhancements */
+@layer components {
+  .transition-all-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .hover-lift {
+    @apply transition-all-smooth hover:transform hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.6s ease-in forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Accessibility improvements */
+@layer base {
+  .focus-visible:focus {
+    outline: 2px solid #00a990;
+    outline-offset: 2px;
+  }
+  
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* Contact Section - Curved Design */
+.c-call-to-action {
+  position: relative;
+}
+
+.c-call-to-action__container {
+  position: relative;
+}
+
+.c-call-to-action__image-wrapper {
+  position: relative;
+}
+
+.c-call-to-action__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/contact/team-collaboration.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  /* Desktop shape - curved right edge */
+  border-top-right-radius: 280px;
+  border-bottom-right-radius: 280px;
+}
+
+.c-call-to-action__image-sustainability {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/contact/heart-sustainability.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  /* Desktop shape - curved right edge */
+  border-top-right-radius: 280px;
+  border-bottom-right-radius: 280px;
+}
+
+/* Mobile responsive design */
+@media only screen and (max-width: 1023px) {
+  .c-call-to-action__container {
+    flex-direction: column;
+  }
+  
+  .c-call-to-action__image-wrapper {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 2rem;
+  }
+  
+  .c-call-to-action__image {
+    /* Mobile shape - curved top edge */
+    border-top-left-radius: 450px;
+    border-top-right-radius: 450px;
+    border-bottom-right-radius: 0;
+    background-image: var(--mobile-image);
+  }
+  
+
+  
+  .c-call-to-action__content {
+    width: 100%;
+    padding-left: 0 !important;
+    text-align: center;
+  }
+}
+
+/* Three-Layer Curved Design - Value Proposition */
+.pill-stack-wrapper {
+  position: relative;
+  height: 140px;
+  overflow: hidden;
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 1.5rem;
+}
+
+.layer1 {
+  background-color: #88F2DD;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-radius: 0;
+  left: 0;
+  top: 0;
+}
+
+.layer2 {
+  background-color: var(--compleo-teal);
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  border-top-left-radius: 8.5vw;
+  border-bottom-left-radius: 8.5vw;
+  right: -14vw;
+  top: 0;
+}
+
+.layer3 {
+  background-color: var(--compleo-deep-teal);
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  border-top-left-radius: 8.5vw;
+  border-bottom-left-radius: 8.5vw;
+  z-index: 2;
+  right: -20vw;
+  top: 0;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .pill-stack-wrapper {
+    height: 120px;
+    margin-bottom: 2rem;
+  }
+  
+  .layer2 {
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    right: -15vw;
+  }
+  
+  .layer3 {
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    right: -25vw;
+  }
+  
+  .pill-text-overlay h2 {
+    font-size: 1.5rem !important;
+    padding: 0 1rem;
+    line-height: 1.3 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .pill-stack-wrapper {
+    height: 100px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .layer2 {
+    border-top-left-radius: 60px;
+    border-bottom-left-radius: 60px;
+    right: -10vw;
+  }
+  
+  .layer3 {
+    border-top-left-radius: 60px;
+    border-bottom-left-radius: 60px;
+    right: -20vw;
+  }
+  
+  .pill-text-overlay h2 {
+    font-size: 1.25rem !important;
+    padding: 0 0.75rem;
+    line-height: 1.2 !important;
+  }
+}
+
+.pill-text-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.pill-text-overlay h2 {
+  text-align: center;
+  margin: 0;
+  color: white;
+  pointer-events: auto;
+}
+
+/* Mobile text positioning for pill sections */
+@media (max-width: 768px) {
+  .pill-text-overlay {
+    justify-content: flex-end;
+    padding-right: 2rem;
+  }
+  
+  .pill-text-overlay h2 {
+    text-align: right !important;
+    max-width: 250px;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .pill-text-overlay {
+    padding-right: 1.5rem;
+  }
+  
+  .pill-text-overlay h2 {
+    max-width: 200px;
+    font-size: 1.1rem !important;
+    line-height: 1.1 !important;
+  }
+}
+
+/* Remove duplicate mobile rules - handled above */
+
+/* Services CTA Curved Pill - Mobile Responsive - REMOVED TO PREVENT DESKTOP CONFLICTS */
+
+/* Services CTA Content Positioning - Mobile */
+@media (max-width: 768px) {
+  .services-cta-content {
+    text-align: center !important;
+    margin-left: 0 !important;
+    max-width: 100% !important;
+    padding: 0 2rem !important;
+  }
+  
+  /* Force center alignment for all pill CTA content on mobile */
+  .services-cta-pill-wrapper .services-cta-content-overlay {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .services-cta-pill-wrapper .services-cta-content-overlay .max-w-7xl {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .services-cta-pill-wrapper .services-cta-content-overlay .flex.items-center {
+    justify-content: center !important;
+  }
+  
+  .services-cta-pill-wrapper .services-cta-content-overlay .max-w-2xl {
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+  
+  .services-cta-pill-wrapper .services-cta-content-overlay h2,
+  .services-cta-pill-wrapper .services-cta-content-overlay p {
+    text-align: center !important;
+  }
+  
+  .services-cta-pill-wrapper .services-cta-content-overlay .flex.flex-col.sm\\:flex-row {
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+/* Services CTA Pill Wrapper - 3x Height */
+.services-cta-pill-wrapper {
+  position: relative;
+  height: 357px; /* 15% reduction from 420px */
+  overflow: hidden;
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 1.5rem;
+}
+
+.services-cta-layer1 {
+  background-color: #88F2DD;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-radius: 0;
+  left: 0;
+  top: 0;
+}
+
+.services-cta-layer2 {
+  background-color: var(--compleo-teal);
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  border-top-right-radius: 210px;
+  border-bottom-right-radius: 210px;
+  left: -14vw;
+  top: 0;
+}
+
+.services-cta-layer3 {
+  background-color: var(--compleo-deep-teal);
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  border-top-right-radius: 210px;
+  border-bottom-right-radius: 210px;
+  z-index: 2;
+  left: -28vw;
+  top: 0;
+}
+
+.services-cta-content-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.services-cta-content-overlay > * {
+  pointer-events: auto;
+}
+
+/* Improved mobile text spacing for pill CTA sections */
+@media (max-width: 768px) {
+  .services-cta-content-overlay h2 {
+    line-height: 1.2 !important;
+    margin-bottom: 0.75rem !important;
+    font-size: 1.75rem !important;
+  }
+  
+  .services-cta-content-overlay p {
+    line-height: 1.4 !important;
+    margin-bottom: 1.25rem !important;
+    font-size: 0.95rem !important;
+  }
+  
+  .services-cta-content-overlay .space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-cta-content-overlay h2 {
+    line-height: 1.1 !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 1.5rem !important;
+  }
+  
+  .services-cta-content-overlay p {
+    line-height: 1.3 !important;
+    margin-bottom: 1rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .services-cta-content-overlay .space-y-4 > * + * {
+    margin-top: 0.75rem !important;
+  }
+}
+
+/* Mobile responsive adjustments for CTA */
+@media (max-width: 768px) {
+  .services-cta-pill-wrapper {
+    height: 380px; /* Increased height for better text spacing */
+    margin-bottom: 2rem;
+  }
+  
+  /* Create mobile pill design with light green background and dark pill */
+  .services-cta-layer1 {
+    background-color: #88F2DD;
+    border-radius: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+  .services-cta-layer2 {
+    display: none;
+  }
+  
+  .services-cta-layer3 {
+    background-color: var(--compleo-deep-teal);
+    border-top-right-radius: 150px;
+    border-bottom-right-radius: 150px;
+    left: -50vw;
+    width: 150vw;
+  }
+  
+  .services-cta-content-overlay .max-w-2xl {
+    text-align: right !important;
+    max-width: 85% !important;
+    margin: 0 !important;
+    margin-left: auto !important;
+    padding-right: 2rem !important;
+  }
+  
+  .services-cta-content-overlay .justify-start {
+    justify-content: flex-end !important;
+  }
+  
+  .services-cta-content-overlay .flex.items-center {
+    padding: 2rem 1rem !important;
+    justify-content: flex-end !important;
+    position: relative !important;
+    z-index: 15 !important; /* Ensure content stays above all layers */
+  }
+  
+  .services-cta-content-overlay .flex.items-center .max-w-2xl {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  .services-cta-content-overlay h2 {
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1rem !important;
+    text-align: right !important;
+  }
+  
+  .services-cta-content-overlay p {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 1.5rem !important;
+    text-align: right !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-cta-pill-wrapper {
+    height: 320px; /* Increased height for better text spacing on small screens */
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Maintain light background and pill shape on smaller mobile screens */
+  .services-cta-layer1 {
+    background-color: #88F2DD;
+    border-radius: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+  .services-cta-layer2 {
+    display: none;
+  }
+  
+  .services-cta-layer3 {
+    background-color: var(--compleo-deep-teal);
+    border-top-right-radius: 120px;
+    border-bottom-right-radius: 120px;
+    left: -60vw;
+    width: 160vw;
+  }
+  
+  .services-cta-content-overlay .max-w-2xl {
+    max-width: 90% !important;
+    padding: 0 1rem !important;
+    text-align: right !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    margin-left: auto !important;
+  }
+  
+  .services-cta-content-overlay h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.75rem !important;
+    text-align: right !important;
+  }
+  
+  .services-cta-content-overlay p {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1rem !important;
+    text-align: right !important;
+  }
+  
+  .services-cta-content-overlay .flex.items-center {
+    padding: 1.5rem 0.5rem !important;
+    justify-content: center !important;
+  }
+  
+  .services-cta-content-overlay .flex.items-center .max-w-2xl {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .services-cta-content-overlay .flex.flex-col.sm\\:flex-row {
+    gap: 0.75rem !important;
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+  }
+  
+  .services-cta-content-overlay .flex.flex-col.sm\\:flex-row button {
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 0.85rem !important;
+    padding: 0.75rem 1rem !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* LinkedIn Header Button Hover Effect */
+.linkedin-header-button {
+  background-color: rgb(15, 46, 46);
+}
+
+.linkedin-header-button:hover {
+  background-color: #0077b5 !important;
+}
+
+/* Team CTA Section - Curved Design */
+.team-cta-section {
+  position: relative;
+}
+
+.team-cta-container {
+  position: relative;
+}
+
+.team-cta-image-wrapper {
+  position: relative;
+}
+
+.team-cta-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/team/team-hero-collaboration.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  /* Desktop shape - curved right edge */
+  border-top-right-radius: 280px;
+  border-bottom-right-radius: 280px;
+}
+
+/* Team CTA Mobile responsive design */
+@media only screen and (max-width: 1023px) {
+  .team-cta-container {
+    flex-direction: column;
+  }
+  
+  .team-cta-image-wrapper {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 2rem;
+  }
+  
+  .team-cta-image {
+    /* Mobile shape - curved top edge */
+    border-top-left-radius: 450px;
+    border-top-right-radius: 450px;
+    border-bottom-right-radius: 0;
+  }
+  
+  .team-cta-content {
+    width: 100%;
+    padding-left: 0 !important;
+    text-align: center;
+  }
+}

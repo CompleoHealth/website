@@ -1,0 +1,128 @@
+{
+  "testimonials": [
+    {
+      "id": "southlands-june-2025",
+      "type": "patient",
+      "location": "Southlands",
+      "service": "MRI",
+      "content": "I am very claustrophobic and was quite anxious. Julian and Amris had the perfect balance of empathy and professionalism, that helped me get through it without any problems.",
+      "rating": 5,
+      "satisfaction": "100%",
+      "date": "2025-06",
+      "isAnonymous": true,
+      "staffMentioned": ["Julian", "Amris"],
+      "status": "published"
+    },
+    {
+      "id": "whipps-cross-june-2025",
+      "type": "patient",
+      "location": "Whipps Cross",
+      "service": "MRI",
+      "content": "Very positive experience, appointment was prompt, easy and fast. Staff was very friendly and informative. It is appreciated. Thank you.",
+      "rating": 5,
+      "satisfaction": "100%",
+      "date": "2025-06",
+      "isAnonymous": true,
+      "status": "published"
+    },
+    {
+      "id": "guys-st-thomas-june-2025",
+      "type": "patient",
+      "location": "Guy's & St Thomas'",
+      "service": "MRI",
+      "content": "Excellent service from arrival to departure. All staff were very helpful and professional. Special thanks to Carl (radiographer) who was very patient and understanding.",
+      "rating": 5,
+      "satisfaction": "100%",
+      "date": "2025-06",
+      "isAnonymous": true,
+      "staffMentioned": ["Carl"],
+      "status": "published"
+    },
+    {
+      "id": "mile-end-june-2025",
+      "type": "patient",
+      "location": "Mile End",
+      "service": "CT",
+      "content": "Really impressed with the service. Very quick and efficient, staff were lovely and made me feel at ease. Would definitely recommend.",
+      "rating": 5,
+      "satisfaction": "95%",
+      "date": "2025-06",
+      "isAnonymous": true,
+      "status": "published"
+    },
+    {
+      "id": "st-georges-june-2025",
+      "type": "patient",
+      "location": "St George's Hospital",
+      "service": "MRI",
+      "content": "Outstanding care from start to finish. The team were incredibly professional and the scan was completed quickly with minimal discomfort.",
+      "rating": 5,
+      "satisfaction": "100%",
+      "date": "2025-06",
+      "isAnonymous": true,
+      "status": "published"
+    },
+    {
+      "id": "prince-philip-wales-june-2025",
+      "type": "patient",
+      "location": "Prince Philip Hospital Wales",
+      "service": "CT",
+      "content": "Excellent service, very professional staff who made me feel comfortable throughout the procedure. Results were available quickly.",
+      "rating": 5,
+      "satisfaction": "95%",
+      "date": "2025-06",
+      "isAnonymous": true,
+      "status": "published"
+    },
+    {
+      "id": "queen-marys-july-2025",
+      "type": "patient",
+      "location": "Queen Mary's",
+      "service": "MRI",
+      "content": "First class service from booking through to results. Staff were incredibly helpful and the facilities were excellent.",
+      "rating": 5,
+      "satisfaction": "100%",
+      "date": "2025-07",
+      "isAnonymous": true,
+      "status": "published"
+    },
+    {
+      "id": "worthing-july-2025",
+      "type": "patient",
+      "location": "Worthing",
+      "service": "CT",
+      "content": "Very impressed with the professional approach and efficiency. The scan was completed quickly and staff were very reassuring.",
+      "rating": 5,
+      "satisfaction": "95%",
+      "date": "2025-07",
+      "isAnonymous": true,
+      "status": "published"
+    },
+    {
+      "id": "rob-simms-spire-leicester",
+      "type": "customer",
+      "customerName": "Rob Simms",
+      "role": "Operations Manager",
+      "organisation": "Spire Hospital Leicester",
+      "location": "Leicester",
+      "service": "Equipment Rental",
+      "content": "Compleo Health provided exceptional support during our equipment upgrade. Their technical expertise and responsive service helped us maintain continuity of care for our patients.",
+      "rating": 5,
+      "date": "2025-05",
+      "status": "published"
+    },
+    {
+      "id": "carrie-davidson-uhsussex",
+      "type": "customer",
+      "customerName": "Carrie Davidson",
+      "role": "Clinical Services Manager",
+      "organisation": "UHSussex NHS Trust",
+      "location": "Brighton",
+      "service": "Clinical Insourcing",
+      "content": "Working with Compleo Health has significantly improved our diagnostic capacity. Their radiographers integrate seamlessly with our team and maintain the highest professional standards.",
+      "rating": 5,
+      "date": "2025-06",
+      "status": "published"
+    }
+  ]
+}

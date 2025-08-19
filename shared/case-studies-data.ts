@@ -1,0 +1,129 @@
+export interface CaseStudy {
+  id: string;
+  title: string;
+  subtitle?: string;
+  category: string;
+  trustName: string;
+  location: string;
+  address: string;
+  date: string;
+  projectDuration?: string;
+  testimonialAuthor: string;
+  testimonialRole: string;
+  testimonialContent: string;
+  summary: string;
+  image: string;
+  keyMetrics?: {
+    label: string;
+    value: string;
+  }[];
+  challenges?: string[];
+  solutions?: string[];
+  outcomes?: string[];
+  tags?: string[];
+}
+
+export const CASE_STUDIES: CaseStudy[] = [
+  {
+    id: 'dartford-gravesham-nhs-trust',
+    title: 'Dartford & Gravesham NHS Trust',
+    subtitle: 'Community Diagnostics Centre Partnership',
+    category: 'Community Diagnostics Centre',
+    trustName: 'Dartford & Gravesham NHS Trust',
+    location: 'Dartford, Kent',
+    address: 'Darent Valley Hospital, Darenth Wood Road, Dartford, Kent DA2 8DA',
+    date: '2023-12-12',
+    projectDuration: 'November 2023 - Ongoing',
+    testimonialAuthor: 'Garrett Turbett MSc MBA',
+    testimonialRole: 'CDC Programme Director, Dartford and Gravesham NHS Trust',
+    testimonialContent: `I am writing to provide a reference for Compleo Health. We have worked for several months with Compleo and would be very happy to recommend them as a MECCS provider.
+
+Following months of planning, Compleo went live with an interim Community Diagnostics Centre (CDC) solution in November 2023. They are operating on a live community hospital site, which includes a range of inpatient and outpatient services.
+
+Compleo has been a considerate partner on the site, even supporting the Trust to build relationships with neighbouring community groups. They have proven to be flexible and adaptable when the Trust has needed to change the timetable or alter the modular unit configuration.
+
+Due to delays agreeing a lease with the property owner, we experienced several weeks' delay in going live. However, Compleo adapted to changing requirements without any issue. Similarly, due to site constraints the original plan for the modular units needed to be changed. Compleo quickly adapted their layout and supplied revised drawings for the Trust to use for planning and discussions with the property owner.
+
+Operationally Compleo are working very closely with the Trust clinical teams and delivering a service that is seen as an asset to patients and the community. On the 8th December Gareth Johnson MP visited the interim CDC and was highly complementary of the work being delivered by the CDC partnership.
+
+I am happy to recommend the Compleo Health team as a trusted partner.`,
+    summary: 'Successful delivery of an interim Community Diagnostics Centre solution with flexible modular units, demonstrating adaptability and strong partnership working with clinical teams.',
+    image: '/images/case-studies/dartford-gravesham-nhs-trust.jpg',
+    keyMetrics: [
+      { label: 'Go Live Date', value: 'November 2023' },
+      { label: 'Service Type', value: 'Community Diagnostics Centre' },
+      { label: 'Opened By', value: 'Prof. Sir Mike Richards' },
+      { label: 'MP Visit', value: 'Gareth Johnson MP - December 8th' }
+    ],
+    challenges: [
+      'Delays in lease agreement with property owner',
+      'Site constraints requiring layout changes',
+      'Operating on a live community hospital site',
+      'Changing timetable requirements'
+    ],
+    solutions: [
+      'Flexible adaptation to changing requirements',
+      'Quick layout modifications with revised drawings',
+      'Considerate partnership approach on live site',
+      'Building relationships with neighbouring community groups'
+    ],
+    outcomes: [
+      'Successful CDC delivery in November 2023',
+      'Service seen as asset to patients and community',
+      'Strong working relationship with Trust clinical teams',
+      'Positive recognition from visiting MP',
+      'Trusted partner recommendation from Programme Director'
+    ],
+    tags: ['CDC', 'Community Hospital', 'NHS Trust', 'Modular Units', 'Partnership']
+  },
+  {
+    id: 'nhs-devon',
+    title: 'NHS Devon',
+    subtitle: 'Willing, flexible, and supportive provider',
+    category: 'Clinical Insourcing',
+    trustName: 'NHS Devon',
+    location: 'Devon, England',
+    address: 'NHS Devon, Devon, England',
+    date: '2023-02-01',
+    projectDuration: 'February 2023 - Ongoing',
+    testimonialAuthor: 'Bev Parker',
+    testimonialRole: 'Head of Planned Care Commissioning Strategic Lead for Cancer and Diagnostic Services NHS Devon',
+    testimonialContent: `I just want to say a huge thank you for everything you have done to support Devon over the past two years. I don't think I have ever met a provider so willing, flexible, and supportive as we tried to provide services in what was the worst period in the NHS history. Your willingness to work with us and support in any way you could was a mindset reflected within you team and they have become an integral part of the successful delivery of one of the first community diagnostic centres in the country scanning thousands of patients and making a huge difference. Patient feedback has been fantastic which again evidences what a good team you have and what a wonderful service you provide.`,
+    summary: 'Exceptional support during challenging NHS period, delivering one of the first community diagnostic centres in the country with outstanding patient feedback and scanning thousands of patients.',
+    image: '/images/case-studies/nhs-devon.png?v=2',
+    keyMetrics: [
+      { label: 'Service Type', value: 'Community Diagnostic Centre' },
+      { label: 'Duration', value: '2+ Years' },
+      { label: 'Patients Scanned', value: 'Thousands' },
+      { label: 'Patient Feedback', value: 'Fantastic' }
+    ],
+    challenges: [
+      'Worst period in NHS history',
+      'Complex service delivery requirements',
+      'Need for flexible and adaptable solutions',
+      'Maintaining high quality patient care during crisis'
+    ],
+    solutions: [
+      'Willing and flexible approach to service delivery',
+      'Supportive team mindset and culture',
+      'Integral partnership with NHS Devon',
+      'Consistent high-quality service provision'
+    ],
+    outcomes: [
+      'Successful delivery of one of first community diagnostic centres',
+      'Thousands of patients scanned',
+      'Fantastic patient feedback',
+      'Strong partnership recognition',
+      'Significant contribution to NHS services during crisis'
+    ],
+    tags: ['Clinical Insourcing', 'Community Diagnostics', 'NHS Devon', 'Patient Care', 'Partnership']
+  }
+];
+
+export const getCaseStudyById = (id: string): CaseStudy | undefined => {
+  return CASE_STUDIES.find(study => study.id === id);
+};
+
+export const getCaseStudiesByCategory = (category: string): CaseStudy[] => {
+  return CASE_STUDIES.filter(study => study.category === category);
+};

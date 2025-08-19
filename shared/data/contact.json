@@ -1,0 +1,90 @@
+{
+  "hero": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with our team for healthcare imaging solutions and partnerships."
+  },
+  "contactMethods": [
+    {
+      "icon": "Phone",
+      "title": "Phone",
+      "primary": "+44 (0)161 884 1303",
+      "secondary": "Free from landlines",
+      "description": "Monday-Friday 8am-8pm",
+      "color": "bg-blue-100 text-blue-600"
+    },
+    {
+      "icon": "Mail",
+      "title": "General Enquiries",
+      "primary": "sales@compleohealth.com",
+      "secondary": "Business inquiries & support",
+      "description": "Response within 24 hours",
+      "color": "bg-green-100 text-green-600",
+      "isEmail": true
+    },
+    {
+      "icon": "Users",
+      "title": "Careers",
+      "primary": "recruitment@compleohealth.com",
+      "secondary": "Work with us",
+      "description": "Response within 48 hours",
+      "color": "bg-purple-100 text-purple-600",
+      "isEmail": true
+    }
+  ],
+  "partnership": {
+    "title": "Healthcare Partnership",
+    "subtitle": "We provide comprehensive support for healthcare organisations seeking imaging solutions.",
+    "cards": [
+      {
+        "icon": "Hospital",
+        "title": "Healthcare Providers",
+        "description": "Equipment services, partnerships, and healthcare solutions",
+        "benefits": [
+          "Dedicated account manager",
+          "Custom solutions", 
+          "Priority support"
+        ],
+        "ctaText": "Get Business Quote",
+        "logoPath": "/images/shared/logo-main.png",
+        "contactInfo": {
+          "companyName": "Compleo Health",
+          "address": [
+            "2A(iii) at Beehive Mill",
+            "Jersey Street",
+            "Manchester M4 6JG",
+            "United Kingdom"
+          ],
+          "phone": "+44 (0)161 884 1303"
+        }
+      }
+    ]
+  },
+  "contactForm": {
+    "title": "Get in touch",
+    "subtitle": "Fill in the form below and we'll get back to you within one working day.",
+    "backgroundImage": "/images/contact/contact-form-watermark.jpg"
+  },
+  "offices": {
+    "title": "Our Office", 
+    "subtitle": "Visit us at our Manchester headquarters.",
+    "locations": [
+      {
+        "name": "Manchester Office",
+        "address": "2A(iii) at Beehive Mill\nJersey Street",
+        "city": "Manchester M4 6JG\nUnited Kingdom",
+        "phone": "+44 (0)161 884 1303",
+        "email": "manchester@compleohealth.com",
+        "hours": "Mon-Fri 8am-6pm",
+        "additional": "Company Number: 13226032",
+        "services": [
+          "MRI & CT Scanning",
+          "Equipment Rental",
+          "Clinical Insourcing",
+          "Mobile Imaging",
+          "Managed Services"
+        ]
+      }
+    ],
+    "logoPath": "/images/shared/logo-main.png"
+  }
+}

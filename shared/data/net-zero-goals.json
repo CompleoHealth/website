@@ -1,0 +1,130 @@
+{
+  "hero": {
+    "backButton": {
+      "text": "Back to Sustainability",
+      "href": "/sustainability"
+    },
+    "title": "Net Zero Goals",
+    "titleHighlight": "Goals",
+    "subtitle": "Aligning Compleo Health's sustainability initiatives with NHS Net Zero requirements to deliver comprehensive carbon reduction and social value.",
+    "nhsStrategyButton": {
+      "text": "View NHS Net Zero Strategy",
+      "href": "https://www.england.nhs.uk/greenernhs/wp-content/uploads/sites/51/2022/07/B1728-delivering-a-net-zero-nhs-july-2022.pdf",
+      "icon": "FileText"
+    }
+  },
+  "timeline": {
+    "title": "NHS Requirements & Compleo Response Timeline",
+    "subtitle": "Our strategic roadmap shows how Compleo Health's initiatives directly align with and exceed NHS Net Zero requirements, ensuring full compliance and environmental leadership."
+  },
+  "timelineItems": [
+    {
+      "id": "nhs-2022-carbon",
+      "date": "2022",
+      "category": "carbon",
+      "type": "nhs",
+      "title": "Carbon Reduction Plan for Major NHS Contracts",
+      "description": "Suppliers must publish a Carbon Reduction Plan for all new NHS contracts over £5 million/year, covering UK Scope 1, 2, and some Scope 3 emissions (per PPN 06/21).",
+      "status": "completed"
+    },
+    {
+      "id": "nhs-2022-social",
+      "date": "2022",
+      "category": "social",
+      "type": "nhs",
+      "title": "10% Net Zero and Social Value Weighting",
+      "description": "All NHS procurements include a minimum 10% weighting for Net Zero and Social Value. Strategy focuses on delivering health-specific outcomes and supporting NHS sustainability goals.",
+      "status": "completed"
+    },
+    {
+      "id": "compleo-2023",
+      "date": "2023",
+      "category": "carbon",
+      "type": "compleo",
+      "title": "Initial Carbon Reduction Plan",
+      "description": "Developed an initial Carbon Reduction Plan, laying the foundation for long-term alignment with the NHS Net Zero ambition and compliance with PPN 06/21.",
+      "status": "completed"
+    },
+    {
+      "id": "nhs-2024-carbon",
+      "date": "2024",
+      "category": "carbon",
+      "type": "nhs",
+      "title": "Extended Carbon Requirements",
+      "description": "Carbon Reduction Requirement extends to all new NHS procurements, regardless of contract value.",
+      "status": "completed"
+    },
+    {
+      "id": "compleo-2025-update",
+      "date": "2025",
+      "category": "carbon",
+      "type": "compleo",
+      "title": "Carbon Reduction Strategy Update",
+      "description": "Update our Carbon Reduction Strategy to reflect rapid growth and align with the NHS Net Zero ambition, using a clear emissions baseline from 2022-2024.",
+      "status": "in-progress"
+    },
+    {
+      "id": "compleo-2025-social",
+      "date": "2025",
+      "category": "social",
+      "type": "compleo",
+      "title": "Sustainability and Social Value Strategy",
+      "description": "Continue to develop our Sustainability and Social Value Strategy, aligned with NHS Social Value Model (PPN 06/20 & 02/21). Embed environmental, economic, and community value across all procurement value chains.",
+      "status": "in-progress"
+    },
+    {
+      "id": "compleo-2026-scope3",
+      "date": "2026",
+      "category": "carbon",
+      "type": "compleo",
+      "title": "Full Carbon Footprint Assessment",
+      "description": "Expand strategic focus to include full carbon footprint assessment, with emphasis on integrating Scope 3 emissions into our planning and reporting.",
+      "status": "planned"
+    },
+    {
+      "id": "compleo-2026-social",
+      "date": "2026",
+      "category": "social",
+      "type": "compleo",
+      "title": "Community-Focused Outcomes",
+      "description": "Deliver measurable, community-focused outcomes across operations. Strengthen alignment with NHS social impact goals through ongoing strategy refinement and performance tracking.",
+      "status": "planned"
+    },
+    {
+      "id": "nhs-2027-comprehensive",
+      "date": "2027",
+      "category": "carbon",
+      "type": "nhs",
+      "title": "Comprehensive Carbon Reduction Plan",
+      "description": "All suppliers must publicly report emissions and targets, publish a Carbon Reduction Plan covering global Scope 1, 2 & 3 emissions, and align with the NHS Net Zero target.",
+      "status": "planned"
+    },
+    {
+      "id": "compleo-2027-final",
+      "date": "2027",
+      "category": "carbon",
+      "type": "compleo",
+      "title": "Comprehensive Carbon Reduction Plan Publication",
+      "description": "Finalise and publish a comprehensive Carbon Reduction Plan, covering all emission scopes, aligned with NHS requirements (PPN 06/21) and subject to annual review.",
+      "status": "planned"
+    }
+  ],
+  "cta": {
+    "title": "Ready to Partner on Net Zero Goals?",
+    "subtitle": "Contact our sustainability team to learn more about how Compleo Health can support your organisation's Net Zero objectives while delivering exceptional diagnostic services.",
+    "buttons": [
+      {
+        "text": "Contact Us",
+        "href": "/contact",
+        "icon": "FileText",
+        "variant": "primary"
+      },
+      {
+        "text": "View Sustainability Page",
+        "href": "/sustainability",
+        "icon": "Leaf",
+        "variant": "secondary"
+      }
+    ]
+  }
+}

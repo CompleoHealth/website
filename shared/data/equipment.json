@@ -1,0 +1,188 @@
+[
+  {
+    "id": "siemens-magnetom-flow",
+    "name": "MAGNETOM Flow MRI",
+    "manufacturer": "Siemens",
+    "type": "MRI",
+    "imageUrl": "/images/equipment/siemens-magnetom-flow.jpg",
+    "description": "Introducing the 1.5T MAGNETOM Flow Platform – empowering you with a game-changing new flow for unparalleled imaging care.",
+    "specifications": {
+      "fieldStrength": "1.5T",
+      "technology": "Sealed DryCool Technology",
+      "keyFeatures": [
+        "Helium independent MRI",
+        "Sealed for Life DryCool technology",
+        "Requires just 0.7l of liquid helium",
+        "Simplified workflows",
+        "Pioneering deep learning"
+      ]
+    },
+    "tags": ["Helium-Free", "AI-Powered", "Sustainable"],
+    "isComingSoon": true
+  },
+  {
+    "id": "siemens-magnetom-sola",
+    "name": "MAGNETOM Sola MRI",
+    "manufacturer": "Siemens",
+    "type": "MRI",
+    "imageUrl": "/images/equipment/siemens-magnetom-sola.jpg",
+    "description": "The perfect symbiosis of power, intelligence, and speed. A scanner designed to exceed expectations and amplify clinical capabilities.",
+    "specifications": {
+      "fieldStrength": "1.5T",
+      "technology": "Most Powerful Platform",
+      "keyFeatures": [
+        "Most powerful 1.5T platform",
+        "Cutting-edge AI integration",
+        "Intelligent workflow assistance",
+        "Enhanced performance",
+        "Sustainable future design"
+      ]
+    },
+    "tags": ["AI-Powered", "High Performance", "Intelligent"],
+    "isComingSoon": false
+  },
+  {
+    "id": "siemens-magnetom-aera",
+    "name": "MAGNETOM Aera MRI",
+    "manufacturer": "Siemens",
+    "type": "MRI",
+    "imageUrl": "/images/equipment/siemens-magnetom-aera.jpg",
+    "description": "Groundbreaking combination of Tim® 4G integrated coil technology and Dot, transforming 1.5T economics.",
+    "specifications": {
+      "fieldStrength": "1.5T",
+      "technology": "Tim® 4G + Dot",
+      "keyFeatures": [
+        "Tim® 4G integrated coil technology",
+        "Dot technology integration",
+        "70cm bore system",
+        "Full range of applications",
+        "Next level patient care"
+      ]
+    },
+    "tags": ["Tim Technology", "Wide Bore", "Integrated"],
+    "isComingSoon": false
+  },
+  {
+    "id": "siemens-magnetom-viato",
+    "name": "MAGNETOM Viato Mobile MRI",
+    "manufacturer": "Siemens",
+    "type": "MRI",
+    "imageUrl": "/images/equipment/siemens-magnetom-viato.jpg",
+    "description": "Mobile 1.5T MRI scanner delivering high-quality care wherever patients are, with no compromise between mobility and performance.",
+    "specifications": {
+      "fieldStrength": "1.5T",
+      "technology": "Mobile Platform",
+      "keyFeatures": [
+        "Mobile 1.5T MRI scanner",
+        "Flexible deployment",
+        "Cutting-edge AI integration",
+        "Intelligent guidance system",
+        "No mobility compromises"
+      ]
+    },
+    "tags": ["Mobile", "AI-Powered", "Flexible"],
+    "isComingSoon": false
+  },
+  {
+    "id": "siemens-somatom-go-top",
+    "name": "SOMATOM go.Top CT",
+    "manufacturer": "Siemens",
+    "type": "CT",
+    "imageUrl": "/images/equipment/siemens-somatom-go-top.jpg",
+    "description": "Clinical allrounder in CT imaging that provides full flexibility for routine procedures and advanced applications.",
+    "specifications": {
+      "technology": "Clinical Allrounder",
+      "keyFeatures": [
+        "Full clinical flexibility",
+        "Routine procedures capability",
+        "Advanced applications support",
+        "Wide range of patients",
+        "Optimised workflows"
+      ]
+    },
+    "tags": ["Versatile", "Clinical", "Flexible"],
+    "isComingSoon": false
+  },
+  {
+    "id": "philips-ingenia-ambition-x",
+    "name": "Ingenia Ambition X MRI",
+    "manufacturer": "Philips",
+    "type": "MRI",
+    "imageUrl": "/images/equipment/philips-ingenia-ambition-x.jpg",
+    "description": "Revolutionary fully sealed BlueSeal magnet enabling helium-free MR operations with superior image quality.",
+    "specifications": {
+      "fieldStrength": "1.5T",
+      "technology": "BlueSeal Magnet",
+      "keyFeatures": [
+        "Fully sealed BlueSeal magnet",
+        "Helium-free operations",
+        "Up to 50% faster exams",
+        "Compressed SENSE accelerations",
+        "Touchless guided patient setup"
+      ]
+    },
+    "tags": ["BlueSeal", "Helium-Free", "Fast Scanning"],
+    "isComingSoon": false
+  },
+  {
+    "id": "philips-ingenia-ambition-s",
+    "name": "Ingenia Ambition S BlueSeal MRI",
+    "manufacturer": "Philips",
+    "type": "MRI",
+    "imageUrl": "/images/equipment/philips-ingenia-ambition-s.jpg",
+    "description": "Revolutionary fully sealed BlueSeal magnet technology for productive helium-free MR operations.",
+    "specifications": {
+      "fieldStrength": "1.5T",
+      "technology": "BlueSeal Technology",
+      "keyFeatures": [
+        "Fully sealed BlueSeal magnet",
+        "Helium-free operations",
+        "Up to 50% faster scanning",
+        "Compressed SENSE for all anatomies",
+        "Guided patient setup"
+      ]
+    },
+    "tags": ["BlueSeal", "Helium-Free", "Compressed SENSE"],
+    "isComingSoon": false
+  },
+  {
+    "id": "canon-aquilion-prime-sp",
+    "name": "Aquilion Prime SP CT",
+    "manufacturer": "Canon",
+    "type": "CT",
+    "imageUrl": "/images/equipment/canon-aquilion-prime-sp.jpg",
+    "description": "Premium CT technology for fast patient throughput, robust cardiac scanning, and new diagnostic capabilities.",
+    "specifications": {
+      "technology": "Premium CT",
+      "keyFeatures": [
+        "Fast patient throughput",
+        "Robust cardiac scanning",
+        "New diagnostic capabilities",
+        "Pediatric to bariatric patients",
+        "Efficient workflow solutions"
+      ]
+    },
+    "tags": ["Premium", "Cardiac", "Efficient"],
+    "isComingSoon": false
+  },
+  {
+    "id": "canon-aquilion-one",
+    "name": "Aquilion ONE Genesis CT",
+    "manufacturer": "Canon",
+    "type": "CT",
+    "imageUrl": "/images/equipment/canon-aquilion-one.jpg",
+    "description": "Next-generation dynamic volume CT with industry-leading spatial resolution and reduced radiation dose requirements.",
+    "specifications": {
+      "technology": "Dynamic Volume CT",
+      "keyFeatures": [
+        "Industry-leading spatial resolution",
+        "Reduced radiation dose",
+        "Dynamic volume scanning",
+        "Breakthrough technology",
+        "Advanced clinical applications"
+      ]
+    },
+    "tags": ["Coming Soon", "Dynamic Volume", "Low Dose"],
+    "isComingSoon": true
+  }
+]

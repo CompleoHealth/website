@@ -1,0 +1,15 @@
+<svg width="400" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="400" height="240" fill="#f8f9fa"/>
+<rect x="80" y="50" width="240" height="140" rx="8" fill="#0f2e2e"/>
+<rect x="100" y="70" width="50" height="30" rx="4" fill="white" opacity="0.3"/>
+<rect x="160" y="70" width="50" height="30" rx="4" fill="white" opacity="0.3"/>
+<rect x="220" y="70" width="50" height="30" rx="4" fill="white" opacity="0.3"/>
+<rect x="280" y="70" width="30" height="30" rx="4" fill="white" opacity="0.3"/>
+<rect x="100" y="110" width="200" height="8" rx="2" fill="white" opacity="0.4"/>
+<rect x="100" y="125" width="180" height="8" rx="2" fill="white" opacity="0.4"/>
+<rect x="100" y="140" width="160" height="8" rx="2" fill="white" opacity="0.4"/>
+<rect x="100" y="155" width="140" height="8" rx="2" fill="white" opacity="0.4"/>
+<circle cx="200" cy="120" r="25" fill="white" opacity="0.2"/>
+<path d="M190 115L200 105L210 115L200 125L190 115Z" fill="white" opacity="0.8"/>
+<text x="200" y="220" text-anchor="middle" fill="#0f2e2e" font-family="Arial" font-size="14" font-weight="bold">Flexible Service Solutions</text>
+</svg>

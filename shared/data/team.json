@@ -1,0 +1,122 @@
+[
+  {
+    "id": "beverley-wallace",
+    "name": "Beverley Wallace",
+    "role": "Chief Executive Officer",
+    "department": "Executive",
+    "image": "/images/team/beverley-wallace-ceo.jpg",
+    "summary": "Visionary leader driving healthcare innovation and strategic growth across UK and European markets.",
+    "bio": "Beverley Wallace is the Chief Executive Officer of Compleo Health Ltd, a company dedicated to transforming the delivery of diagnostic services across the UK and Europe. Under her leadership, Compleo Health works in close partnership with NHS trusts and other healthcare providers to deliver high-quality, efficient and equitable imaging services through Community Diagnostic Centres (CDCs), MRI, CT and diagnostic solutions.\n\nCompleo Health's mission is grounded in four core values; integrity, collaboration, excellence, and equity which guide its commitment to improving patient access and outcomes while building a more responsive and resilient healthcare system.\n\nWith over 30 years of experience in the diagnostic imaging industry, Beverley brings deep clinical expertise and strategic vision. A radiographer by background, she also holds an MSc in Nuclear Medicine and an MBA. Throughout her career, she has successfully led high-performing teams through complex change and large-scale service mobilisation, including the national PET-CT contract and the rollout of multiple CDCs and Imaging Centres.\n\nBeverley has also contributed to shaping national workforce policy and clinical standards through her elected leadership roles in professional organisations. Passionate about advancing healthcare and imaging services, she is dedicated to creating an inclusive workplace culture and driving innovation and equity across the sector.",
+    "experience": "30+ years",
+    "qualifications": ["MSc in Nuclear Medicine", "MBA", "Radiographer"],
+    "keyAchievements": ["National PET-CT contract leadership", "Multiple CDC rollouts", "Imaging Centre mobilisation", "National workforce policy contributions"],
+    "expertise": ["Healthcare Leadership", "Diagnostic Imaging", "Strategic Planning", "NHS Partnerships", "Service Mobilisation"],
+    "email": "beverley.wallace@compleohealth.com",
+    "linkedin": "https://www.linkedin.com/in/beverley-wallace-0a06966/"
+  },
+  {
+    "id": "claire-zeki",
+    "name": "Claire Zeki",
+    "role": "Chief Financial Officer",
+    "department": "Finance",
+    "image": "/images/team/claire-zeki-cfo.jpg",
+    "summary": "Strategic financial leader ensuring sustainable growth and operational excellence.",
+    "bio": "As CFO of Compleo Health, Claire leads the company's financial strategy while keeping a close eye on the day-to-day; from guiding key commercial decisions to ensuring our customers are paid on time. Her approach is clear, transparent, and people-first, with a strong focus on doing what's right for both patients and colleagues.\n\nClaire graduated in Business Management (Accounting) from Swansea University and is a qualified CIMA accountant. Her career spans global industries and continents including seven years in the US. Upon returning to the UK she led Commercial Finance for healthcare providers and discovered a passion for healthcare; a journey she continues at Compleo Health.\n\nOutside of work, Claire is a busy mum to two young boys and a governor at her local primary school. She enjoys running, travelling, and making time for friends and family.",
+    "qualifications": ["Business Management (Accounting), Swansea University", "CIMA Qualified Accountant"],
+    "expertise": ["Financial Strategy", "Commercial Finance", "Healthcare Finance", "International Business"],
+    "experience": "15+ years",
+    "linkedin": "https://www.linkedin.com/in/claire-zeki-57a148107/"
+  },
+  {
+    "id": "david-uregbula",
+    "name": "David Uregbula",
+    "role": "Commercial Director",
+    "department": "Commercial",
+    "image": "/images/team/david-uregbula-commercial-director.jpg",
+    "summary": "Commercial strategist driving partnership development and business expansion.",
+    "bio": "As Commercial Director, David Uregbula is responsible for the growth and development of Compleo Health. He is accountable for setting and executing the commercial strategy. As we are a fast-growing and dynamic organisation, he is tasked with things ranging from new business, service line development, to informing acquisition decisions.\n\nDavid is a qualified Cardiac Physiologist and his clinical background frames his approach. The emphasis is always on patients, outcomes and the focus on their experience extending beyond their interaction with us in a scanner, theatre or other type of clinical setting.\n\nDavid strongly believes that positively impacting clinical pathways should be at the heart of everything we do, and this is reflective in the way we approach growth and engagement with our customers.",
+    "qualifications": ["Qualified Cardiac Physiologist"],
+    "expertise": ["Commercial Strategy", "New Business Development", "Service Line Development", "Acquisition Strategy", "Clinical Pathways", "Customer Engagement"],
+    "experience": "18+ years",
+    "linkedin": "https://www.linkedin.com/in/daviduregbula/"
+  },
+  {
+    "id": "candice-martin",
+    "name": "Candice Martin",
+    "role": "Director of Operations",
+    "department": "Operations",
+    "image": "/images/team/candice-martin-operations-director.jpg",
+    "summary": "Operations expert with a proven track record of leading transformative change across complex health systems.",
+    "bio": "Candice is the Director of Operations for Compleo Health and has a proven track record of leading transformative change across complex health systems and regulatory environments. Candice brings deep expertise in designing and implementing high-impact strategies that optimise clinical pathways, improve operational performance, and deliver better patient outcomes.\n\nWith extensive experience managing large-scale projects and multidisciplinary teams, Candice consistently drives measurable improvements in efficiency, cost reduction, and quality of care. She is also skilled in strategic commercial discussions and stakeholder engagement, ensuring that innovation aligns with both clinical priorities and organisational goals.\n\nRecognised for her leadership, strategic thinking, and commitment to continuous improvement, Candice is passionate about creating meaningful, lasting change in healthcare.\n\nCandice believes that truly effective healthcare leadership combines vision, collaboration, and a relentless focus on doing what's best for patients and the people who care for them!",
+    "expertise": ["Operations Management", "Healthcare Transformation", "Clinical Pathway Optimisation", "Strategic Planning", "Project Management", "Stakeholder Engagement", "Quality Improvement", "Cost Reduction", "Team Leadership"],
+    "experience": "12+ years",
+    "linkedin": "https://www.linkedin.com/in/candice-martin-7454b5124/"
+  },
+  {
+    "id": "cordelia-wilson",
+    "name": "Cordelia Wilson",
+    "role": "Quality & Risk Director",
+    "department": "Quality",
+    "image": "/images/team/cordelia-wilson-quality-risk-director.jpg",
+    "summary": "Quality assurance leader maintaining the highest standards of clinical excellence.",
+    "bio": "Cordelia Wilson is an experienced healthcare leader with a proven history in the hospital and health care sector. She has led organisational development initiatives that improve patient-centred services and operational performance. Her career reflects a strong focus on strategic planning, quality improvement, and embedding best practices across teams and services.\n\nCordelia is highly skilled in incident management, risk management, complaints handling, and patient engagement. She brings expertise in contract management, budget oversight, policy development, and delivering organisational change. Cordelia brings an ability to guide diverse teams through complex transitions while maintaining high standards of safety, compliance, and service quality.\n\nIn addition to her leadership experience, Cordelia has a robust clinical background in MRI. She holds a Postgraduate Certificate in MRI from the University of Bradford, which underpins her understanding of advanced imaging services. This blend of operational expertise and clinical knowledge enables her to drive innovation in healthcare delivery.",
+    "qualifications": ["Postgraduate Certificate in MRI, University of Bradford"],
+    "expertise": ["Incident Management", "Risk Management", "Complaints Handling", "Patient Engagement", "Contract Management", "Budget Oversight", "Policy Development", "Organisational Change", "MRI Clinical Background"],
+    "experience": "16+ years",
+    "linkedin": "https://www.linkedin.com/in/cordelia-wilson-2478b489/"
+  },
+  {
+    "id": "paula-moore",
+    "name": "Paula Moore",
+    "role": "Head of Business Operations",
+    "department": "Operations",
+    "image": "/images/team/paula-moore.jpg",
+    "summary": "Purpose-led leader with 25+ years experience translating high-level strategies into successful programmes across retail, healthcare and fitness industries.",
+    "bio": "Paula Moore is a purpose-led, strategic leader with a passion for translating high-level strategies into sustainable systems and processes that are critical to both user experience and business growth. As Head of Business Operations, Paula thrives on designing and refining operational frameworks that empower teams, support patients, and drive the organisation forward.\n\nWith a strong focus on continual development, Paula is committed to capturing learning from every activity to improve outcomes for the greater good. She believes that innovation comes from consistently questioning how things can be done better and applying those insights to create lasting impact.\n\nPaula finds energy and inspiration in the variety that each day brings, as well as in seeing the tangible outcomes of team-led and patient-led projects. Her leadership style is collaborative and inclusive, contributing to a culture where everyone has a voice in shaping the future.",
+    "keyAchievements": [
+      "Project Managed award winning £3.2mil expansion programme for Debenhams Trafford",
+      "Led award winning programmes for evidence-based clinical pathways measuring social value and patient satisfaction",
+      "Successfully established Business Operations function in fast-growing diagnostics organisation",
+      "Project Managed and led service delivery for NHS Community Diagnostics Centre"
+    ],
+    "expertise": [
+      "Strategic Programme Management",
+      "Healthcare Operations",
+      "Clinical Pathway Development",
+      "Multi-stakeholder Engagement",
+      "Evidence-based Healthcare Solutions"
+    ],
+    "qualifications": [
+      "MSc by Research in Health and Social Care",
+      "PRINCE2 (7) Certified",
+      "AAT Qualified"
+    ],
+    "experience": "25+ years",
+    "email": "paula.moore@compleohealth.com",
+    "linkedin": "https://www.linkedin.com/in/paula-moore-31483159/"
+  },
+  {
+    "id": "carsten-nyborg",
+    "name": "Carsten Nyborg",
+    "role": "Director of International Business Development",
+    "department": "International",
+    "image": "/images/team/carsten-nyborg.jpg?v=2",
+    "summary": "International expansion specialist driving growth across European markets.",
+    "bio": "As Director of international Business Development, Carsten Nyborg leads strategic growth initiatives in Continental Europe, that drive long-term value for the company. With over 10 years of experience in business strategy, client relationship management, and market expansion, Carsten brings a results-driven approach to identifying new opportunities and fostering strong, collaborative partnerships across different markets.\n\nHe plays a pivotal role in aligning the company's vision with evolving market demands. Known for his market insight and innovative thinking, Carsten consistently delivers measurable outcomes that support sustainable growth. He ensures the company remains competitive, and well-positioned for continued success in an ever-changing business landscape.",
+    "expertise": ["Business Strategy", "Client Relationship Management", "Market Expansion", "International Business Development", "Strategic Partnerships", "Market Analysis"],
+    "experience": "20+ years",
+    "linkedin": "https://www.linkedin.com/in/carsten-nyborg/"
+  },
+  {
+    "id": "james-berry",
+    "name": "James Berry",
+    "role": "Head of Logistics",
+    "department": "Logistics",
+    "image": "/images/team/james-berry.jpg",
+    "summary": "Driven logistics leader consistently striving for excellence, innovation, and efficiency in service delivery.",
+    "bio": "James Berry is a driven logistics leader consistently striving for excellence, innovation, and efficiency in every aspect of service delivery. He is proactive and deeply committed to optimising processes to deliver measurable improvements, leveraging data and technology to make informed decisions, and remains adaptable in fast-paced or high-pressure environments.\n\nBeing the Head of Logistics in healthcare involves overseeing the planning, coordination, and management of service delivery to ensure that our units are in the right place at the right time to operate efficiently whilst ensuring that logistical operations comply with healthcare regulations and quality standards. James draws on his extensive experience and knowledge of the Healthcare industry to embrace challenges, inspire teams and lead with a clear vision for continuous growth.\n\nJames thrives on playing a crucial behind-the-scenes role in ensuring that Compleo Health delivers safe, effective care, with the patient at the heart of everything he does.",
+    "expertise": ["Logistics Management", "Healthcare Operations", "Process Optimisation", "Data-Driven Decision Making", "Regulatory Compliance", "Team Leadership", "Service Delivery", "Quality Standards"],
+    "experience": "14+ years",
+    "linkedin": "https://www.linkedin.com/in/james-berry-304599147/"
+  }
+]

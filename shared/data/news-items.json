@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "category": "NHS Updates",
+    "title": "10 Year Health Plan for England: fit for the future",
+    "excerpt": "The 10 Year Health Plan is part of the government's health mission to build a health service fit for the future. It sets out how the government will reinvent the NHS through 3 radical shifts.",
+    "date": "2025-07-03",
+    "readTime": "5 min read",
+    "url": "https://www.gov.uk/government/publications/10-year-health-plan-for-england-fit-for-the-future",
+    "image": "https://www.gov.uk/assets/government-frontend/govuk-logo-2b9c0ace03cca91c48b2e7e28c79fafb60b2c641c6b4b36db0ab2f73f4e8a02d.png",
+    "domain": "GOV.UK"
+  },
+  {
+    "id": 2,
+    "category": "NHS Updates",
+    "title": "NHS England > Community diagnostic centres",
+    "excerpt": "Introducing the national Community Diagnostic Centre (CDC) Programme is now in its third year and has approved 170 CDC sites across England. As at August 2024, 165 sites are operational in a variety of settings including shopping centres, university campuses and football stadiums.",
+    "date": "2025-06-09",
+    "readTime": "4 min read",
+    "url": "https://www.england.nhs.uk/long-read/community-diagnostic-centres/",
+    "image": "https://www.england.nhs.uk/wp-content/themes/nhsengland/static/img/nhs-england-logo.svg",
+    "domain": "NHS England"
+  },
+  {
+    "id": 3,
+    "category": "Innovation",
+    "title": "The latest in scanning innovations - check out the new Siemens Magnetom Flow MRI",
+    "excerpt": "MAGNETOM Flow Platform - Siemens Healthineers Introducing MAGNETOM Flow Platform1 - planned to be our next-generation 1.5T MRI platform that will empower you with a game-changing new flow for unparalleled imaging care. Ushering in a new sustainable era of planned AI-powered and helium-independent2 MRI.",
+    "date": "2025-01-10",
+    "readTime": "3 min read",
+    "url": "https://www.siemens-healthineers.com/magnetic-resonance-imaging/0-35-to-1-5t-mri-scanner/magnetom-flow",
+    "image": "https://marketing.webassets.siemens-healthineers.com/d5bd72f9bca11b1b/17013f6da04f/v/496946d619d5/siemens-healthineers-MR_MAGNETOM_Flow_Platform_60_70.jpg",
+    "domain": "Siemens Healthineers"
+  },
+  {
+    "id": 4,
+    "category": "NHS Updates",
+    "title": "Deal between NHS and independent sector to cut NHS waiting lists",
+    "excerpt": "New agreement struck between NHS and independent sector to help tackle waiting lists and give patients greater choice.",
+    "date": "2025-01-06",
+    "readTime": "4 min read",
+    "url": "https://www.gov.uk/government/news/deal-between-nhs-and-independent-sector-to-cut-nhs-waiting-lists",
+    "image": "https://www.gov.uk/assets/government-frontend/govuk-logo-2b9c0ace03cca91c48b2e7e28c79fafb60b2c641c6b4b36db0ab2f73f4e8a02d.png",
+    "domain": "GOV.UK"
+  }
+]

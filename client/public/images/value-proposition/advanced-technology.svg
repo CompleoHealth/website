@@ -1,0 +1,12 @@
+<svg width="400" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="400" height="240" fill="#f8f9fa"/>
+<rect x="50" y="40" width="300" height="160" rx="12" fill="#00a990"/>
+<rect x="70" y="60" width="60" height="40" rx="4" fill="white" opacity="0.2"/>
+<rect x="140" y="60" width="180" height="10" rx="2" fill="white" opacity="0.3"/>
+<rect x="140" y="80" width="140" height="10" rx="2" fill="white" opacity="0.3"/>
+<rect x="140" y="100" width="160" height="10" rx="2" fill="white" opacity="0.3"/>
+<rect x="70" y="130" width="260" height="40" rx="4" fill="white" opacity="0.1"/>
+<circle cx="200" cy="120" r="30" fill="white" opacity="0.2"/>
+<path d="M200 100L215 120L200 140L185 120L200 100Z" fill="white" opacity="0.6"/>
+<text x="200" y="220" text-anchor="middle" fill="#0f2e2e" font-family="Arial" font-size="14" font-weight="bold">Advanced MRI/CT Technology</text>
+</svg>

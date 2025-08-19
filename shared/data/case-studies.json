@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "title": "Case Studies",
+    "subtitle": "Real results from our partnerships with healthcare providers across the UK. Discover how we've helped improve patient outcomes and operational efficiency.",
+    "primaryButton": {
+      "text": "VIEW",
+      "subtext": "Our Services",
+      "icon": "Award",
+      "href": "/services"
+    },
+    "secondaryButton": {
+      "text": "CONTACT",
+      "subtext": "Us",
+      "icon": "Target",
+      "href": "/contact"
+    }
+  },
+  "successStories": {
+    "title": "Success Stories",
+    "subtitle": "Content will be added here showcasing our successful partnerships and the measurable impact we've delivered."
+  }
+}
