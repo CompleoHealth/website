@@ -68,16 +68,9 @@ export const globalSettingsApi = {
         timeout: DEFAULT_TIMEOUT
       });
       
-      debugLog('✅ Global Settings Response Success');
-      debugLog('🔍 GLOBAL SETTINGS RAW DATA STRUCTURE:', JSON.stringify(response.data.data, null, 2));
-      debugLog('🔍 Available fields in Global Settings:', Object.keys(response.data.data || {}));
       
       return extractEntityData(response.data);
     } catch (error) {
-      console.log('🚨 GLOBAL SETTINGS API FAILED:', error);
-      console.log('🚨 Error message:', (error as any)?.message);
-      console.log('🚨 Error response:', (error as any)?.response?.data);
-      console.log('🚨 Error status:', (error as any)?.response?.status);
       return handleApiError(error, 'Failed to fetch global settings data');
     }
   },

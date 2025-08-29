@@ -7,23 +7,93 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'wouter';
 import { MessageSquare, Users } from 'lucide-react';
-import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { useEffect, useState } from 'react';
 
-// Import team data
+// CMS imports
+import { ourTeamApi } from '@/lib/strapi/api/our-team';
+import { globalSettingsApi } from '@/lib/strapi/api/global-settings';
+import { StrapiOurTeamPage } from '@/lib/strapi/types/our-team';
+import { StrapiGlobalSettings } from '@/lib/strapi/types/global-settings';
+
+// Import team data (stays as operational data)
 import { TEAM_MEMBERS } from '@/../../shared/team-data';
 import teamPageData from '@/../../shared/data/team-page.json';
 
 export default function OurTeam() {
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-  const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
+  // CMS State Management (following proven pattern)
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pageData, setPageData] = useState<StrapiOurTeamPage | null>(null);
+  const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
 
+  const leadership = TEAM_MEMBERS; // Stays as operational data
+
+  // Fetch CMS data (following proven pattern from about.tsx)
   useEffect(() => {
-    const timer = setTimeout(() => setShouldAnimate(true), 300);
-    return () => clearTimeout(timer);
+    const fetchData = async () => {
+      try {
+        console.log('🏢 Starting Our Team page CMS data fetch...');
+        setIsLoading(true);
+        
+        // Parallel API calls for page data and global settings
+        const [ourTeamPageData, globalSettingsData] = await Promise.all([
+          ourTeamApi.getOurTeamPage(),
+          globalSettingsApi.getGlobalSettings()
+        ]);
+        
+        console.log('✅ Our Team CMS data fetched successfully');
+        console.log('📄 Page Data:', ourTeamPageData);
+        console.log('🌐 Global Settings:', globalSettingsData);
+        
+        setPageData(ourTeamPageData as any); // Type assertion for flexibility
+        setGlobalSettings(globalSettingsData);
+        setIsLoading(false);
+      } catch (err) {
+        console.error('❌ Error fetching Our Team CMS data:', err);
+        setError('Failed to load page content');
+        setIsLoading(false);
+      }
+    };
+    
+    fetchData();
   }, []);
 
-  const leadership = TEAM_MEMBERS;
+  // Loading state (proven pattern)
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center relative overflow-hidden">
+        {/* Large Compleo Logo Watermark */}
+        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <img 
+            src="/images/shared/logo-loading.png" 
+            alt="Compleo Health Logo" 
+            className="w-[768px] h-auto max-w-[70vw] max-h-[40vh] object-contain animate-logo-grow"
+          />
+        </div>
+        {/* Loading Spinner */}
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-compleo-teal relative z-10 mb-6"></div>
+        <p className="text-compleo-gray text-lg font-medium relative z-10">Loading Our Team...</p>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Error Loading Page</h1>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-compleo-teal text-white rounded hover:bg-compleo-deep-teal"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -31,15 +101,15 @@ export default function OurTeam() {
       <Header />
       <main className="animate-fade-in-up">
         {/* Hero Section - Standard Centered */}
-        <section ref={heroRef} className="relative bg-gradient-to-br from-compleo-deep-teal via-compleo-deep-teal to-slate-800 text-white py-20 lg:py-24">
+        <section className="relative bg-gradient-to-br from-compleo-deep-teal via-compleo-deep-teal to-slate-800 text-white py-20 lg:py-24">
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className={`text-center transition-all duration-700 ${heroInView ? 'animate-fade-in-up opacity-100' : 'opacity-0 translate-y-8'}`}>
+            <div className="text-center animate-fade-in-up">
               <h1 className="heading-1 mb-6">
-                {teamPageData.hero.title}
+                {pageData?.Hero?.title || teamPageData.hero.title}
               </h1>
               <p className="body-large text-gray-300 mb-12 max-w-3xl mx-auto">
-                {teamPageData.hero.subtitle}
+                {pageData?.Hero?.subtitle || teamPageData.hero.subtitle}
               </p>
               <div className="flex flex-row gap-3 sm:gap-6 justify-center">
                 <Link href="/work-with-us">
@@ -85,10 +155,10 @@ export default function OurTeam() {
           <div className="max-w-7xl mx-auto container-padding">
             <div className="text-center mb-16">
               <h2 className="heading-2 text-compleo-deep-teal mb-6">
-                {teamPageData.leadership.title}
+                {pageData?.leadershipTitle || teamPageData.leadership.title}
               </h2>
               <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-                {teamPageData.leadership.subtitle}
+                {pageData?.leadershipDescription || teamPageData.leadership.subtitle}
               </p>
             </div>
             
@@ -125,51 +195,40 @@ export default function OurTeam() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-4xl font-bold text-compleo-deep-teal mb-6">
-                  {teamPageData.culture.title}
+                  {pageData?.cultureTitle || teamPageData.culture.title}
                 </h2>
                 <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-                  {teamPageData.culture.description}
+                  {pageData?.cultureDescription || teamPageData.culture.description}
                 </p>
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-compleo-teal/10 p-3 rounded-lg">
-                      <svg className="h-6 w-6 text-compleo-teal" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                      </svg>
+                  {(pageData?.cultureValues && pageData.cultureValues.length > 0 
+                    ? pageData.cultureValues 
+                    : [
+                        { title: "Patient-First Mindset", description: "Every decision we make is guided by improving patient outcomes and experiences" },
+                        { title: "Excellence & Innovation", description: "Continuous improvement and technological advancement drive our work" },
+                        { title: "Collaborative Partnership", description: "Building lasting relationships with NHS Trusts and healthcare providers" }
+                      ]
+                  ).map((value, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="bg-compleo-teal/10 p-3 rounded-lg">
+                        <svg className="h-6 w-6 text-compleo-teal" fill="currentColor" viewBox="0 0 24 24">
+                          {index === 0 && <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>}
+                          {index === 1 && <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>}
+                          {index === 2 && <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A3.01 3.01 0 0 0 17.1 7c-.5 0-.96.18-1.31.47l-5.11 4.24A1.004 1.004 0 0 0 11 12.5v8.5c0 .55.45 1 1 1s1-.45 1-1v-7h2.5l2.5 7.5h1.5c.83 0 1.5-.67 1.5-1.5z"/>}
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-compleo-deep-teal mb-2">{value.title}</h3>
+                        <p className="text-gray-600">{value.description}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-compleo-deep-teal mb-2">Patient-First Mindset</h3>
-                      <p className="text-gray-600">Every decision we make is guided by improving patient outcomes and experiences</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="bg-compleo-teal/10 p-3 rounded-lg">
-                      <svg className="h-6 w-6 text-compleo-teal" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-compleo-deep-teal mb-2">Excellence & Innovation</h3>
-                      <p className="text-gray-600">Continuous improvement and technological advancement drive our work</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="bg-compleo-teal/10 p-3 rounded-lg">
-                      <svg className="h-6 w-6 text-compleo-teal" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A3.01 3.01 0 0 0 17.1 7c-.5 0-.96.18-1.31.47l-5.11 4.24A1.004 1.004 0 0 0 11 12.5v8.5c0 .55.45 1 1 1s1-.45 1-1v-7h2.5l2.5 7.5h1.5c.83 0 1.5-.67 1.5-1.5z"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-compleo-deep-teal mb-2">Collaborative Partnership</h3>
-                      <p className="text-gray-600">Building lasting relationships with NHS Trusts and healthcare providers</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
               <div>
                 <img 
-                  src={teamPageData.culture.image}
-                  alt={teamPageData.culture.imageAlt}
+                  src={pageData?.cultureImage?.url || teamPageData.culture.image}
+                  alt={pageData?.cultureImageAlt || teamPageData.culture.imageAlt}
                   className="w-full aspect-square object-cover rounded-xl shadow-lg"
                 />
               </div>

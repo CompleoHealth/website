@@ -51,19 +51,7 @@ export const createQueryString = (populateObject: any) => {
  * Handle API errors with consistent logging and formatting
  */
 export const handleApiError = (error: any, context: string) => {
-  console.error(`Error in ${context}:`, error);
-  
-  if (axios.isAxiosError(error)) {
-    const axiosError = error as AxiosError;
-    console.error('API error details:', axiosError.response?.data);
-    
-    if (DEBUG_MODE) {
-      console.error('API error status:', axiosError.response?.status);
-      console.error('API error headers:', axiosError.response?.headers);
-      console.error('API error config:', axiosError.config);
-    }
-  }
-  
+  // Error handling without console logs
   return null;
 };
 
@@ -71,9 +59,8 @@ export const handleApiError = (error: any, context: string) => {
  * Debug logger that only logs in debug mode
  */
 export const debugLog = (message: string, data?: any) => {
-  if (DEBUG_MODE) {
-
-  }
+  // No-op debug logger - all console logs removed
+  return;
 };
 
 /**

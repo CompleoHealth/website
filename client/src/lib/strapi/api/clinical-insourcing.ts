@@ -9,13 +9,7 @@ import { ClinicalInsourcingPage } from '../types/clinical-insourcing';
  * @param methodName - The name of the API method
  */
 function handleApiError(error: unknown, methodName: string): void {
-  if (axios.isAxiosError(error)) {
-    console.error(`Axios error in ${methodName}:`, error.response?.data || error.message);
-  } else if (error instanceof Error) {
-    console.error(`Error in ${methodName}:`, error.message);
-  } else {
-    console.error(`Unknown error in ${methodName}:`, error);
-  }
+  // Silent error handling - errors are tracked in state but not logged to console
 }
 
 /**
@@ -39,13 +33,7 @@ export const clinicalInsourcingApi = {
       // Extract the data using proven pattern - flat structure without .attributes
       return extractEntityData(response.data);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error(`Axios error in getClinicalInsourcingPage:`, error.response?.status, error.response?.data || error.message);
-      } else if (error instanceof Error) {
-        console.error(`Error in getClinicalInsourcingPage:`, error.message);
-      } else {
-        console.error(`Unknown error in getClinicalInsourcingPage:`, error);
-      }
+      // Silent error handling - errors are tracked in state but not logged to console
       return null;
     }
   }

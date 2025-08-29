@@ -32,24 +32,17 @@ export default function CommunityDiagnosticCentres() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('🏠 Starting CMS data fetch for Community Diagnostic Centres...');
         // Parallel API calls - proven pattern, using direct import for communityDiagnosticCentresApi
         const [communityDiagnosticPageData, globalSettingsData] = await Promise.all([
           communityDiagnosticCentresApi.getCommunityDiagnosticCentresPage(),
           strapiApi.getGlobalSettings()
         ]);
         
-        console.log('✅ CMS data fetched successfully for Community Diagnostic Centres');
-        console.log('📄 Page Data:', communityDiagnosticPageData);
-        console.log('🌐 Global Settings:', globalSettingsData);
-        
         setPageData(communityDiagnosticPageData);
         setGlobalSettings(globalSettingsData);
       } catch (error) {
-        console.error('❌ Error fetching CMS data for Community Diagnostic Centres:', error);
         setError('Failed to load page content');
       } finally {
-        console.log('🏁 Community Diagnostic Centres: Loading complete');
         setIsLoading(false);
       }
     };

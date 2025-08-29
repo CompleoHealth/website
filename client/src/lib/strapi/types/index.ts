@@ -8,5 +8,13 @@
 export * from './common';
 export * from './home';
 export * from './global-settings';
-export * from './managed-equipment';
+
+// Explicitly re-export from managed-equipment to avoid ambiguity
+import * as ManagedEquipment from './managed-equipment';
+export { ManagedEquipment };
+
 export * from './clinical-insourcing';
+export * from './team-page';
+export * from './our-team';
+export * from './work-with-us';
+export * from './case-studies';

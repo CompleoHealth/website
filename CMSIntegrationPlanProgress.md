@@ -359,3 +359,65 @@ For each component integration, follow this protocol:
 ## Progress Tracking
 
 Use this document to track progress by checking off completed tasks. Update regularly as implementation progresses.
+
+## Website Pages CMS Integration Status
+
+| Page | CMS Integration Status | API Module | Notes |
+|------|------------------------|------------|-------|
+| **Main Pages** | | | |
+| Home | ✅ Complete | homeApi | Reference implementation with parallel API calls |
+| Services | ✅ Complete | strapiApi | Uses centralized API object |
+| About | ❌ Not Started | N/A | Static content only |
+| Contact | ❌ Not Started | N/A | Static content only |
+| News and Views | ✅ Complete | newsAndViewsApi | Fixed API module with proper imports |
+| Case Studies | ❌ Not Started | N/A | Uses static JSON data |
+| Our Team | ❌ Not Started | N/A | Uses static data |
+| Work With Us | ❌ Not Started | N/A | Static content only |
+| Social Impact | ✅ Complete | sustainabilityApi | Direct module import pattern with full CMS integration |
+| Net Zero Goals | ❌ Not Started | N/A | Static content only |
+| **Service Pages** | | | |
+| Clinical Insourcing | ✅ Complete | clinicalInsourcingApi | Direct module import pattern |
+| Community Diagnostic Centres | ✅ Complete | communityDiagnosticCentresApi | Direct module import pattern |
+| Equipment Rental | ✅ Complete | equipmentRentalApi | Direct module import pattern |
+| Managed Equipment | ✅ Complete | managedEquipmentApi | Direct module import pattern |
+| Screening Programmes | ✅ Complete | screeningProgrammesApi | Direct module import pattern |
+| **Detail Pages** | | | |
+| Equipment Details | ✅ Complete | equipmentDetailsApi | Dynamic routing with slug parameter |
+| Case Study | ❌ Not Started | N/A | Uses static JSON data |
+| Team Member | ❌ Not Started | N/A | Uses static data |
+| **Policy Pages** | | | |
+| Privacy Policy | ❌ Not Started | N/A | Static content only |
+| Cookie Policy | ❌ Not Started | N/A | Static content only |
+| Accessibility | ❌ Not Started | N/A | Static content only |
+| Sitemap | ❌ Not Started | N/A | Generated from routes |
+| **Utility Pages** | | | |
+| Manage Cookies | ❌ Not Started | N/A | Functional component, no CMS needed |
+| Not Found | ❌ Not Started | N/A | Static content only |
+
+## CMS Content Types Status
+
+| Content Type | Status | Associated Pages | Notes |
+|-------------|--------|------------------|-------|
+| Home | ✅ Complete | Home page | Full schema with all sections |
+| Services | ✅ Complete | Services page | List and hero content |
+| Clinical Insourcing | ✅ Complete | Clinical Insourcing page | Full service page schema |
+| Community Diagnostic Centres | ✅ Complete | Community Diagnostic Centres page | Full service page schema |
+| Equipment Rental | ✅ Complete | Equipment Rental page | Full service page schema |
+| Managed Equipment | ✅ Complete | Managed Equipment page | Full service page schema |
+| Screening Programmes | ✅ Complete | Screening Programmes page | Full service page schema |
+| Equipment Details | ✅ Complete | Equipment Details page | Dynamic content type with slug |
+| News and Views Page | ✅ Complete | News and Views page | Full schema with all sections |
+| Sustainability | ✅ Complete | Social Impact page | Full schema with all sections |
+| Global Settings | ✅ Complete | All pages | Trust signals, contact info, footer links |
+
+## Non-CMS Managed Content
+
+The following content types are **NOT** managed through the CMS and will be updated by an operational database at a later point:
+
+- Testimonials
+- Equipment detail records
+- Staff members/team profiles
+- Case studies data
+- Other operational data
+
+No changes should be made to these content sources as part of the CMS integration work.

@@ -44,10 +44,8 @@ export default function Home() {
         setPageData(homePageData);
         setGlobalSettings(globalSettingsData);
       } catch (err) {
-        console.error('❌ Home Page: Error fetching CMS data:', err);
         setError('Failed to load page content');
       } finally {
-        console.log('🏁 Home Page: Loading complete');
         setIsLoading(false);
       }
     };

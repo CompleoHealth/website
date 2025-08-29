@@ -32,24 +32,17 @@ export default function ManagedEquipment() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('🏠 Starting CMS data fetch for Managed Equipment...');
         // Parallel API calls - proven pattern, using direct import for managedEquipmentApi
         const [managedEquipmentPageData, globalSettingsData] = await Promise.all([
           managedEquipmentApi.getManagedEquipmentPage(),
           strapiApi.getGlobalSettings()
         ]);
         
-        console.log('✅ CMS data fetched successfully for Managed Equipment');
-        console.log('📄 Page Data:', managedEquipmentPageData);
-        console.log('🌐 Global Settings:', globalSettingsData);
-        
         setPageData(managedEquipmentPageData);
         setGlobalSettings(globalSettingsData);
       } catch (error) {
-        console.error('❌ Error fetching CMS data for Managed Equipment:', error);
         setError('Failed to load page content');
       } finally {
-        console.log('🏁 Managed Equipment: Loading complete');
         setIsLoading(false);
       }
     };

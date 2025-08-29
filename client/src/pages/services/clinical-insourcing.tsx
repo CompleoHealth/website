@@ -32,24 +32,17 @@ export default function ClinicalInsourcing() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('🏠 Starting CMS data fetch for Clinical Insourcing...');
         // Parallel API calls - proven pattern, using direct import for clinicalInsourcingApi
         const [clinicalInsourcingPageData, globalSettingsData] = await Promise.all([
           clinicalInsourcingApi.getClinicalInsourcingPage(),
           strapiApi.getGlobalSettings()
         ]);
         
-        console.log('✅ CMS data fetched successfully for Clinical Insourcing');
-        console.log('📄 Page Data:', clinicalInsourcingPageData);
-        console.log('🌐 Global Settings:', globalSettingsData);
-        
         setPageData(clinicalInsourcingPageData);
         setGlobalSettings(globalSettingsData);
       } catch (error) {
-        console.error('❌ Error fetching CMS data for Clinical Insourcing:', error);
         setError('Failed to load page content');
       } finally {
-        console.log('🏁 Clinical Insourcing: Loading complete');
         setIsLoading(false);
       }
     };

@@ -69,6 +69,20 @@ export default function NewsAndViews() {
   const newsInView = useIntersectionObserver({ threshold: 0.1 });
   const eventsInView = useIntersectionObserver({ threshold: 0.1 });
 
+  
+  // Hero section content - using CMS data with fallbacks
+  // The console logs show the data is directly in the pageData object, not in attributes
+  const heroTitle = pageData?.heroTitle || 'News and Views';
+  const heroHighlightWord = pageData?.heroHighlightWord || 'Latest';
+  const heroSubtitle = pageData?.heroSubtitle || 'Stay up to date with our latest news, events and social media posts.';
+
+  // Section titles - using CMS data with fallbacks
+  const beeCardTitle = pageData?.beeCardTitle || 'Bee in the know';
+  const newsTitle = pageData?.newsTitle || 'News';
+  const eventsTitle = pageData?.eventsTitle || 'Events';
+  const socialTitle = pageData?.socialTitle || 'Social';
+  
+
   useEffect(() => {
     const timer = setTimeout(() => setShouldAnimate(true), 100);
     return () => clearTimeout(timer);
@@ -79,10 +93,17 @@ export default function NewsAndViews() {
       try {
         setLoading(true);
         const pageResult = await fetchNewsAndViewsPageData();
-        setPageData(pageResult);
-        setError(null);
+        
+        if (pageResult) {
+          // Set the page data and log success
+          setPageData(pageResult);
+          setError(null);
+        } else {
+          // No data returned from API
+          setError('Failed to load page data');
+        }
       } catch (err) {
-        console.error('Error fetching page data:', err);
+        // Error handled through state management
         setError('Failed to load page data');
       } finally {
         setLoading(false);
@@ -127,14 +148,14 @@ export default function NewsAndViews() {
     <div className="min-h-screen bg-gray-50">
       <SEOHead {...SEO_DATA.newsAndViews} />
       <Header />
-      <main>
+      <main className="animate-fade-in-up">
         {/* Tabloid Hero Section */}
         <section ref={heroRef} className="relative section-padding-lg bg-[rgb(15,46,46)]">
           <div className="max-w-7xl mx-auto container-padding">
             {/* Tabloid Grid Layout */}
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Tabloid News Title */}
-              <div className={`transition-all duration-700 ${shouldAnimate ? 'animate-slide-in-left opacity-100' : 'opacity-0 translate-x-[-50px]'}`}>
+              <div className="animate-slide-in-left">
                 <div className="text-left">
                   {/* Tabloid-style News and Views Header */}
                   <div className="mb-6">
@@ -157,7 +178,7 @@ export default function NewsAndViews() {
               </div>
               
               {/* Right Column - Compleo Buzz Card (EXACTLY AS IS) */}
-              <div className={`transition-all duration-700 ${shouldAnimate ? 'animate-slide-in-right opacity-100' : 'opacity-0 translate-x-[50px]'}`}>
+              <div className="animate-slide-in-right">
                 <div className="bg-gradient-to-br from-white via-white to-gray-50 backdrop-blur-sm rounded-2xl p-8 text-center shadow-2xl border-2 border-compleo-teal/30 hover:border-compleo-teal/50 hover:shadow-3xl transition-all duration-300 hover:scale-105 relative overflow-hidden">
                   {/* Subtle background pattern */}
                   <div className="absolute inset-0 bg-gradient-to-br from-compleo-teal/5 to-transparent opacity-50"></div>
@@ -184,25 +205,21 @@ export default function NewsAndViews() {
         {/* Latest News */}
         <section ref={newsRef} className="section-padding bg-[#ffffff]">
           <div className="max-w-7xl mx-auto container-padding">
-            <div className={`text-center mb-12 transition-all duration-700 ${newsInView ? 'animate-fade-in opacity-100' : 'opacity-0 translate-y-[20px]'}`}>
+            <div className="text-center mb-12 animate-fade-in">
               <div className="inline-block bg-compleo-teal rounded-full px-6 py-2 mb-4">
                 <span className="text-white font-bold text-sm uppercase tracking-wide">{newsSection.badgeText}</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-compleo-deep-teal mb-4">
-                {pageData?.newsTitle || newsSection.title}
-              </h2>
-              <p className="text-lg text-compleo-gray mb-8 leading-relaxed">
+              <h2 className="heading-2 text-compleo-deep-teal mb-3">{pageData?.newsTitle || newsSection.title}</h2>
+              <p className="text-xl text-compleo-gray max-w-3xl mx-auto mb-8">
                 {pageData?.newsDescription || newsSection.description}
               </p>
-              <span className="inline-block bg-compleo-teal text-white px-4 py-2 rounded-full text-sm font-medium mb-8">
-                {pageData?.newsBadgeText || newsSection.badgeText}
-              </span>      
-              <div className="grid md:grid-cols-2 gap-8">
-                {(pageData?.newsItems || newsItems).map((item, index) => {
+      
+              <div className="grid md:grid-cols-2 gap-8 mt-12">
+                {newsItems.map((item, index) => {
                   
                   return (
                     <a key={index} href={item.url} target="_blank" rel="noopener noreferrer" className="block h-full">
-                      <Card className={`relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer bg-white border border-gray-200 rounded-lg h-full ${newsInView ? 'animate-slide-in-up opacity-100' : 'opacity-0 translate-y-[30px]'}`} style={{ animationDelay: `${index * 100}ms` }}>
+                      <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer bg-white border border-gray-200 rounded-lg h-full animate-slide-in-up" style={{ animationDelay: `${index * 100}ms` }}>
                         {/* Open Graph style layout */}
                         <div className="flex h-40">
                           {/* Left side - Image */}
@@ -263,28 +280,23 @@ export default function NewsAndViews() {
           <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-gray-400/20 rounded-full blur-2xl"></div>
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className={`text-center mb-16 transition-all duration-700 ${eventsInView ? 'animate-fade-in opacity-100' : 'opacity-0 translate-y-[20px]'}`}>
+            <div className="text-center mb-16 animate-fade-in">
               <div className="inline-block bg-compleo-teal rounded-full px-6 py-2 mb-4">
                 <span className="text-white font-bold text-sm uppercase tracking-wide">{eventsSection.badgeText}</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-compleo-deep-teal mb-4">
-                {pageData?.eventsTitle || eventsSection.title}
-              </h2>
-              <p className="text-lg text-compleo-gray mb-8 leading-relaxed">
+              <h2 className="heading-2 text-compleo-deep-teal mb-3">{pageData?.eventsTitle || eventsSection.title}</h2>
+              <p className="text-xl text-compleo-gray max-w-3xl mx-auto mb-8">
                 {pageData?.eventsDescription || eventsSection.description}
               </p>
-              <span className="inline-block bg-compleo-teal text-white px-4 py-2 rounded-full text-sm font-medium mb-8">
-                {pageData?.eventsBadgeText || eventsSection.badgeText}
-              </span>
-              <div className="grid grid-cols-2 gap-6">
-                {(pageData?.events || events).map((event, index) => (
+              <div className="grid grid-cols-2 gap-6 mt-12">
+                {events.map((event, index) => (
                   <a key={index} href={event.url} target="_blank" rel="noopener noreferrer" className="block h-full">
-                    <Card className={`relative bg-white hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden group cursor-pointer h-full ${eventsInView ? 'animate-slide-in-up opacity-100' : 'opacity-0 translate-y-[30px]'}`} style={{ animationDelay: `${index * 150}ms` }}>
+                    <Card className="relative bg-white hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden group cursor-pointer h-full animate-slide-in-up" style={{ animationDelay: `${index * 150}ms` }}>
                       <div className="absolute inset-0 bg-compleo-deep-teal opacity-0 group-hover:opacity-25 transition-opacity duration-300 z-10"></div>
                       <div className="relative h-full">
                         <div className="overflow-hidden">
                           <img 
-                            src={(event as any).imageUrl || (event as any).image} 
+                            src={event.image} 
                             alt={event.title}
                             className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
                           />
@@ -316,26 +328,26 @@ export default function NewsAndViews() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <div className="inline-block bg-compleo-deep-teal rounded-full px-6 py-2 mb-4">
-                <span className="text-white font-bold text-sm uppercase tracking-wide">{socialSection.badgeText}</span>
+                <span className="text-white font-bold text-sm uppercase tracking-wide">{pageData?.socialBadgeText || socialSection.badgeText}</span>
               </div>
               <div className="flex items-center justify-center gap-3 mb-4">
                 <a 
-                  href={socialSection.linkedinUrl} 
+                  href={pageData?.linkedinUrl || socialSection.linkedinUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 hover:scale-105 transition-transform duration-300"
                 >
-                  <h2 className="text-4xl font-bold text-compleo-deep-teal">{socialSection.title}</h2>
+                  <h2 className="heading-2 text-compleo-deep-teal">{pageData?.socialTitle || socialSection.title}</h2>
                   <SiLinkedin className="w-12 h-12 text-[#0077B5] hover:text-[#005885] transition-colors duration-300" />
                 </a>
               </div>
-              <p className="text-xl text-compleo-gray max-w-3xl mx-auto">
-                {socialSection.description}
+              <p className="text-xl text-compleo-gray max-w-3xl mx-auto mb-8">
+                {pageData?.socialDescription || socialSection.description}
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 mb-12">
-              {(pageData?.linkedinPosts?.map(post => post.embedUrl) || linkedinPosts).map((postUrl, index) => (
+            <div className="grid lg:grid-cols-3 gap-8 mb-12 mt-12">
+              {linkedinPosts.map((postUrl, index) => (
                 <div key={index} className="bg-gray-50 rounded-xl overflow-hidden shadow-lg">
                   <iframe 
                     src={postUrl} 
@@ -355,9 +367,9 @@ export default function NewsAndViews() {
         <PillCTA
           heading={pageData?.ctaSection?.title || ctaContent.title}
           description={pageData?.ctaSection?.description || ctaContent.description}
-          primaryButton={{
-            text: pageData?.ctaSection?.primaryButton_text || ctaContent.buttonText,
-            href: pageData?.ctaSection?.primaryButton_action || ctaContent.buttonAction
+          primaryButton={{ 
+            text: pageData?.ctaSection?.primaryButton_text || ctaContent.buttonText, 
+            onClick: () => window.open(pageData?.ctaSection?.primaryButton_action || ctaContent.buttonAction, '_blank') 
           }}
         />
       </main>

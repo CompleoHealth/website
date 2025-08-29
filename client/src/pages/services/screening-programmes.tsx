@@ -32,24 +32,17 @@ export default function ScreeningPrograms() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('🎯 Starting CMS data fetch for Screening Programmes...');
         // Parallel API calls - proven pattern, using direct import for screeningProgrammesApi
         const [screeningProgrammesPageData, globalSettingsData] = await Promise.all([
           screeningProgrammesApi.getScreeningProgrammesPage(),
           strapiApi.getGlobalSettings()
         ]);
         
-        console.log('✅ CMS data fetched successfully for Screening Programmes');
-        console.log('📄 Page Data:', screeningProgrammesPageData);
-        console.log('🌐 Global Settings:', globalSettingsData);
-        
         setPageData(screeningProgrammesPageData);
         setGlobalSettings(globalSettingsData);
       } catch (error) {
-        console.error('❌ Error fetching CMS data for Screening Programmes:', error);
         setError('Failed to load page content');
       } finally {
-        console.log('🏁 Screening Programmes: Loading complete');
         setIsLoading(false);
       }
     };

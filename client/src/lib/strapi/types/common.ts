@@ -6,6 +6,36 @@
  */
 
 /**
+ * Base Strapi entity with common fields
+ */
+export interface StrapiEntity {
+  id: number;
+  attributes?: any;
+  [key: string]: any;
+}
+
+/**
+ * Image type for Strapi media
+ */
+export interface StrapiImage {
+  data?: {
+    id: number;
+    attributes: {
+      url: string;
+      width: number;
+      height: number;
+      alternativeText?: string;
+      formats?: {
+        thumbnail?: { url: string; width: number; height: number };
+        small?: { url: string; width: number; height: number };
+        medium?: { url: string; width: number; height: number };
+        large?: { url: string; width: number; height: number };
+      };
+    };
+  };
+}
+
+/**
  * Button component used across multiple sections
  */
 export interface StrapiButton {

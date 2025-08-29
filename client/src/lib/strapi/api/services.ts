@@ -104,7 +104,7 @@ export const servicesApi = {
       
       return data;
     } catch (error) {
-      console.error('Error fetching services page:', error);
+      // Silent error handling - errors are tracked through return value
       return handleApiError(error, 'getServicesPage');
     }
   }

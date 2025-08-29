@@ -26,6 +26,12 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { ImpactStatistics } from '@/components/common/impact-statistics';
 import caseStudiesData from '@/../../shared/data/case-studies.json';
 
+// CMS imports
+import { caseStudiesApi } from '@/lib/strapi/api/case-studies';
+import { globalSettingsApi } from '@/lib/strapi/api/global-settings';
+import { StrapiCaseStudiesPage } from '@/lib/strapi/types/case-studies';
+import { StrapiGlobalSettings } from '@/lib/strapi/types/global-settings';
+
 // Icon mapping for dynamic icons
 const getIcon = (iconName: string) => {
   const icons: { [key: string]: any } = {
@@ -41,13 +47,88 @@ const getIcon = (iconName: string) => {
 };
 
 export default function CaseStudies() {
+  // CMS State Management (following proven pattern)
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pageData, setPageData] = useState<StrapiCaseStudiesPage | null>(null);
+  const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
+
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
+
+  // Fetch CMS data (following proven pattern)  
+  useEffect(() => {
+    console.log('🚀 Case Studies useEffect triggered!');
+    const fetchData = async () => {
+      try {
+        console.log('📖 Starting Case Studies page CMS data fetch...');
+        setIsLoading(true);
+        
+        // Parallel API calls for page data and global settings
+        const [caseStudiesPageData, globalSettingsData] = await Promise.all([
+          caseStudiesApi.getCaseStudiesPage(),
+          globalSettingsApi.getGlobalSettings()
+        ]);
+        
+        console.log('✅ Case Studies CMS data fetched successfully');
+        console.log('📄 Page Data:', caseStudiesPageData);
+        console.log('🌐 Global Settings:', globalSettingsData);
+        console.log('🔍 Impact Statistics:', globalSettingsData?.ImpactStatistics);
+        
+        setPageData(caseStudiesPageData as any); // Type assertion for flexibility
+        setGlobalSettings(globalSettingsData);
+        setIsLoading(false);
+      } catch (err) {
+        console.error('❌ Error fetching Case Studies CMS data:', err);
+        setError('Failed to load page content');
+        setIsLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setShouldAnimate(true), 300);
     return () => clearTimeout(timer);
   }, []);
+
+  // Loading state (proven pattern)
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center relative overflow-hidden">
+        {/* Large Compleo Logo Watermark */}
+        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <img 
+            src="/images/shared/logo-loading.png" 
+            alt="Compleo Health Logo" 
+            className="w-[768px] h-auto max-w-[70vw] max-h-[40vh] object-contain animate-logo-grow"
+          />
+        </div>
+        {/* Loading Spinner */}
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-compleo-teal relative z-10 mb-6"></div>
+        <p className="text-compleo-gray text-lg font-medium relative z-10">Loading Case Studies...</p>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Error Loading Page</h1>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-compleo-teal text-white rounded hover:bg-compleo-deep-teal"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -58,12 +139,12 @@ export default function CaseStudies() {
         <section ref={heroRef} className="py-20 bg-compleo-deep-teal text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className={`transition-all duration-700 ${heroInView ? 'animate-slide-in-left opacity-100' : 'opacity-0 translate-x-[-50px]'}`}>
+              <div className="opacity-100">
                 <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-                  {caseStudiesData.hero.title}
+                  {pageData?.Hero?.title || caseStudiesData.hero.title}
                 </h1>
                 <p className="text-xl lg:text-2xl text-gray-200 mb-8 leading-relaxed">
-                  {caseStudiesData.hero.subtitle}
+                  {pageData?.Hero?.subtitle || caseStudiesData.hero.subtitle}
                 </p>
                 <div className="flex flex-row gap-3 sm:gap-6">
                   <Link href={caseStudiesData.hero.primaryButton.href}>
@@ -109,6 +190,8 @@ export default function CaseStudies() {
                   variant="hero"
                   textColor="yellow"
                   gridCols={3}
+                  impactStats={globalSettings?.ImpactStatistics}
+                  title={pageData?.impactStatsTitle}
                 />
               </div>
             </div>
@@ -122,10 +205,10 @@ export default function CaseStudies() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-compleo-deep-teal mb-6">
-                {caseStudiesData.successStories.title}
+                {pageData?.successStoriesTitle || caseStudiesData.successStories.title}
               </h2>
               <p className="text-xl text-compleo-gray max-w-3xl mx-auto">
-                {caseStudiesData.successStories.subtitle}
+                {pageData?.successStoriesSubtitle || caseStudiesData.successStories.subtitle}
               </p>
             </div>
 

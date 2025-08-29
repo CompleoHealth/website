@@ -41,6 +41,7 @@ export interface StrapiPillCTA {
 /**
  * Complete News and Views Page Structure
  * Following exact proven pattern from other service pages
+ * Note: Collections (news items, events, LinkedIn posts) are NOT managed by CMS
  */
 export interface NewsAndViewsPage {
   // Hero section
@@ -55,20 +56,20 @@ export interface NewsAndViewsPage {
   newsTitle: string;
   newsDescription: string;
   newsBadgeText: string;
-  newsItems: StrapiNewsItem[];
+  // Note: newsItems are NOT managed by CMS, they come from static JSON
   
   // Events section
   eventsTitle: string;
   eventsDescription: string;
   eventsBadgeText: string;
-  events: StrapiEvent[];
+  // Note: events are NOT managed by CMS, they come from static JSON
   
   // Social section
   socialTitle: string;
   socialDescription: string;
   socialBadgeText: string;
   linkedinUrl: string;
-  linkedinPosts: StrapiLinkedInPost[];
+  // Note: linkedinPosts are NOT managed by CMS, they come from static TS
   
   // CTA section
   ctaSection: StrapiPillCTA;

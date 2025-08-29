@@ -10,3 +10,6 @@ export * from './utils';
 export * from './home';
 export * from './global-settings';
 export * from './managed-equipment';
+export * from './team-page';
+export * from './our-team';
+export * from './work-with-us';
