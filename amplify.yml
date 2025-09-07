@@ -4,6 +4,7 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - npm install @rollup/rollup-linux-x64-gnu --no-save
         - cp .env client/.env || echo "No .env file to copy"
     build:
       commands:
