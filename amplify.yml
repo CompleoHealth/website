@@ -8,7 +8,7 @@ frontend:
         - cp .env client/.env || echo "No .env file to copy"
     build:
       commands:
-        - VITE_STRAPI_URL=http://18.201.155.94:1337 VITE_GA_MEASUREMENT_ID=G-4C9XEXTQ93 npx vite build
+        - VITE_STRAPI_URL=https://18.201.155.94 VITE_GA_MEASUREMENT_ID=G-4C9XEXTQ93 npx vite build
   artifacts:
     baseDirectory: dist/public
     files:
