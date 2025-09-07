@@ -96,15 +96,21 @@ function EquipmentCard({ item, index, shouldAnimate }: EquipmentCardProps) {
       
       {/* Equipment Image */}
       <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
-        <img
-          src={item.imageUrl}
-          alt={`${item.name} - ${item.manufacturer} diagnostic imaging equipment`}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-          loading="lazy"
-          width="400"
-          height="192"
-          style={{ aspectRatio: '25/12' }}
-        />
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={`${item.name} - ${item.manufacturer} diagnostic imaging equipment`}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            loading="lazy"
+            width="400"
+            height="192"
+            style={{ aspectRatio: '25/12' }}
+          />
+        ) : (
+          <div className="h-48 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+            <p className="text-gray-400 font-medium text-sm">Photo - Coming Soon</p>
+          </div>
+        )}
       </div>
       
       {/* Card Content */}

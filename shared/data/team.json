@@ -1,20 +1,5 @@
 [
   {
-    "id": "beverley-wallace",
-    "name": "Beverley Wallace",
-    "role": "Chief Executive Officer",
-    "department": "Executive",
-    "image": "/images/team/beverley-wallace-ceo.jpg",
-    "summary": "Visionary leader driving healthcare innovation and strategic growth across UK and European markets.",
-    "bio": "Beverley Wallace is the Chief Executive Officer of Compleo Health Ltd, a company dedicated to transforming the delivery of diagnostic services across the UK and Europe. Under her leadership, Compleo Health works in close partnership with NHS trusts and other healthcare providers to deliver high-quality, efficient and equitable imaging services through Community Diagnostic Centres (CDCs), MRI, CT and diagnostic solutions.\n\nCompleo Health's mission is grounded in four core values; integrity, collaboration, excellence, and equity which guide its commitment to improving patient access and outcomes while building a more responsive and resilient healthcare system.\n\nWith over 30 years of experience in the diagnostic imaging industry, Beverley brings deep clinical expertise and strategic vision. A radiographer by background, she also holds an MSc in Nuclear Medicine and an MBA. Throughout her career, she has successfully led high-performing teams through complex change and large-scale service mobilisation, including the national PET-CT contract and the rollout of multiple CDCs and Imaging Centres.\n\nBeverley has also contributed to shaping national workforce policy and clinical standards through her elected leadership roles in professional organisations. Passionate about advancing healthcare and imaging services, she is dedicated to creating an inclusive workplace culture and driving innovation and equity across the sector.",
-    "experience": "30+ years",
-    "qualifications": ["MSc in Nuclear Medicine", "MBA", "Radiographer"],
-    "keyAchievements": ["National PET-CT contract leadership", "Multiple CDC rollouts", "Imaging Centre mobilisation", "National workforce policy contributions"],
-    "expertise": ["Healthcare Leadership", "Diagnostic Imaging", "Strategic Planning", "NHS Partnerships", "Service Mobilisation"],
-    "email": "beverley.wallace@compleohealth.com",
-    "linkedin": "https://www.linkedin.com/in/beverley-wallace-0a06966/"
-  },
-  {
     "id": "claire-zeki",
     "name": "Claire Zeki",
     "role": "Chief Financial Officer",
