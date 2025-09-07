@@ -148,10 +148,20 @@ export default function SocialImpact() {
     return () => clearTimeout(timer);
   }, []);
 
-  // CMS Data fetching - Following exact proven pattern from equipment-details
+  // Enhanced CMS data fetching with better error handling and debugging
   useEffect(() => {
+    console.log('🚀 Social Impact page initializing...');
+    console.log('🔧 Environment details:', {
+      currentURL: window.location.href,
+      cmsURL: import.meta.env?.VITE_STRAPI_URL || 'NOT_SET',
+      isHTTPS: window.location.protocol === 'https:',
+      isCMSHttps: (import.meta.env?.VITE_STRAPI_URL || '').startsWith('https:'),
+      mixedContentRisk: window.location.protocol === 'https:' && (import.meta.env?.VITE_STRAPI_URL || '').startsWith('http:')
+    });
+    
     const fetchData = async () => {
       try {
+        console.log('🌱 Starting Social Impact CMS data fetch...');
         setIsLoading(true);
         setError(null);
         
@@ -161,13 +171,33 @@ export default function SocialImpact() {
           globalSettingsApi.getGlobalSettings()
         ]);
         
+        console.log('✅ Social Impact CMS data fetched successfully');
+        console.log('📄 Sustainability Data:', sustainabilityData);
+        console.log('🌐 Global Settings:', globalSettingsData);
+        
         setPageData(sustainabilityData);
         setGlobalSettings(globalSettingsData);
-      } catch (err) {
-        console.error('Failed to fetch sustainability page data:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load page content');
-      } finally {
         setIsLoading(false);
+      } catch (err: any) {
+        console.error('❌ Social Impact CMS connection failed:', err);
+        console.error('🔍 Error type:', err?.name || 'Unknown');
+        console.error('🔍 Error message:', err?.message || 'No message');
+        console.error('🔍 Error code:', err?.code || 'No code');
+        
+        // Check for Mixed Content or CORS issues
+        if (err?.message?.includes('Mixed Content') || err?.message?.includes('CORS') || err?.code === 'ERR_FAILED') {
+          console.error('🚨 HTTPS→HTTP Mixed Content Security Error detected!');
+          console.error('💡 Solution: CMS needs HTTPS or frontend needs HTTP');
+          setError('CMS connection blocked by browser security (HTTPS→HTTP)');
+        } else if (err?.code === 'ECONNABORTED' || err?.message?.includes('timeout')) {
+          console.error('⏱️ Connection timeout detected');
+          setError('CMS connection timeout - using fallback content');
+        } else {
+          setError(`CMS connection failed: ${err?.message || 'Unknown error'}`);
+        }
+        
+        setIsLoading(false);
+        // Don't block the page - let it render with fallback content
       }
     };
 
@@ -193,23 +223,16 @@ export default function SocialImpact() {
     );
   }
 
-  // Error state with retry - Following proven pattern
+  // Enhanced debugging when CMS fails - but continue rendering with fallback content  
   if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto px-6">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Page Unavailable</h1>
-          <p className="text-gray-600 mb-6">{error}</p>
-          <Button 
-            onClick={() => window.location.reload()} 
-            className="bg-compleo-teal hover:bg-compleo-teal-dark text-white"
-          >
-            Try Again
-          </Button>
-        </div>
-      </div>
-    );
+    console.log('🚨 Social Impact CMS Connection Failed - Using fallback content');
+    console.log('🔍 Error details:', error);
+    console.log('🔍 Environment check:', {
+      currentURL: window.location.href,
+      cmsURL: import.meta.env?.VITE_STRAPI_URL || 'NOT_SET',
+      isHTTPS: window.location.protocol === 'https:',
+      mixedContentIssue: window.location.protocol === 'https:' && (import.meta.env?.VITE_STRAPI_URL || '').startsWith('http:')
+    });
   }
 
 

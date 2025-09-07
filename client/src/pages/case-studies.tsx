@@ -56,13 +56,22 @@ export default function CaseStudies() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
 
-  // Fetch CMS data (following proven pattern)  
+  // Enhanced CMS data fetching with better error handling and debugging
   useEffect(() => {
-    console.log('🚀 Case Studies useEffect triggered!');
+    console.log('🚀 Case Studies page initializing...');
+    console.log('🔧 Environment details:', {
+      currentURL: window.location.href,
+      cmsURL: import.meta.env?.VITE_STRAPI_URL || 'NOT_SET',
+      isHTTPS: window.location.protocol === 'https:',
+      isCMSHttps: (import.meta.env?.VITE_STRAPI_URL || '').startsWith('https:'),
+      mixedContentRisk: window.location.protocol === 'https:' && (import.meta.env?.VITE_STRAPI_URL || '').startsWith('http:')
+    });
+    
     const fetchData = async () => {
       try {
-        console.log('📖 Starting Case Studies page CMS data fetch...');
+        console.log('📖 Starting Case Studies CMS data fetch...');
         setIsLoading(true);
+        setError(null);
         
         // Parallel API calls for page data and global settings
         const [caseStudiesPageData, globalSettingsData] = await Promise.all([
@@ -75,13 +84,29 @@ export default function CaseStudies() {
         console.log('🌐 Global Settings:', globalSettingsData);
         console.log('🔍 Impact Statistics:', globalSettingsData?.ImpactStatistics);
         
-        setPageData(caseStudiesPageData as any); // Type assertion for flexibility
+        setPageData(caseStudiesPageData as any);
         setGlobalSettings(globalSettingsData);
         setIsLoading(false);
-      } catch (err) {
-        console.error('❌ Error fetching Case Studies CMS data:', err);
-        setError('Failed to load page content');
+      } catch (err: any) {
+        console.error('❌ Case Studies CMS connection failed:', err);
+        console.error('🔍 Error type:', err?.name || 'Unknown');
+        console.error('🔍 Error message:', err?.message || 'No message');
+        console.error('🔍 Error code:', err?.code || 'No code');
+        
+        // Check for Mixed Content or CORS issues
+        if (err?.message?.includes('Mixed Content') || err?.message?.includes('CORS') || err?.code === 'ERR_FAILED') {
+          console.error('🚨 HTTPS→HTTP Mixed Content Security Error detected!');
+          console.error('💡 Solution: CMS needs HTTPS or frontend needs HTTP');
+          setError('CMS connection blocked by browser security (HTTPS→HTTP)');
+        } else if (err?.code === 'ECONNABORTED' || err?.message?.includes('timeout')) {
+          console.error('⏱️ Connection timeout detected');
+          setError('CMS connection timeout - using fallback content');
+        } else {
+          setError(`CMS connection failed: ${err?.message || 'Unknown error'}`);
+        }
+        
         setIsLoading(false);
+        // Don't block the page - let it render with fallback content
       }
     };
     
@@ -112,22 +137,16 @@ export default function CaseStudies() {
     );
   }
 
-  // Error state
+  // Enhanced debugging when CMS fails - but continue rendering with fallback content
   if (error) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Error Loading Page</h1>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-compleo-teal text-white rounded hover:bg-compleo-deep-teal"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
+    console.log('🚨 CMS Connection Failed - Using fallback content');
+    console.log('🔍 Error details:', error);
+    console.log('🔍 Environment check:', {
+      currentURL: window.location.href,
+      cmsURL: import.meta.env?.VITE_STRAPI_URL || 'NOT_SET',
+      isHTTPS: window.location.protocol === 'https:',
+      mixedContentIssue: window.location.protocol === 'https:' && (import.meta.env?.VITE_STRAPI_URL || '').startsWith('http:')
+    });
   }
 
   return (
