@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'wouter';
-import { CASE_STUDIES } from '@/../../shared/case-studies-data';
+// Remove TypeScript import - using JSON data directly
 import { 
   TrendingUp, 
   Clock, 
@@ -56,20 +56,11 @@ export default function CaseStudies() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
 
-  // Enhanced CMS data fetching with better error handling and debugging
+  // Enhanced CMS data fetching with better error handling
   useEffect(() => {
-    console.log('🚀 Case Studies page initializing...');
-    console.log('🔧 Environment details:', {
-      currentURL: window.location.href,
-      cmsURL: import.meta.env?.VITE_STRAPI_URL || 'NOT_SET',
-      isHTTPS: window.location.protocol === 'https:',
-      isCMSHttps: (import.meta.env?.VITE_STRAPI_URL || '').startsWith('https:'),
-      mixedContentRisk: window.location.protocol === 'https:' && (import.meta.env?.VITE_STRAPI_URL || '').startsWith('http:')
-    });
     
     const fetchData = async () => {
       try {
-        console.log('📖 Starting Case Studies CMS data fetch...');
         setIsLoading(true);
         setError(null);
         
@@ -79,10 +70,6 @@ export default function CaseStudies() {
           globalSettingsApi.getGlobalSettings()
         ]);
         
-        console.log('✅ Case Studies CMS data fetched successfully');
-        console.log('📄 Page Data:', caseStudiesPageData);
-        console.log('🌐 Global Settings:', globalSettingsData);
-        console.log('🔍 Impact Statistics:', globalSettingsData?.ImpactStatistics);
         
         setPageData(caseStudiesPageData as any);
         setGlobalSettings(globalSettingsData);
@@ -137,16 +124,9 @@ export default function CaseStudies() {
     );
   }
 
-  // Enhanced debugging when CMS fails - but continue rendering with fallback content
+  // Render with fallback content if CMS fails
   if (error) {
-    console.log('🚨 CMS Connection Failed - Using fallback content');
-    console.log('🔍 Error details:', error);
-    console.log('🔍 Environment check:', {
-      currentURL: window.location.href,
-      cmsURL: import.meta.env?.VITE_STRAPI_URL || 'NOT_SET',
-      isHTTPS: window.location.protocol === 'https:',
-      mixedContentIssue: window.location.protocol === 'https:' && (import.meta.env?.VITE_STRAPI_URL || '').startsWith('http:')
-    });
+    // Error details are logged in console.error above
   }
 
   return (
@@ -233,7 +213,7 @@ export default function CaseStudies() {
 
             {/* Case Studies Grid */}
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {CASE_STUDIES.map((caseStudy, index) => (
+              {caseStudiesData.caseStudies.map((caseStudy, index) => (
                 <div key={caseStudy.id} className="relative group">
                   {caseStudy.id === 'nhs-devon' ? (
                     <Card className="hover-lift hover-glow transition-all duration-300 bg-white relative overflow-hidden">

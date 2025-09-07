@@ -16,9 +16,6 @@ interface HeroSectionProps {
 export default function HeroSection({ heroData, impactStats, impactStatsTitle }: HeroSectionProps) {
   const { elementRef, shouldAnimate } = useIntersectionObserver();
   
-  // DEBUG: Log what data is being received
-
-  
   return (
     <section ref={elementRef} className="relative bg-compleo-deep-teal text-white overflow-hidden">
       {/* Background Video */}

@@ -50,7 +50,6 @@ export default function EquipmentDetails() {
 
         setPageData(pageResponse);
         setGlobalSettings(globalResponse);
-        console.log('Equipment Details data loaded successfully', pageResponse);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to load page content';
         setError(errorMessage);

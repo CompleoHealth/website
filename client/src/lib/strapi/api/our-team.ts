@@ -37,26 +37,15 @@ class OurTeamAPI {
    */
   async getOurTeamPage(): Promise<any | null> {
     try {
-      console.log('🏢 Starting Our Team CMS data fetch...');
-      
       // Use simplest working pattern - populate=* like managed-equipment
       const queryString = 'populate=*';
-      
-      console.log('🔗 Our Team API URL:', `${this.baseURL}/our-team-page?${queryString}`);
-      console.log('📋 Query String:', queryString);
       
       const response = await axios.get(`${this.baseURL}/our-team-page?${queryString}`, {
         timeout: DEFAULT_TIMEOUT
       });
 
-      console.log('📊 Raw Our Team API Response:', response.data);
-
       // Extract data from the Strapi response following the established pattern
       const responseData = response.data.data;
-      
-      console.log('✅ Processed Our Team Data:', responseData);
-      console.log('🎯 Hero Data:', responseData?.Hero);
-      console.log('👥 Culture Values:', responseData?.cultureValues);
       
       return responseData;
     } catch (error) {

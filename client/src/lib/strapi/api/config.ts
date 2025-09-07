@@ -9,6 +9,8 @@
 export const STRAPI_URL = (import.meta.env?.VITE_STRAPI_URL as string) || 'http://localhost:1337';
 export const API_URL = `${STRAPI_URL}/api`;
 
+// Configuration loaded - no debug logging in production
+
 // Common headers or request config
 export const defaultHeaders = {
   'Content-Type': 'application/json',

@@ -1,12 +1,7 @@
-import { IMPACT_STATISTICS, type ImpactStatistic } from '@shared/impact-statistics';
 import { StrapiImpactStatistic } from '@/lib/strapi/types/common';
 
 // Helper function to get a unique key for each statistic
-function getStatisticKey(stat: ImpactStatistic | StrapiImpactStatistic, index: number): string | number {
-  // Check if it's a static ImpactStatistic (has id)
-  if ('id' in stat && stat.id) {
-    return stat.id;
-  }
+function getStatisticKey(stat: StrapiImpactStatistic, index: number): string | number {
   // Check if it's a Strapi ImpactStatistic (has statId)
   if ('statId' in stat && stat.statId) {
     return stat.statId;
@@ -22,8 +17,7 @@ interface ImpactStatisticsProps {
   showTitle?: boolean;
   gridCols?: 2 | 3 | 6;
   textColor?: 'yellow' | 'teal' | 'white' | 'dark';
-  subset?: string[]; // Array of statistic IDs to show (if not provided, shows all 6)
-  statistics?: StrapiImpactStatistic[]; // CMS-driven statistics
+  statistics?: StrapiImpactStatistic[]; // CMS-driven statistics (required)
 }
 
 export function ImpactStatistics({ 
@@ -33,15 +27,17 @@ export function ImpactStatistics({
   showTitle = true,
   gridCols = 3,
   textColor = 'teal',
-  subset,
   statistics: cmsStatistics
 }: ImpactStatisticsProps) {
-  // Use CMS statistics if provided, otherwise use subset or all static statistics
-  const statistics = cmsStatistics
-    ? cmsStatistics
-    : subset 
-      ? subset.map(id => IMPACT_STATISTICS.find(stat => stat.id === id)).filter(Boolean) as ImpactStatistic[]
-      : IMPACT_STATISTICS;
+  // Use CMS statistics with hardcoded fallback
+  const statistics = cmsStatistics || [
+    { statId: 'nhs-trusts', value: '30+', label: 'NHS TRUSTS SERVED' },
+    { statId: 'hospital-sites', value: '50+', label: 'HOSPITAL SITES' },
+    { statId: 'scanners', value: '30+', label: 'STATE-OF-ART SCANNERS' },
+    { statId: 'cost-savings', value: '6%+', label: 'COST SAVINGS' },
+    { statId: 'patient-satisfaction', value: '99%', label: 'PATIENT SATISFACTION' },
+    { statId: 'accreditations', value: '6+', label: 'INDUSTRY ACCREDITATIONS' }
+  ];
 
   const getColorClasses = () => {
     switch (textColor) {

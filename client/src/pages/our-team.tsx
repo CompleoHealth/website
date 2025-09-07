@@ -17,7 +17,6 @@ import { StrapiGlobalSettings } from '@/lib/strapi/types/global-settings';
 
 // Import team data (stays as operational data)
 import { TEAM_MEMBERS } from '@/../../shared/team-data';
-import teamPageData from '@/../../shared/data/team-page.json';
 
 export default function OurTeam() {
   // CMS State Management (following proven pattern)
@@ -32,7 +31,6 @@ export default function OurTeam() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('🏢 Starting Our Team page CMS data fetch...');
         setIsLoading(true);
         
         // Parallel API calls for page data and global settings
@@ -41,9 +39,6 @@ export default function OurTeam() {
           globalSettingsApi.getGlobalSettings()
         ]);
         
-        console.log('✅ Our Team CMS data fetched successfully');
-        console.log('📄 Page Data:', ourTeamPageData);
-        console.log('🌐 Global Settings:', globalSettingsData);
         
         setPageData(ourTeamPageData as any); // Type assertion for flexibility
         setGlobalSettings(globalSettingsData);
@@ -106,10 +101,10 @@ export default function OurTeam() {
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center animate-fade-in-up">
               <h1 className="heading-1 mb-6">
-                {pageData?.Hero?.title || teamPageData.hero.title}
+                {pageData?.Hero?.title || "Our Team"}
               </h1>
               <p className="body-large text-gray-300 mb-12 max-w-3xl mx-auto">
-                {pageData?.Hero?.subtitle || teamPageData.hero.subtitle}
+                {pageData?.Hero?.subtitle || "Meet the passionate professionals driving healthcare innovation and excellence across the UK."}
               </p>
               <div className="flex flex-row gap-3 sm:gap-6 justify-center">
                 <Link href="/work-with-us">
@@ -155,10 +150,10 @@ export default function OurTeam() {
           <div className="max-w-7xl mx-auto container-padding">
             <div className="text-center mb-16">
               <h2 className="heading-2 text-compleo-deep-teal mb-6">
-                {pageData?.leadershipTitle || teamPageData.leadership.title}
+                {pageData?.leadershipTitle || "Leadership Team"}
               </h2>
               <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-                {pageData?.leadershipDescription || teamPageData.leadership.subtitle}
+                {pageData?.leadershipDescription || "Experienced leaders combining clinical expertise, technological innovation, and healthcare industry knowledge to drive our mission forward."}
               </p>
             </div>
             
@@ -195,10 +190,10 @@ export default function OurTeam() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-4xl font-bold text-compleo-deep-teal mb-6">
-                  {pageData?.cultureTitle || teamPageData.culture.title}
+                  {pageData?.cultureTitle || "Our Culture & Values"}
                 </h2>
                 <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-                  {pageData?.cultureDescription || teamPageData.culture.description}
+                  {pageData?.cultureDescription || "We believe in fostering an environment where innovation thrives, collaboration flourishes, and every team member feels empowered to make a meaningful impact on healthcare delivery."}
                 </p>
                 <div className="space-y-6">
                   {(pageData?.cultureValues && pageData.cultureValues.length > 0 
@@ -227,8 +222,8 @@ export default function OurTeam() {
               </div>
               <div>
                 <img 
-                  src={pageData?.cultureImage?.url || teamPageData.culture.image}
-                  alt={pageData?.cultureImageAlt || teamPageData.culture.imageAlt}
+                  src={pageData?.cultureImage?.url || "/images/team/culture-collage.jpg"}
+                  alt={pageData?.cultureImageAlt || "Compleo Health team culture and collaboration moments"}
                   className="w-full aspect-square object-cover rounded-xl shadow-lg"
                 />
               </div>

@@ -1,5 +1,5 @@
 import { useParams } from 'wouter';
-import { getCaseStudyById } from '@/../../shared/case-studies-data';
+import caseStudiesData from '@/../../shared/data/case-studies.json';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import BackToTop from '@/components/common/back-to-top';
@@ -21,7 +21,7 @@ import { Link } from 'wouter';
 
 export default function CaseStudy() {
   const params = useParams();
-  const caseStudy = getCaseStudyById(params.id as string);
+  const caseStudy = caseStudiesData.caseStudies.find(study => study.id === params.id as string);
 
   // Redirect NHS Devon case study back to case studies page (quote only)
   if (params.id === 'nhs-devon') {

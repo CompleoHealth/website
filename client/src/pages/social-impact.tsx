@@ -148,20 +148,11 @@ export default function SocialImpact() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Enhanced CMS data fetching with better error handling and debugging
+  // Enhanced CMS data fetching with better error handling
   useEffect(() => {
-    console.log('🚀 Social Impact page initializing...');
-    console.log('🔧 Environment details:', {
-      currentURL: window.location.href,
-      cmsURL: import.meta.env?.VITE_STRAPI_URL || 'NOT_SET',
-      isHTTPS: window.location.protocol === 'https:',
-      isCMSHttps: (import.meta.env?.VITE_STRAPI_URL || '').startsWith('https:'),
-      mixedContentRisk: window.location.protocol === 'https:' && (import.meta.env?.VITE_STRAPI_URL || '').startsWith('http:')
-    });
     
     const fetchData = async () => {
       try {
-        console.log('🌱 Starting Social Impact CMS data fetch...');
         setIsLoading(true);
         setError(null);
         
@@ -171,9 +162,6 @@ export default function SocialImpact() {
           globalSettingsApi.getGlobalSettings()
         ]);
         
-        console.log('✅ Social Impact CMS data fetched successfully');
-        console.log('📄 Sustainability Data:', sustainabilityData);
-        console.log('🌐 Global Settings:', globalSettingsData);
         
         setPageData(sustainabilityData);
         setGlobalSettings(globalSettingsData);
@@ -223,16 +211,9 @@ export default function SocialImpact() {
     );
   }
 
-  // Enhanced debugging when CMS fails - but continue rendering with fallback content  
+  // Render with fallback content if CMS fails
   if (error) {
-    console.log('🚨 Social Impact CMS Connection Failed - Using fallback content');
-    console.log('🔍 Error details:', error);
-    console.log('🔍 Environment check:', {
-      currentURL: window.location.href,
-      cmsURL: import.meta.env?.VITE_STRAPI_URL || 'NOT_SET',
-      isHTTPS: window.location.protocol === 'https:',
-      mixedContentIssue: window.location.protocol === 'https:' && (import.meta.env?.VITE_STRAPI_URL || '').startsWith('http:')
-    });
+    // Error details are logged in console.error above
   }
 
 

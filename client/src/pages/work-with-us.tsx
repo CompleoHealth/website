@@ -26,7 +26,6 @@ import { SiLinkedin } from 'react-icons/si';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { BrandedIcon } from '@/components/ui/branded-icons';
 import { trackCTAClick } from '@/lib/analytics';
-import workWithUsData from '@/../../shared/data/work-with-us.json';
 import React from 'react';
 import { useEffect, useState } from 'react';
 
@@ -68,7 +67,6 @@ export default function WorkWithUs() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('💼 Starting Work With Us page CMS data fetch...');
         setIsLoading(true);
         
         // Parallel API calls for page data and global settings
@@ -77,9 +75,6 @@ export default function WorkWithUs() {
           globalSettingsApi.getGlobalSettings()
         ]);
         
-        console.log('✅ Work With Us CMS data fetched successfully');
-        console.log('📄 Page Data:', workWithUsPageData);
-        console.log('🌐 Global Settings:', globalSettingsData);
         
         setPageData(workWithUsPageData as any); // Type assertion for flexibility
         setGlobalSettings(globalSettingsData);
@@ -153,15 +148,15 @@ export default function WorkWithUs() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="opacity-100">
                 <h1 className="heading-1 mb-4">
-                  {pageData?.Hero?.title || workWithUsData.hero.title}
+                  {pageData?.Hero?.title || "Work with us"}
                 </h1>
-                <p className="body-large text-gray-200 mb-6 leading-relaxed">{pageData?.Hero?.subtitle || workWithUsData.hero.subtitle}</p>
+                <p className="body-large text-gray-200 mb-6 leading-relaxed">{pageData?.Hero?.subtitle || "Be part of a team that's revolutionising healthcare through innovation, collaboration, and unwavering commitment to patient care."}</p>
                 <div className="flex flex-row gap-3 sm:gap-6">
                   <Button 
                     size="lg" 
                     className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold text-sm sm:text-lg px-4 sm:px-8 py-4 sm:py-4 rounded-xl shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] border-4 border-white/80 hover:border-white backdrop-blur-md bg-white/20 hover-scale w-36 sm:w-48 h-auto"
                     onClick={() => {
-                      trackCTAClick(`${workWithUsData.hero.primaryButton.text} ${workWithUsData.hero.primaryButton.subtext} - Work With Us Hero`, '/work-with-us');
+                      trackCTAClick('VIEW Open Roles - Work With Us Hero', '/work-with-us');
                       const element = document.getElementById('openings');
                       if (element) {
                         element.scrollIntoView({ behavior: 'smooth' });
@@ -170,32 +165,32 @@ export default function WorkWithUs() {
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-white/20 rounded-full p-1">
-                        {getIcon(workWithUsData.hero.primaryButton.icon) && 
-                          React.createElement(getIcon(workWithUsData.hero.primaryButton.icon)!, { 
+                        {getIcon('Briefcase') && 
+                          React.createElement(getIcon('Briefcase')!, { 
                             className: "h-4 w-4 sm:h-5 sm:w-5 group-hover:bounce transition-transform duration-300" 
                           })
                         }
                       </div>
                       <div className="flex flex-col items-center">
-                        <span className="text-sm sm:text-base font-semibold tracking-wider">{workWithUsData.hero.primaryButton.text}</span>
-                        <span className="text-xs font-medium opacity-90">{workWithUsData.hero.primaryButton.subtext}</span>
+                        <span className="text-sm sm:text-base font-semibold tracking-wider">VIEW</span>
+                        <span className="text-xs font-medium opacity-90">Open Roles</span>
                       </div>
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </Button>
-                  <Link href={workWithUsData.hero.secondaryButton.href} onClick={() => trackCTAClick(`${workWithUsData.hero.secondaryButton.text} ${workWithUsData.hero.secondaryButton.subtext} - Work With Us Hero`, '/work-with-us')}>
+                  <Link href="/contact" onClick={() => trackCTAClick('CONTACT Us - Work With Us Hero', '/work-with-us')}>
                     <Button size="lg" className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold text-sm sm:text-lg px-4 sm:px-8 py-4 sm:py-4 rounded-xl shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 border-compleo-deep-teal/50 hover:border-compleo-deep-teal/80 hover-scale w-36 sm:w-48 h-auto">
                       <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                         <div className="bg-compleo-deep-teal/20 rounded-full p-1">
-                          {getIcon(workWithUsData.hero.secondaryButton.icon) && 
-                            React.createElement(getIcon(workWithUsData.hero.secondaryButton.icon)!, { 
+                          {getIcon('Mail') && 
+                            React.createElement(getIcon('Mail')!, { 
                               className: "h-4 w-4 sm:h-5 sm:w-5 group-hover:pulse transition-transform duration-300" 
                             })
                           }
                         </div>
                         <div className="flex flex-col items-center">
-                          <span className="text-sm sm:text-base font-semibold tracking-wider">{workWithUsData.hero.secondaryButton.text}</span>
-                          <span className="text-xs font-medium opacity-90">{workWithUsData.hero.secondaryButton.subtext}</span>
+                          <span className="text-sm sm:text-base font-semibold tracking-wider">CONTACT</span>
+                          <span className="text-xs font-medium opacity-90">Us</span>
                         </div>
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -205,11 +200,16 @@ export default function WorkWithUs() {
               </div>
               
               <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-[0_25px_60px_rgba(0,0,0,0.4)] border-4 border-white/50">
-                <h3 className="text-2xl font-bold text-compleo-deep-teal mb-6">{pageData?.whyJoinTitle || workWithUsData.hero.whyJoinUs.title}</h3>
+                <h3 className="text-2xl font-bold text-compleo-deep-teal mb-6">{pageData?.whyJoinTitle || "Why work with us?"}</h3>
                 <div className="space-y-4">
                   {(pageData?.whyJoinPoints && pageData.whyJoinPoints.length > 0 
-                    ? pageData.whyJoinPoints.map((point, index) => ({ ...point, icon: workWithUsData.hero.whyJoinUs.points[index]?.icon || 'Users' }))
-                    : workWithUsData.hero.whyJoinUs.points
+                    ? pageData.whyJoinPoints.map((point, index) => ({ ...point, icon: 'Users' }))
+                    : [
+                        { icon: 'TrendingUp', text: 'Fast-growing healthcare innovator' },
+                        { icon: 'Award', text: 'Industry-leading benefits package' },
+                        { icon: 'Users', text: 'Collaborative Culture' },
+                        { icon: 'Heart', text: 'Meaningful impact on patient care' }
+                      ]
                   ).map((point, index) => {
                     const IconComponent = getIcon(point.icon);
                     return (
@@ -236,10 +236,10 @@ export default function WorkWithUs() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="heading-2 text-compleo-deep-teal mb-6">
-                {pageData?.benefitsTitle || workWithUsData.benefits.title}
+                {pageData?.benefitsTitle || "Benefits & Perks"}
               </h2>
               <p className="body-large text-compleo-gray max-w-3xl mx-auto">
-                {pageData?.benefitsSubtitle || workWithUsData.benefits.subtitle}
+                {pageData?.benefitsSubtitle || "We believe in taking care of our team members with comprehensive benefits and a supportive work environment."}
               </p>
             </div>
 
@@ -247,9 +247,16 @@ export default function WorkWithUs() {
               {(pageData?.benefitsItems && pageData.benefitsItems.length > 0 
                 ? pageData.benefitsItems.map((benefit, index) => ({ 
                     ...benefit, 
-                    icon: workWithUsData.benefits.items[index]?.icon || 'Award' 
+                    icon: 'Award' 
                   }))
-                : workWithUsData.benefits.items
+                : [
+                    { icon: 'Clock', title: '33 Days Annual Leave', description: 'Generous holiday allowance including bank holidays' },
+                    { icon: 'Heart', title: 'Healthcare Plan', description: 'Comprehensive health coverage for you and your family' },
+                    { icon: 'GraduationCap', title: 'Continuous Learning', description: 'Professional development and training opportunities' },
+                    { icon: 'Coffee', title: 'Flexible Working', description: 'Work-life balance with flexible arrangements' },
+                    { icon: 'Bike', title: 'Cycle to Work Scheme', description: 'Tax-efficient way to purchase a bicycle and cycling equipment' },
+                    { icon: 'Users', title: 'Team Culture', description: 'Supportive, collaborative environment' }
+                  ]
               ).map((benefit, index) => (
                 <div key={index} className="group relative bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-compleo-teal/20 overflow-hidden">
                   {/* Full card overlay */}
@@ -279,24 +286,24 @@ export default function WorkWithUs() {
             <div className="text-center mb-16">
               <h2 className="heading-2 text-compleo-deep-teal mb-6">
                 <a 
-                  href={pageData?.linkedinUrl || workWithUsData.openings.linkedinUrl}
+                  href={pageData?.linkedinUrl || "https://www.linkedin.com/company/compleohealth/jobs/"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-compleo-teal transition-colors duration-300"
                 >
-                  {pageData?.opportunitiesTitle || workWithUsData.openings.title}
+                  {pageData?.opportunitiesTitle || "Current Opportunities"}
                 </a>
               </h2>
               <p className="body-large text-compleo-gray max-w-3xl mx-auto mb-6">
-                {pageData?.opportunitiesSubtitle || workWithUsData.openings.subtitle}
+                {pageData?.opportunitiesSubtitle || "Explore our open positions and find your next career opportunity with us."}
               </p>
               <Button 
                 size="lg" 
                 className="bg-[#0A66C2] hover:bg-[#0A66C2]/90 text-white shadow-lg transition-all duration-300 hover:scale-105"
-                onClick={() => window.open(pageData?.linkedinUrl || workWithUsData.openings.linkedinUrl, '_blank')}
+                onClick={() => window.open(pageData?.linkedinUrl || "https://www.linkedin.com/company/compleohealth/jobs/", '_blank')}
               >
                 <SiLinkedin className="mr-2 h-5 w-5" />
-                {pageData?.linkedinButtonText || workWithUsData.openings.buttonText}
+                {pageData?.linkedinButtonText || "LinkedIn Careers Page"}
                 <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -308,15 +315,15 @@ export default function WorkWithUs() {
         </section>
 
         <PillCTA
-          heading={pageData?.ctaHeading || workWithUsData.cta.heading}
-          description={pageData?.ctaDescription || workWithUsData.cta.description}
+          heading={pageData?.ctaHeading || "Ready to Join Our Team?"}
+          description={pageData?.ctaDescription || "Take the next step in your career with Compleo Health. We're looking for passionate individuals to join our mission."}
           primaryButton={{ 
-            text: pageData?.ctaPrimaryButton?.text || workWithUsData.cta.primaryButton.text, 
-            href: pageData?.ctaPrimaryButton?.url || workWithUsData.cta.primaryButton.href 
+            text: pageData?.ctaPrimaryButton?.text || "Apply Now", 
+            href: pageData?.ctaPrimaryButton?.url || "/contact" 
           }}
           secondaryButton={{ 
-            text: pageData?.ctaSecondaryButton?.text || workWithUsData.cta.secondaryButton.text, 
-            onClick: () => window.open(pageData?.ctaSecondaryButton?.url || workWithUsData.cta.secondaryButton.url, '_blank') 
+            text: pageData?.ctaSecondaryButton?.text || "View LinkedIn Jobs", 
+            onClick: () => window.open(pageData?.ctaSecondaryButton?.url || "https://www.linkedin.com/company/compleohealth/jobs/", '_blank') 
           }}
         />
 

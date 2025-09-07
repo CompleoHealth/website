@@ -50,7 +50,29 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
   });
 
   const createContactMutation = useMutation({
-    mutationFn: (data: EnhancedContactFormData) => apiRequest('POST', '/api/contact', data),
+    mutationFn: async (data: EnhancedContactFormData) => {
+      const response = await fetch('https://27jqynn952.execute-api.us-east-1.amazonaws.com/Testing/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `${data.firstName} ${data.lastName}`,
+          email: data.email,
+          phone: data.phone,
+          organization: data.organization,
+          role: data.role,
+          serviceInterest: data.serviceInterest,
+          message: data.message,
+          website: '' // Honeypot field
+        })
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to send message');
+      }
+      
+      return response.json();
+    },
     onSuccess: () => {
       toast({
         title: 'Enquiry sent successfully!',

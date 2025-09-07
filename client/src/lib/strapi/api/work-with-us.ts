@@ -26,27 +26,15 @@ class WorkWithUsAPI {
    */
   async getWorkWithUsPage(): Promise<any | null> {
     try {
-      console.log('💼 Starting Work With Us CMS data fetch...');
-      
       // Use simplest working pattern - populate=* like our-team and managed-equipment
       const queryString = 'populate=*';
-      
-      console.log('🔗 Work With Us API URL:', `${this.baseURL}/work-with-us-page?${queryString}`);
-      console.log('📋 Query String:', queryString);
       
       const response = await axios.get(`${this.baseURL}/work-with-us-page?${queryString}`, {
         timeout: DEFAULT_TIMEOUT
       });
 
-      console.log('📊 Raw Work With Us API Response:', response.data);
-
       // Extract data from the Strapi response following the established pattern
       const responseData = response.data.data;
-      
-      console.log('✅ Processed Work With Us Data:', responseData);
-      console.log('🎯 Hero Data:', responseData?.Hero);
-      console.log('🎁 Benefits Items:', responseData?.benefitsItems);
-      console.log('📢 Why Join Points:', responseData?.whyJoinPoints);
       
       return responseData;
     } catch (error) {

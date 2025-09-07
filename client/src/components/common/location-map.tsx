@@ -1,7 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
-import { LocationData } from '@shared/location-data';
-import { Skeleton } from '@/components/ui/skeleton';
+import { LocationData, COMPLEO_LOCATIONS } from '@shared/location-data';
 import InteractiveMap from '@/components/common/interactive-map';
 import { getOperatingCountries, getCountryCode } from '@shared/location-data';
 import { LocationMapProps, MapLocationPoint } from '@/types/components';
@@ -25,15 +23,8 @@ export default function LocationMap({
   subtitle,
   locations: cmsLocations
 }: LocationMapComponentProps = {}) {
-  // Use CMS locations if provided, otherwise fetch from API
-  const { data: apiLocations = [], isLoading } = useQuery<LocationData[]>({
-    queryKey: ['/api/locations'],
-    // Skip the API call if we have CMS locations
-    enabled: !cmsLocations || cmsLocations.length === 0,
-  });
-  
-  // Use CMS locations if available, otherwise use API locations
-  const locations = cmsLocations || apiLocations;
+  // Use CMS locations if provided, otherwise use direct JSON data
+  const locations = cmsLocations || COMPLEO_LOCATIONS;
 
   // Convert locations to map format with coordinates and country info
   // Convert locations to map format with coordinates and country info
@@ -76,15 +67,6 @@ export default function LocationMap({
 
   // Get operating countries for map shading
   const operatingCountries = getOperatingCountries();
-
-  if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <Skeleton className="h-8 w-64" />
-        <Skeleton className="h-96 w-full" />
-      </div>
-    );
-  }
 
   return (
     <section className="py-16 px-4 bg-[#ffffff]">

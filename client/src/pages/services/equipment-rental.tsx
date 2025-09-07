@@ -95,7 +95,6 @@ export default function EquipmentRentals() {
 
         setPageData(pageResponse);
         setGlobalSettings(globalResponse);
-        console.log('Equipment Rental data loaded successfully', pageResponse);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to load page content';
         setError(errorMessage);
