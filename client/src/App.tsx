@@ -76,6 +76,7 @@ function Router() {
   
   // Scroll to top when route changes and update SEO
   useEffect(() => {
+    console.log('🚀 useEffect triggered - location:', location, 'cmsSeoData:', cmsSeoData);
     window.scrollTo(0, 0);
     
     // Update SEO based on current route
@@ -119,10 +120,14 @@ function Router() {
       }
     }
     
+    console.log('🎯 Calculated routeKey:', routeKey);
+    
     // Try CMS SEO data first, then fallback to hardcoded
     let seoData: any = null;
     if (cmsSeoData?.pages) {
+      console.log('🔍 Searching in CMS pages:', cmsSeoData.pages.map(p => p.pageSlug));
       const cmsPage = cmsSeoData.pages.find(p => p.pageSlug === routeKey);
+      console.log('🎯 Found CMS page:', cmsPage);
       if (cmsPage) {
         seoData = {
           title: cmsPage.title,
