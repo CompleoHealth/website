@@ -10,8 +10,10 @@ interface SEOData {
 }
 
 export function updatePageSEO(seoData: SEOData) {
+  console.log('🔥 updatePageSEO called with:', seoData);
   // Update document title
   document.title = seoData.title;
+  console.log('🔥 document.title set to:', document.title);
 
   // Update meta description
   updateMetaTag('name', 'description', seoData.description);
