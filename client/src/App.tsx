@@ -3,18 +3,15 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useEffect, lazy, Suspense, useState } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import ScrollProgress from "@/components/common/scroll-progress";
 import ErrorBoundary from "@/components/common/error-boundary";
 
-import { updatePageSEO, pageSEOData } from "@/lib/seo";
 import { optimizeResourceLoading } from "@/lib/resource-hints";
 import { injectCriticalCSS } from "@/lib/critical-css";
 import CookieConsent from "@/components/common/cookie-consent";
 import { initGA } from "@/lib/analytics";
 import { useAnalytics } from "@/hooks/use-analytics";
-import { strapiApi } from "@/lib/strapi";
-import type { StrapiPageSEO } from "@/lib/strapi/types";
 
 // Lazy load all page components for better performance
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -55,101 +52,14 @@ const ManageCookies = lazy(() => import("@/pages/manage-cookies"));
 
 function Router() {
   const [location] = useLocation();
-  const [cmsSeoData, setCmsSeoData] = useState<StrapiPageSEO | null>(null);
   
   // Track page views automatically
   useAnalytics();
   
-  // Fetch CMS SEO data once on app load
+  // Scroll to top when route changes
   useEffect(() => {
-    const fetchCMSSEO = async () => {
-      try {
-        const data = await strapiApi.pageSeoApi.getPageSEO();
-        setCmsSeoData(data);
-        console.log('CMS SEO data loaded:', data);
-      } catch (error) {
-        console.log('Failed to fetch CMS SEO data, using fallback');
-      }
-    };
-    fetchCMSSEO();
-  }, []);
-  
-  // Scroll to top when route changes and update SEO
-  useEffect(() => {
-    console.log('🚀 useEffect triggered - location:', location, 'cmsSeoData:', cmsSeoData);
     window.scrollTo(0, 0);
-    
-    // Update SEO based on current route
-    let routeKey: string;
-    if (location === '/') {
-      routeKey = 'home';
-    } else {
-      // Handle special multi-part routes
-      const path = location.slice(1); // Remove leading slash
-      if (path.startsWith('work-with-us')) {
-        routeKey = 'work-with-us';
-      } else if (path.startsWith('news-and-views')) {
-        routeKey = 'news-and-views';
-      } else if (path.startsWith('our-team')) {
-        routeKey = 'our-team';
-      } else if (path.startsWith('case-studies')) {
-        routeKey = 'case-studies';
-      } else if (path.startsWith('equipment-details')) {
-        routeKey = 'equipment-details';
-      } else if (path.startsWith('net-zero-goals')) {
-        routeKey = 'net-zero-goals';
-      } else if (path.startsWith('privacy-policy')) {
-        routeKey = 'privacy-policy';
-      } else if (path.startsWith('cookie-policy')) {
-        routeKey = 'cookie-policy';
-      } else if (path.startsWith('modern-slavery-statement')) {
-        routeKey = 'modern-slavery-statement';
-      } else if (path.startsWith('services/managed-equipment')) {
-        routeKey = 'managed-equipment';
-      } else if (path.startsWith('services/equipment-rental')) {
-        routeKey = 'equipment-rentals';
-      } else if (path.startsWith('services/clinical-insourcing')) {
-        routeKey = 'clinical-insourcing';
-      } else if (path.startsWith('services/community-diagnostic-centres')) {
-        routeKey = 'community-diagnostic-centres';
-      } else if (path.startsWith('services/screening-programmes')) {
-        routeKey = 'screening-programmes';
-      } else {
-        // Default to first path segment
-        routeKey = path.split('/')[0];
-      }
-    }
-    
-    console.log('🎯 Calculated routeKey:', routeKey);
-    
-    // Try CMS SEO data first, then fallback to hardcoded
-    let seoData: any = null;
-    if (cmsSeoData?.pages) {
-      console.log('🔍 Searching in CMS pages:', cmsSeoData.pages.map(p => p.pageSlug));
-      const cmsPage = cmsSeoData.pages.find(p => p.pageSlug === routeKey);
-      console.log('🎯 Found CMS page:', cmsPage);
-      if (cmsPage) {
-        seoData = {
-          title: cmsPage.title,
-          description: cmsPage.description,
-          keywords: cmsPage.keywords
-        };
-        console.log(`Using CMS SEO for ${routeKey}:`, seoData);
-      }
-    }
-    
-    // Fallback to hardcoded data if no CMS data
-    if (!seoData) {
-      seoData = pageSEOData[routeKey as keyof typeof pageSEOData];
-      if (seoData) {
-        console.log(`Using fallback SEO for ${routeKey}`);
-      }
-    }
-    
-    if (seoData) {
-      updatePageSEO(seoData);
-    }
-  }, [location, cmsSeoData]);
+  }, [location]);
 
   return (
     <Suspense fallback={
