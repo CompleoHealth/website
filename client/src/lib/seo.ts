@@ -23,6 +23,13 @@ export function updatePageSEO(seoData: SEOData) {
       console.log('✅ Title still correct after 1s:', document.title);
     }
   }, 1000);
+  
+  // Also check immediately after React's next tick
+  setTimeout(() => {
+    if (document.title !== seoData.title) {
+      console.error('🚨 TITLE OVERRIDDEN IMMEDIATELY! Expected:', seoData.title, 'Actual:', document.title);
+    }
+  }, 0);
 
   // Update meta description
   updateMetaTag('name', 'description', seoData.description);
