@@ -3,7 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense, useState } from "react";
 import ScrollProgress from "@/components/common/scroll-progress";
 import ErrorBoundary from "@/components/common/error-boundary";
 
@@ -13,6 +13,8 @@ import { injectCriticalCSS } from "@/lib/critical-css";
 import CookieConsent from "@/components/common/cookie-consent";
 import { initGA } from "@/lib/analytics";
 import { useAnalytics } from "@/hooks/use-analytics";
+import { strapiApi } from "@/lib/strapi";
+import type { StrapiPageSEO } from "@/lib/strapi/types";
 
 // Lazy load all page components for better performance
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -53,9 +55,24 @@ const ManageCookies = lazy(() => import("@/pages/manage-cookies"));
 
 function Router() {
   const [location] = useLocation();
+  const [cmsSeoData, setCmsSeoData] = useState<StrapiPageSEO | null>(null);
   
   // Track page views automatically
   useAnalytics();
+  
+  // Fetch CMS SEO data once on app load
+  useEffect(() => {
+    const fetchCMSSEO = async () => {
+      try {
+        const data = await strapiApi.pageSeoApi.getPageSEO();
+        setCmsSeoData(data);
+        console.log('CMS SEO data loaded:', data);
+      } catch (error) {
+        console.log('Failed to fetch CMS SEO data, using fallback');
+      }
+    };
+    fetchCMSSEO();
+  }, []);
   
   // Scroll to top when route changes and update SEO
   useEffect(() => {
@@ -86,17 +103,49 @@ function Router() {
         routeKey = 'cookie-policy';
       } else if (path.startsWith('modern-slavery-statement')) {
         routeKey = 'modern-slavery-statement';
+      } else if (path.startsWith('services/managed-equipment')) {
+        routeKey = 'managed-equipment';
+      } else if (path.startsWith('services/equipment-rental')) {
+        routeKey = 'equipment-rentals';
+      } else if (path.startsWith('services/clinical-insourcing')) {
+        routeKey = 'clinical-insourcing';
+      } else if (path.startsWith('services/community-diagnostic-centres')) {
+        routeKey = 'community-diagnostic-centres';
+      } else if (path.startsWith('services/screening-programmes')) {
+        routeKey = 'screening-programmes';
       } else {
         // Default to first path segment
         routeKey = path.split('/')[0];
       }
     }
     
-    const seoData = pageSEOData[routeKey as keyof typeof pageSEOData];
+    // Try CMS SEO data first, then fallback to hardcoded
+    let seoData: any = null;
+    if (cmsSeoData?.pages) {
+      const cmsPage = cmsSeoData.pages.find(p => p.pageSlug === routeKey);
+      if (cmsPage) {
+        seoData = {
+          title: cmsPage.title,
+          description: cmsPage.description,
+          keywords: cmsPage.keywords,
+          ogImage: cmsPage.ogImage?.url
+        };
+        console.log(`Using CMS SEO for ${routeKey}:`, seoData);
+      }
+    }
+    
+    // Fallback to hardcoded data if no CMS data
+    if (!seoData) {
+      seoData = pageSEOData[routeKey as keyof typeof pageSEOData];
+      if (seoData) {
+        console.log(`Using fallback SEO for ${routeKey}`);
+      }
+    }
+    
     if (seoData) {
       updatePageSEO(seoData);
     }
-  }, [location]);
+  }, [location, cmsSeoData]);
 
   return (
     <Suspense fallback={

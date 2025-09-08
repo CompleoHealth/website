@@ -10,7 +10,7 @@ export interface SEOPageData {
 
 export const SEO_DATA: Record<string, SEOPageData> = {
   home: {
-    title: "Medical Imaging Equipment Rental UK | MRI & CT Scanners | Compleo Health",
+    title: "Compleo Health | Medical Imaging Equipment Rental UK | MRI & CT Scanners",
     description: "Leading UK provider of MRI and CT scanner equipment rental, clinical services, and mobile imaging solutions for NHS Trusts and private healthcare providers.",
     keywords: "medical imaging equipment rental uk, mri scanner rental, ct scanner hire, healthcare diagnostic services, mobile mri services, clinical insourcing",
     canonicalUrl: "https://compleohealth.com/",

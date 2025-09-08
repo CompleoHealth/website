@@ -13,3 +13,4 @@ export * from './managed-equipment';
 export * from './team-page';
 export * from './our-team';
 export * from './work-with-us';
+export * from './page-seo';

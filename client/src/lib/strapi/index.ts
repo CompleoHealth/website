@@ -15,12 +15,14 @@ export * from './api';
 import { homeApi } from './api/home';
 import { servicesApi } from './api/services';
 import { globalSettingsApi } from './api/global-settings';
+import { pageSeoApi } from './api/page-seo';
 
 // Consolidated API object that contains all API functions
 export const strapiApi = {
   ...homeApi,
   ...servicesApi,
-  ...globalSettingsApi
+  ...globalSettingsApi,
+  pageSeoApi
 };
 
 export default strapiApi;

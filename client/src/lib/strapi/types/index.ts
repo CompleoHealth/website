@@ -18,3 +18,4 @@ export * from './team-page';
 export * from './our-team';
 export * from './work-with-us';
 export * from './case-studies';
+export * from './page-seo';
