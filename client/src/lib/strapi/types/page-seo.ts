@@ -9,25 +9,6 @@ export interface StrapiPageSEOEntry {
   title: string;
   description: string;
   keywords?: string;
-  ogImage?: {
-    url: string;
-    name: string;
-    alternativeText?: string;
-    formats?: {
-      thumbnail?: {
-        url: string;
-      };
-      small?: {
-        url: string;
-      };
-      medium?: {
-        url: string;
-      };
-      large?: {
-        url: string;
-      };
-    };
-  };
 }
 
 export interface StrapiPageSEO {

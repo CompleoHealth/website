@@ -1,0 +1,16 @@
+{
+  "name": "contact-email-lambda",
+  "version": "1.0.0",
+  "description": "Email service for Compleo Health contact form",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "zip": "zip -r function.zip index.js package.json node_modules"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1400.0"
+  },
+  "devDependencies": {},
+  "author": "Compleo Health",
+  "license": "MIT"
+}

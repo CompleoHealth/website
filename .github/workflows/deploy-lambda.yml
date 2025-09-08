@@ -1,0 +1,114 @@
+name: Deploy Lambda Function
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lambda/contact-email/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Install dependencies
+      run: |
+        cd lambda/contact-email
+        npm ci --production
+    
+    - name: Run tests
+      run: |
+        cd lambda/contact-email
+        npm test
+      continue-on-error: true  # Tests may fail without AWS creds locally
+    
+    - name: Create deployment package
+      run: |
+        cd lambda/contact-email
+        zip -r function.zip index.js package.json node_modules
+    
+    - name: Check if Lambda exists
+      id: check-lambda
+      run: |
+        if aws lambda get-function --function-name compleohealth-contact-email 2>/dev/null; then
+          echo "exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "exists=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create Lambda function
+      if: steps.check-lambda.outputs.exists == 'false'
+      run: |
+        aws lambda create-function \
+          --function-name compleohealth-contact-email \
+          --runtime nodejs18.x \
+          --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/lambda-ses-role \
+          --handler index.handler \
+          --timeout 10 \
+          --memory-size 128 \
+          --zip-file fileb://lambda/contact-email/function.zip
+    
+    - name: Update Lambda function code
+      if: steps.check-lambda.outputs.exists == 'true'
+      run: |
+        aws lambda update-function-code \
+          --function-name compleohealth-contact-email \
+          --zip-file fileb://lambda/contact-email/function.zip
+    
+    - name: Wait for Lambda to be active
+      run: |
+        aws lambda wait function-active \
+          --function-name compleohealth-contact-email
+    
+    - name: Update Lambda configuration
+      run: |
+        aws lambda update-function-configuration \
+          --function-name compleohealth-contact-email \
+          --environment Variables="{
+            TO_EMAIL='${{ secrets.CONTACT_TO_EMAIL }}',
+            FROM_EMAIL='${{ secrets.CONTACT_FROM_EMAIL }}',
+            CC_EMAIL='${{ secrets.CONTACT_CC_EMAIL }}',
+            ALLOWED_ORIGINS='${{ secrets.ALLOWED_ORIGINS }}',
+            AWS_REGION='eu-west-2'
+          }"
+    
+    - name: Create Lambda alias for production
+      run: |
+        # Get latest version
+        VERSION=$(aws lambda publish-version \
+          --function-name compleohealth-contact-email \
+          --query 'Version' --output text)
+        
+        # Create or update alias
+        aws lambda update-alias \
+          --function-name compleohealth-contact-email \
+          --name production \
+          --function-version $VERSION \
+          2>/dev/null || \
+        aws lambda create-alias \
+          --function-name compleohealth-contact-email \
+          --name production \
+          --function-version $VERSION
+    
+    - name: Output Lambda ARN
+      run: |
+        aws lambda get-function \
+          --function-name compleohealth-contact-email \
+          --query 'Configuration.FunctionArn' \
+          --output text

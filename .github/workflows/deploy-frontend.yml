@@ -1,0 +1,146 @@
+name: Deploy Frontend to Amplify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run linting
+      run: npm run lint
+      continue-on-error: true  # Don't fail build on lint warnings
+    
+    - name: Run tests
+      run: npm test -- --run
+      continue-on-error: true  # Continue if no tests exist yet
+    
+    - name: Build project
+      run: npm run build
+      env:
+        VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
+        VITE_CONTACT_API_ENDPOINT: ${{ secrets.VITE_CONTACT_API_ENDPOINT }}
+        VITE_STRAPI_URL: ${{ secrets.VITE_STRAPI_URL }}
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifacts
+        path: dist/
+
+  deploy:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+    
+    - name: Check if Amplify app exists
+      id: check-amplify
+      run: |
+        if aws amplify get-app --app-id ${{ secrets.AMPLIFY_APP_ID }} 2>/dev/null; then
+          echo "exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "exists=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create Amplify app
+      if: steps.check-amplify.outputs.exists == 'false'
+      run: |
+        aws amplify create-app \
+          --name compleohealth \
+          --platform WEB \
+          --repository ${{ github.server_url }}/${{ github.repository }} \
+          --access-token ${{ secrets.GITHUB_TOKEN }} \
+          --environment-variables \
+            VITE_GA_MEASUREMENT_ID=${{ secrets.VITE_GA_MEASUREMENT_ID }} \
+            VITE_CONTACT_API_ENDPOINT=${{ secrets.VITE_CONTACT_API_ENDPOINT }} \
+            VITE_STRAPI_URL=${{ secrets.VITE_STRAPI_URL }}
+    
+    - name: Start Amplify deployment
+      run: |
+        aws amplify start-job \
+          --app-id ${{ secrets.AMPLIFY_APP_ID }} \
+          --branch-name main \
+          --job-type RELEASE \
+          --commit-id ${{ github.sha }}
+    
+    - name: Wait for deployment
+      run: |
+        JOB_ID=$(aws amplify list-jobs \
+          --app-id ${{ secrets.AMPLIFY_APP_ID }} \
+          --branch-name main \
+          --max-items 1 \
+          --query 'jobSummaries[0].jobId' \
+          --output text)
+        
+        echo "Deployment Job ID: $JOB_ID"
+        echo "Waiting for deployment to complete..."
+        
+        # Poll job status
+        while true; do
+          STATUS=$(aws amplify get-job \
+            --app-id ${{ secrets.AMPLIFY_APP_ID }} \
+            --branch-name main \
+            --job-id $JOB_ID \
+            --query 'job.summary.status' \
+            --output text)
+          
+          echo "Current status: $STATUS"
+          
+          if [ "$STATUS" = "SUCCEED" ]; then
+            echo "✅ Deployment successful!"
+            break
+          elif [ "$STATUS" = "FAILED" ] || [ "$STATUS" = "CANCELLED" ]; then
+            echo "❌ Deployment failed with status: $STATUS"
+            exit 1
+          fi
+          
+          sleep 30
+        done
+    
+    - name: Get deployment URL
+      run: |
+        URL=$(aws amplify get-app \
+          --app-id ${{ secrets.AMPLIFY_APP_ID }} \
+          --query 'app.defaultDomain' \
+          --output text)
+        
+        echo "🚀 Application deployed to: https://$URL"
+        echo "DEPLOYMENT_URL=https://$URL" >> $GITHUB_ENV
+    
+    - name: Run smoke tests
+      run: |
+        # Basic health check
+        response=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.DEPLOYMENT_URL }})
+        if [ $response = "200" ]; then
+          echo "✅ Site is accessible"
+        else
+          echo "❌ Site returned status code: $response"
+          exit 1
+        fi

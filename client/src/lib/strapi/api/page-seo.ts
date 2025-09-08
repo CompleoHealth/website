@@ -26,15 +26,8 @@ export const pageSeoApi = {
     try {
       debugLog('Fetching page SEO data from Strapi');
       
-      // Use EXACT global-settings working pattern
-      const populateObject = {
-        pages: {
-          populate: {
-            ogImage: '*'
-          }
-        }
-      };
-      const queryString = createQueryString(populateObject);
+      // Use EXACT global-settings working pattern - simple populate
+      const queryString = 'populate=*';
       
       debugLog('🔍 Page SEO Request URL:', `${API_URL}/page-seo?${queryString}`);
       debugLog('🔍 USING EXACT GLOBAL-SETTINGS PATTERN - direct createQueryString call');

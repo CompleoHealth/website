@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir C:VSProjectsCompleoHealthLatest)",
+      "Read(C:\\VSProjects\\CompleoHealthCMS/**)",
+      "Read(C:\\VSProjects\\CompleoHealthCMS/**)",
+      "Read(C:\\VSProjects\\CompleoHealthCMS\\config/**)",
+      "Bash(curl:*)",
+      "Read(//c/VSProjects/CompleoHealthCMS/**)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(npm run build:*)",
+      "Bash(git push:*)",
+      "Bash(cat:*)",
+      "Bash(npm run strapi export:*)",
+      "Bash(npm run dev:*)",
+      "Bash(ssh:*)",
+      "Bash(node:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

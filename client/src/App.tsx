@@ -127,8 +127,7 @@ function Router() {
         seoData = {
           title: cmsPage.title,
           description: cmsPage.description,
-          keywords: cmsPage.keywords,
-          ogImage: cmsPage.ogImage?.url
+          keywords: cmsPage.keywords
         };
         console.log(`Using CMS SEO for ${routeKey}:`, seoData);
       }
