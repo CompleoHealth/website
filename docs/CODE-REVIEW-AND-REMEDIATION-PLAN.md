@@ -1,377 +1,340 @@
 # Code Review & Remediation Plan
 ## CompleoHealthLatest Application
 
----
-
-
-## Executive Summary
-
-This document provides a comprehensive code review of the CompleoHealthLatest application with specific remediation tasks to improve security, accessibility, performance, and maintainability. These improvements can be implemented independently or alongside the client-only refactor.
-
-**Current Status:**
-- Security Score: 78/100 (🟡 AMBER)
-- Accessibility Score: 74/100 (🟡 AMBER)
-- Performance Score: 82/100 (🟢 GREEN)
-- Maintainability Score: 85/100 (🟢 GREEN)
-- SEO Score: 88/100 (🟢 GREEN)
+*Document Updated: 2025-09-08*  
+*Based on Comprehensive 5-Aspect Audit*
 
 ---
 
-## Phase 1: Critical Security Remediation (Priority: IMMEDIATE)
+## 🎯 Executive Summary
 
-### 1.1 API Key Security
-**Issue:** SendGrid API key stored as environment variable, potentially exposed
-**Location:** `server/email-service.ts`
+Following comprehensive audits of **Security**, **Accessibility**, **Performance**, **Maintainability**, and **SEO**, this document outlines remaining remediation tasks to optimize the CompleoHealthLatest application. Significant progress has been achieved, with most foundational issues resolved.
+
+**Updated Current Status:**
+- **Security Score**: 78/100 → **Target: 95/100** (🔴 HIGH PRIORITY)
+- **Accessibility Score**: 93/100 → **Target: 100/100** (🟢 NEAR COMPLETE) 
+- **Performance Score**: 82/100 → **Target: 95/100** (🟡 MEDIUM PRIORITY)
+- **Maintainability Score**: 85/100 → **Target: 92/100** (🟡 MEDIUM PRIORITY)
+- **SEO Score**: 88/100 → **Target: 95/100** (🟡 MEDIUM PRIORITY)
+
+## 🔴 Phase 1: Critical Security Remediation (Priority: IMMEDIATE)
+
+### ✅ 1.1 API Key Security - RESOLVED
+**Status**: Already implemented correctly via AWS SES + Lambda architecture  
+**Implementation**: `C:\VSProjects\CompleoHealthLatest\lambda\contact-email\index.js` uses AWS SES with environment variables  
+**No Action Required**: SendGrid dependencies will be removed during server deprecation
+
+### 1.2 Content Security Policy Hardening
+**Issue**: Dangerous `'unsafe-inline'` and `'unsafe-eval'` directives in CSP  
+**Location**: `C:\VSProjects\CompleoHealthLatest\server\index.ts:22-23`  
+**Risk**: Complete bypass of XSS protection
 
 #### Tasks:
-- [ ] Audit current API key exposure
-- [ ] Rotate SendGrid API key immediately
-- [ ] Implement key vault solution (AWS Secrets Manager)
-- [ ] Remove any hardcoded keys from codebase
-- [ ] Update deployment scripts to use secure key retrieval
-
-### 1.2 Content Security Policy (CSP) Hardening
-**Issue:** Mixed CSP policies allowing 'unsafe-inline' for scripts
-**Location:** `server/index.ts`, various component files
-
-#### Tasks:
-- [ ] Audit all inline scripts and styles
-- [ ] Convert inline scripts to external files
-- [ ] Generate nonces for necessary inline scripts
-- [ ] Update CSP policy to remove 'unsafe-inline'
+- [ ] Remove `'unsafe-inline'` and `'unsafe-eval'` from script-src
+- [ ] Implement nonce-based CSP for necessary inline scripts
+- [ ] Convert inline styles to external stylesheets
 - [ ] Test application functionality with strict CSP
-- [ ] Document any required exceptions
 
-### 1.3 Input Validation & Sanitization
-**Issue:** Inconsistent validation across forms
-**Locations:** `client/src/components/forms/*.tsx`
-
-#### Tasks:
-- [ ] Review all form inputs for proper validation
-- [ ] Implement Zod schemas for all user inputs
-- [ ] Add server-side validation for API endpoints
-- [ ] Enhance DOMPurify usage for all user-generated content
-- [ ] Add input length limits to prevent DoS
-- [ ] Implement rate limiting on all forms
-
-### 1.4 Authentication & Authorization
-**Issue:** No CSRF protection implemented
-**Impact:** Medium risk for state-changing operations
+### 1.2 CSRF Protection Implementation
+**Issue**: No CSRF tokens or protection mechanisms  
+**Risk**: All forms vulnerable to Cross-Site Request Forgery
 
 #### Tasks:
-- [ ] Implement CSRF tokens for forms
-- [ ] Add request signing for sensitive operations
-- [ ] Review and document all public vs. protected endpoints
-- [ ] Implement proper session management if needed
-- [ ] Add security headers for all API responses
+- [ ] Add CSRF middleware to server routes
+- [ ] Implement CSRF tokens for all forms in `C:\VSProjects\CompleoHealthLatest\client\src\components\forms\*.tsx`
+- [ ] Validate tokens on all state-changing operations
+- [ ] Update contact form and email service integration
+
+### 1.3 Dependency Security Updates
+**Issue**: 4 vulnerable dependencies including esbuild and cookie packages  
+**Risk**: Known security vulnerabilities
+
+#### Tasks:
+- [ ] Run `npm audit fix` for automatic updates
+- [ ] Manually update esbuild to latest version
+- [ ] Update cookie package to >= 0.7.0
+- [ ] Implement automated dependency monitoring
+
+### 1.4 HTTPS Enforcement
+**Issue**: HTTP fallbacks in CMS configuration  
+**Location**: `C:\VSProjects\CompleoHealthLatest\client\src\lib\strapi\api\config.ts:9`
+
+#### Tasks:
+- [ ] Remove HTTP fallbacks in production environment
+- [ ] Enforce HTTPS-only connections for CMS
+- [ ] Update environment configuration
+
+### 1.5 Debug Logging Cleanup
+**Issue**: Production console logging exposing sensitive information  
+**Locations**: Multiple files with console.log statements
+
+#### Tasks:
+- [ ] Implement log levels for development vs production
+- [ ] Remove debug logging from production builds
+- [ ] Create centralized logging utility
 
 ---
 
-## Phase 2: Accessibility Improvements (Priority: HIGH)
+## 🟢 Phase 2: Accessibility Completion (Priority: HIGH - 93% Complete)
 
-### 2.2 Image Accessibility
-**Issue:** Some images missing alt text
-**Locations:** Throughout component files
-
-#### Tasks:
-- [ ] Audit all images in the application
-- [ ] Add meaningful alt text to informational images
-- [ ] Mark decorative images with empty alt=""
-- [ ] Implement image loading error states
-- [ ] Add aria-labels where appropriate
-
-### 2.3 Form Accessibility
-**Issue:** Form validation errors not always announced
-**Locations:** `client/src/components/forms/*.tsx`
+### 2.1 Form Accessibility Enhancements
+**Location**: `C:\VSProjects\CompleoHealthLatest\client\src\components\forms\contact-form.tsx`
 
 #### Tasks:
-- [ ] Add aria-live regions for error announcements
-- [ ] Implement proper error messaging with aria-describedby
-- [ ] Add focus management on error
-- [ ] Ensure all form fields have labels
-- [ ] Test with screen readers (NVDA, JAWS)
+- [ ] Add autocomplete attributes to form inputs:
+  - `autocomplete="given-name"` for first name
+  - `autocomplete="family-name"` for last name  
+  - `autocomplete="email"` for email
+  - `autocomplete="tel"` for phone
+  - `autocomplete="organization"` for company
 
-### 2.4 Color Contrast & Visual Accessibility
-**Issue:** Some components fail WCAG AA contrast requirements
-**Locations:** Various UI components
-
-#### Tasks:
-- [ ] Run contrast audit on all color combinations
-- [ ] Fix any contrast ratios below 4.5:1 for normal text
-- [ ] Fix any contrast ratios below 3:1 for large text
-- [ ] Implement high contrast mode option
-- [ ] Test with color blindness simulators
-
-### 2.5 Keyboard Navigation
-**Issue:** Some interactive elements not keyboard accessible
-**Locations:** Custom dropdown components, modals
+### 2.2 Touch Target Size Optimization
+**Issue**: Some buttons below 44px minimum recommendation
 
 #### Tasks:
-- [ ] Audit all interactive elements for keyboard access
-- [ ] Add proper tabindex values
-- [ ] Implement skip links for navigation
-- [ ] Add focus visible styles
-- [ ] Test entire flow with keyboard only
+- [ ] Increase button minimum height to 44px
+- [ ] Review all interactive elements for touch accessibility
+- [ ] Test on mobile devices for usability
+
+### 2.3 Color Contrast Verification
+**Issue**: Some text/background combinations may fail WCAG ratios
+
+#### Tasks:
+- [ ] Audit white text on teal backgrounds
+- [ ] Test light text in form placeholders
+- [ ] Fix any contrast failures found
+
+### 2.4 Skip Links Standardization
+**Issue**: Skip links manually added to pages instead of shared component
+
+#### Tasks:
+- [ ] Create shared skip link component
+- [ ] Implement consistently across all pages
+- [ ] Remove duplicate implementations
 
 ---
 
-## Phase 3: Performance Optimization (Priority: MEDIUM)
+## 🟡 Phase 3: Performance Optimization (Priority: MEDIUM)
 
-### 3.1 Bundle Size Optimization
-**Issue:** Large bundle with all Radix UI components
-**Current Size:** ~450KB gzipped
-
-#### Tasks:
-- [ ] Analyze bundle with webpack-bundle-analyzer
-- [ ] Implement tree shaking for Radix UI
-- [ ] Code split by route
-- [ ] Lazy load heavy components
-- [ ] Remove unused dependencies
-- [ ] Target: Reduce bundle by 30%
-
-### 3.2 Image Optimization
-**Issue:** Large images served without optimization
-**Locations:** `public/images/`, component imports
+### 3.1 Image Optimization Pipeline
+**Issue**: Large uncompressed images affecting Core Web Vitals  
+**Impact**: 60-80% file size reduction potential
 
 #### Tasks:
-- [ ] Convert images to WebP format
-- [ ] Implement responsive image sizes
-- [ ] Add lazy loading for below-fold images
-- [ ] Implement blur-up placeholders
-- [ ] Use image CDN for transformation
+- [ ] Implement WebP/AVIF conversion for all images
+- [ ] Add responsive image sizes for different viewports
+- [ ] Compress existing images (target: <300K per image)
+- [ ] Add Vite plugin for automatic image optimization
 
-### 3.3 Caching Strategy
-**Issue:** No service worker for offline support
-**Impact:** Poor offline experience, no caching
+### 3.2 Bundle Size Optimization  
+**Issue**: Large JavaScript bundles (277K main, 212K home page)
 
 #### Tasks:
-- [ ] Implement service worker with Workbox
-- [ ] Cache critical resources
-- [ ] Implement offline fallback page
-- [ ] Add cache versioning strategy
-- [ ] Configure browser caching headers
+- [ ] Split vendor chunks (React, Radix UI, other libraries)
+- [ ] Optimize heavy components (back-to-top: 109K)
+- [ ] Implement dynamic imports for Leaflet maps
+- [ ] Review and optimize home page bundle
 
-### 3.4 Runtime Performance
-**Issue:** Unnecessary re-renders in complex components
-**Locations:** `location-map.tsx`, `contact-form.tsx`
+### 3.3 Service Worker Implementation
+**Issue**: Missing caching strategy despite references in code
 
 #### Tasks:
-- [ ] Add React.memo to pure components
-- [ ] Implement useMemo for expensive calculations
-- [ ] Use useCallback for event handlers
-- [ ] Split large components
-- [ ] Add performance monitoring
+- [ ] Implement service worker for static asset caching
+- [ ] Add API response caching strategy
+- [ ] Configure cache invalidation policies
+- [ ] Test offline functionality
+
+### 3.4 CSS Bundle Optimization
+**Issue**: Large CSS bundle (134K) with potential unused styles
+
+#### Tasks:
+- [ ] Optimize Tailwind purging configuration
+- [ ] Split CSS by route for on-demand loading
+- [ ] Improve critical CSS extraction
+- [ ] Minimize complex CSS animations
+
+### 3.5 React Performance Optimization
+**Issue**: Missing memoization and potential re-render issues
+
+#### Tasks:
+- [ ] Add React.memo to frequently re-rendering components
+- [ ] Implement useMemo/useCallback for expensive computations
+- [ ] Optimize intersection observer usage
+- [ ] Add debouncing for mobile detection
 
 ---
 
-## Phase 4: Code Quality & Maintainability (Priority: MEDIUM)
+## 🟡 Phase 4: Maintainability Improvements (Priority: MEDIUM)
 
-### 4.1 Component Refactoring
-**Issue:** Some components too large (400+ lines)
-**Locations:** `contact-form.tsx`, `enhanced-contact-form.tsx`
-
-#### Tasks:
-- [ ] Break down large components into smaller units
-- [ ] Extract custom hooks for logic
-- [ ] Create compound components where appropriate
-- [ ] Implement proper component composition
-- [ ] Target: No component over 200 lines
-
-### 4.2 Error Handling
-**Issue:** Limited error boundary coverage
-**Impact:** Poor error recovery, bad UX
+### 4.1 TypeScript Type Safety (Critical Gap)
+**Issue**: 45 files contain `any` types affecting maintainability  
+**Locations**: `C:\VSProjects\CompleoHealthLatest\client\src\lib\strapi\types\common.ts:13-14`
 
 #### Tasks:
-- [ ] Add error boundaries to all route components
-- [ ] Implement fallback UI for errors
-- [ ] Add error logging service (Sentry)
-- [ ] Create user-friendly error messages
-- [ ] Add retry mechanisms for failed requests
+- [ ] Replace `any` types with proper type definitions
+- [ ] Fix generic `any` in Strapi entity interfaces
+- [ ] Add proper JSON module typing in `vite-env.d.ts`
+- [ ] Create specific error interfaces instead of `any`
 
-### 4.3 Testing Infrastructure
-**Issue:** No test coverage
-**Impact:** High risk of regressions
-
-#### Tasks:
-- [ ] Set up Vitest for unit testing
-- [ ] Set up React Testing Library
-- [ ] Write tests for critical paths (forms, navigation)
-- [ ] Add integration tests for API calls
-- [ ] Set up E2E tests with Playwright
-- [ ] Target: 70% code coverage
-
-### 4.4 TypeScript Improvements
-**Issue:** Some any types, missing strict checks
-**Locations:** Various utility functions
+### 4.2 Testing Implementation (Critical Gap)
+**Issue**: Zero test coverage - no test files found  
+**Impact**: Major maintainability risk
 
 #### Tasks:
-- [ ] Enable strict TypeScript mode
-- [ ] Remove all any types
-- [ ] Add proper type guards
-- [ ] Implement branded types for IDs
-- [ ] Add JSDoc comments for complex types
+- [ ] Add Vitest testing framework configuration
+- [ ] Install @testing-library/react and jest-dom
+- [ ] Create tests for critical components (error boundary, forms)
+- [ ] Implement API integration testing
+- [ ] Target minimum 70% test coverage
 
-### 4.5 Code Organization
-**Issue:** Mixed data sources and inconsistent patterns
-**Locations:** `shared/` folder structure
+### 4.3 Code Quality Tools
+**Issue**: Missing linting, formatting, and pre-commit hooks
 
 #### Tasks:
-- [ ] Consolidate data sources
-- [ ] Implement consistent file naming
-- [ ] Create clear module boundaries
-- [ ] Document architectural decisions
-- [ ] Add README files for each module
+- [ ] Add ESLint configuration with TypeScript rules
+- [ ] Configure Prettier for consistent code formatting
+- [ ] Set up Husky pre-commit hooks with lint-staged
+- [ ] Add EditorConfig for cross-platform consistency
+
+### 4.4 Error Handling Standardization
+**Issue**: 193 try/catch blocks across 50 files without consistent patterns
+
+#### Tasks:
+- [ ] Create centralized error handling utility
+- [ ] Implement AppError class for typed error handling
+- [ ] Replace console-based error logging with proper service
+- [ ] Add global error reporting integration (Sentry)
+
+### 4.5 Dependency Management
+**Issue**: 56 outdated packages including major version updates
+
+#### Tasks:
+- [ ] Update React and Radix UI components to latest versions
+- [ ] Fix security vulnerabilities in cookie and esbuild packages
+- [ ] Implement automated dependency update monitoring
+- [ ] Review and update all development dependencies
 
 ---
 
-## Phase 5: SEO & Analytics (Priority: LOW)
+## 🟡 Phase 5: SEO Enhancement (Priority: MEDIUM)
 
-### 5.1 SEO Improvements
-**Issue:** No server-side rendering affects SEO
-**Impact:** Slower indexing, potential ranking issues
-
-#### Tasks:
-- [ ] Implement meta tag management system
-- [ ] Add Open Graph tags for all pages
-- [ ] Create XML sitemap generator
-- [ ] Implement canonical URLs
-- [ ] Add structured data for all content types
-
-### 5.2 Analytics Enhancement
-**Issue:** Basic GA implementation only
-**Impact:** Limited insights
+### 5.1 Server-Side Rendering (Major Impact)
+**Issue**: Client-side rendering limiting crawlability  
+**Impact**: Primary blocker for higher SEO score
 
 #### Tasks:
-- [ ] Implement event tracking for user actions
-- [ ] Add conversion tracking for forms
-- [ ] Set up custom dimensions
-- [ ] Implement error tracking in GA
-- [ ] Add performance metrics tracking
+- [ ] Evaluate Next.js migration for SSR/SSG
+- [ ] Implement pre-rendering for critical pages
+- [ ] Consider hybrid rendering approach
+- [ ] Test search engine crawling improvements
+
+### 5.2 Technical SEO Fixes
+**Issue**: Minor technical SEO improvements needed
+
+#### Tasks:
+- [ ] Fix OG image inconsistency in index.html (use `/images/shared/logo-seo.jpg`)
+- [ ] Add hreflang attributes for international markets (UK, IE, IT, CH, DK)
+- [ ] Implement `fetchpriority="high"` for above-the-fold images
+- [ ] Add Web Vitals monitoring integration
+
+### 5.3 Enhanced Structured Data
+**Issue**: Opportunities for richer schema markup
+
+#### Tasks:
+- [ ] Add FAQ schema for service pages
+- [ ] Implement medical procedure schemas
+- [ ] Add review/rating schema markup
+- [ ] Expand healthcare-specific structured data
+
+### 5.4 Core Web Vitals Optimization
+**Issue**: Performance impact on SEO rankings
+
+#### Tasks:
+- [ ] Optimize video loading in hero sections
+- [ ] Implement advanced image optimization
+- [ ] Add real user monitoring for Core Web Vitals
+- [ ] Test and improve mobile page speed
 
 ---
 
-## Phase 6: Documentation & Process (Priority: LOW)
+## 🎯 Implementation Priority Matrix
 
-### 6.1 Code Documentation
-#### Tasks:
-- [ ] Add JSDoc comments to all functions
-- [ ] Create component storybook
-- [ ] Document API contracts
-- [ ] Create architecture diagrams
-- [ ] Add inline code comments for complex logic
+### **Week 1-2: Critical Security (Must Complete)**
+1. Fix CSP directives (remove unsafe-inline/eval)
+2. Implement CSRF protection across all forms
+3. Update vulnerable dependencies
+4. Remove debug logging from production
 
-### 6.2 Development Process
-#### Tasks:
-- [ ] Set up pre-commit hooks
-- [ ] Implement automated code review
-- [ ] Add CI/CD pipeline checks
-- [ ] Create coding standards document
-- [ ] Set up automated dependency updates
+### **Week 3-4: Accessibility Completion**
+1. Add form autocomplete attributes
+2. Fix touch target sizes
+3. Verify color contrast compliance
+4. Standardize skip links implementation
 
----
+### **Week 5-8: Performance & Maintainability**
+1. Implement comprehensive testing framework
+2. Fix TypeScript any types
+3. Add image optimization pipeline
+4. Implement service worker caching
 
-## Implementation Schedule
-
-### Week 1-2: Critical Security
-- Focus on Phase 1 tasks
-- Immediate API key rotation
-- CSP hardening
-
-### Week 3-4: Accessibility
-- Focus on Phase 2 tasks
-- Priority on form accessibility
-- Contrast fixes
-
-### Week 5-6: Performance
-- Focus on Phase 3 tasks
-- Bundle optimization
-- Image optimization
-
-### Week 7-8: Code Quality
-- Focus on Phase 4 tasks
-- Component refactoring
-- Testing setup
-
-### Week 9-10: Final Polish
-- SEO improvements
-- Documentation
-- Final testing
+### **Month 3: SEO & Advanced Features**
+1. Evaluate SSR implementation
+2. Add enhanced structured data
+3. Implement advanced performance monitoring
+4. Complete remaining technical SEO improvements
 
 ---
 
-## Quick Wins (Can be done immediately)
+## 🏆 Success Metrics
 
-1. **Security**
-   - [ ] Rotate API keys (1 hour)
-   - [ ] Add security headers (2 hours)
-   - [ ] Update dependencies (1 hour)
-
-2. **Accessibility**
-   - [ ] Add missing alt text (2 hours)
-   - [ ] Fix color contrast issues (3 hours)
-   - [ ] Add skip links (1 hour)
-
-3. **Performance**
-   - [ ] Enable gzip compression (30 min)
-   - [ ] Add lazy loading to images (2 hours)
-   - [ ] Implement code splitting (3 hours)
-
-4. **Code Quality**
-   - [ ] Fix TypeScript any types (2 hours)
-   - [ ] Add error boundaries (3 hours)
-   - [ ] Set up Prettier/ESLint (1 hour)
-
----
-
-## Success Metrics
-
-### Security
+### Security Targets
 - [ ] Zero critical vulnerabilities in security audit
-- [ ] All API keys in secure storage
-- [ ] CSP policy without unsafe-inline
+- [ ] CSP policy without unsafe directives
 - [ ] 100% of forms with CSRF protection
+- [ ] All API keys in secure storage
 
-### Accessibility
-- [ ] WCAG AA compliance
-- [ ] All images with appropriate alt text
-- [ ] 100% keyboard navigable
-- [ ] Screen reader tested
+### Accessibility Targets  
+- [ ] 100% WCAG 2.1 AA compliance
+- [ ] All images with appropriate alt text (currently 93%)
+- [ ] 100% keyboard navigable interface
+- [ ] Screen reader compatibility tested
 
-### Performance
+### Performance Targets
 - [ ] Lighthouse score > 90
-- [ ] Initial bundle < 300KB
-- [ ] FCP < 1.5s
-- [ ] TTI < 3.5s
+- [ ] Initial bundle < 200KB (currently 277KB)
+- [ ] First Contentful Paint < 1.5s
+- [ ] Core Web Vitals in "Good" range
 
-### Code Quality
-- [ ] 70% test coverage
-- [ ] No components > 200 lines
-- [ ] Zero TypeScript errors
-- [ ] All functions documented
+### Maintainability Targets
+- [ ] 70% test coverage minimum
+- [ ] Zero `any` types in TypeScript
+- [ ] All components < 200 lines
+- [ ] Comprehensive error handling patterns
 
----
-
-## Risk Assessment
-
-| Area | Current Risk | After Remediation | Priority |
-|------|-------------|-------------------|----------|
-| Security | HIGH | LOW | IMMEDIATE |
-| Accessibility | MEDIUM | LOW | HIGH |
-| Performance | LOW | VERY LOW | MEDIUM |
-| Maintainability | LOW | VERY LOW | MEDIUM |
-| SEO | MEDIUM | LOW | LOW |
+### SEO Targets
+- [ ] All critical pages server-side rendered
+- [ ] Complete structured data implementation  
+- [ ] 100% mobile-friendly score
+- [ ] International hreflang implementation
 
 ---
 
-## Estimated Resources
+## 💼 Resource Requirements
 
-- **Total Effort:** 10 weeks (1 developer)
-- **Critical Path:** Weeks 1-4 (Security & Accessibility)
-- **Optional Improvements:** Weeks 5-10
-- **Quick Wins:** Can be completed in parallel with refactor
+**Estimated Development Time:**
+- **Security Fixes**: 15-20 hours
+- **Accessibility Completion**: 8-10 hours  
+- **Performance Optimization**: 25-30 hours
+- **Testing Implementation**: 20-25 hours
+- **SEO Enhancements**: 10-15 hours
 
----
+**Total Estimated Effort**: 78-100 hours over 8-12 weeks
 
-*Document Version: 2.0*  
-*Created: 2025-09-05*  
-*Status: Ready for Implementation*
+**Skills Required:**
+- TypeScript/React expertise
+- Security best practices knowledge
+- Performance optimization experience
+- Testing framework setup
+- SEO technical implementation
+
+This comprehensive remediation plan addresses all critical gaps identified in the application while maintaining its current functionality and user experience. Priority should be given to security fixes, followed by accessibility completion, then performance and maintainability improvements.

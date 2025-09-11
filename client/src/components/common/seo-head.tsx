@@ -33,7 +33,7 @@ export function SEOHead({
         const data = await strapiApi.pageSeoApi.getPageSEO();
         setCmsSeoData(data);
       } catch (error) {
-        console.log('SEOHead: Failed to fetch CMS SEO data');
+        // Failed to fetch CMS SEO data - using fallback
       }
     };
     fetchCMSSEO();
@@ -88,9 +88,9 @@ export function SEOHead({
         finalTitle = cmsPage.title;
         finalDescription = cmsPage.description;
         finalKeywords = cmsPage.keywords;
-        console.log(`SEOHead: Using CMS SEO for ${routeKey}`);
+        // Using CMS SEO data
       } else {
-        console.log(`SEOHead: No CMS data for ${routeKey}, using fallback`);
+        // No CMS data available, using fallback
       }
     }
     

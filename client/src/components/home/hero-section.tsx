@@ -39,6 +39,7 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
             style={{
               backgroundImage: "url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
             }}
+            aria-label="Generic Medical Equipment"
           />
         </video>
       </div>

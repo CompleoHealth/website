@@ -34,6 +34,7 @@ export default function CurvedCtaPanel({
                 backgroundImage: `url(${imageSrc})`,
                 '--mobile-image': `url(${mobileImageSrc})`
               } as React.CSSProperties & { '--mobile-image': string }}
+              aria-label="Compleo Health Leadership Team photo"
             />
           </div>
           

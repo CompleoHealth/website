@@ -89,7 +89,7 @@ function EquipmentCard({ item, index, shouldAnimate }: EquipmentCardProps) {
       {isComingSoon && (
         <div className="bg-gradient-to-r from-compleo-yellow to-compleo-yellow/90 text-compleo-deep-teal py-2 px-4">
           <div className="text-center">
-            <span className="text-sm font-bold tracking-wide">COMING SOON</span>
+            <strong className="text-sm font-bold tracking-wide">COMING SOON</strong>
           </div>
         </div>
       )}

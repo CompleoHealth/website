@@ -307,6 +307,7 @@ export default function EquipmentRentals() {
                 style={{
                   backgroundImage: `url('${pageData?.videoHeroFallbackImage || '/images/services/mobile-imaging-hero.jpg'}')`
                 }}
+                aria-label="Mobile MRI scanner being transported to NHS Orkney facility and positioned for operational use"
               />
             </video>
           </div>

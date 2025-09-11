@@ -108,7 +108,7 @@ export default function EquipmentDetails() {
       <SEOHead {...SEO_DATA.equipmentDetails} />
       <ScrollProgress />
       <Header />
-      <main className="animate-fade-in-up">
+      <main id="main-content" className="animate-fade-in-up">
         {/* Hero Section - Mobile Imaging with Video Background */}
         <section ref={heroRef} className="section-padding bg-compleo-deep-teal text-white relative overflow-hidden">
           {/* Background Video */}
@@ -257,7 +257,7 @@ export default function EquipmentDetails() {
               <div>
                 <img 
                   src={pageData?.serviceImage || "/images/services/mobile-imaging-hero.jpg"}
-                  alt={pageData?.serviceImageAlt || "Compleo relocatable MRI unit with brand teal and white exterior"}
+                  alt={pageData?.serviceImageAlt || "Compleo relocatable MRI unit in situ"}
                   className="w-full h-96 object-cover rounded-xl shadow-lg"
                 />
               </div>

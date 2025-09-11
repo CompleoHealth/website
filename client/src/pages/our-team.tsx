@@ -94,7 +94,7 @@ export default function OurTeam() {
     <div className="min-h-screen bg-gray-50">
       <ScrollProgress />
       <Header />
-      <main className="animate-fade-in-up">
+      <main id="main-content" className="animate-fade-in-up">
         {/* Hero Section - Standard Centered */}
         <section className="relative bg-gradient-to-br from-compleo-deep-teal via-compleo-deep-teal to-slate-800 text-white py-20 lg:py-24">
           <div className="absolute inset-0 bg-black/20"></div>

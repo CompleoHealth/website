@@ -86,11 +86,12 @@ export const homeApi = {
         timeout: DEFAULT_TIMEOUT
       });
       
-      debugLog('Raw Strapi response:', response.data);
-      debugLog('Raw Strapi response:', response.data);
-      debugLog(' HOME PAGE RAW DATA STRUCTURE:', JSON.stringify(response.data.data, null, 2));
-      debugLog(' Available fields in Home Page:', Object.keys(response.data.data || {}));
-      debugLog('Extracted home page data:', response.data.data);
+      debugLog('Home page response received', {
+        url: `${API_URL}/home`,
+        status: response.status,
+        dataKeys: Object.keys(response.data.data || {}),
+        hasData: !!response.data.data
+      });
       
       return response.data.data;
     } catch (error) {

@@ -17,7 +17,10 @@
       "Bash(npm run dev:*)",
       "Bash(ssh:*)",
       "Bash(node:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(npm audit:*)",
+      "Bash(find:*)",
+      "Bash(npm outdated:*)"
     ],
     "deny": [],
     "ask": []

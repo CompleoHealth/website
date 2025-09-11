@@ -9,7 +9,11 @@
 export const STRAPI_URL = (import.meta.env?.VITE_STRAPI_URL as string) || 'http://localhost:1337';
 export const API_URL = `${STRAPI_URL}/api`;
 
-// Configuration loaded - no debug logging in production
+// Log configuration on startup in debug mode
+if ((import.meta.env?.DEV as boolean) || false) {
+  console.log(`[CMS Config] Strapi URL: ${STRAPI_URL}`);
+  console.log(`[CMS Config] API URL: ${API_URL}`);
+}
 
 // Common headers or request config
 export const defaultHeaders = {

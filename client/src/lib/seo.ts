@@ -10,26 +10,8 @@ interface SEOData {
 }
 
 export function updatePageSEO(seoData: SEOData) {
-  console.log('🔥 updatePageSEO called with:', seoData);
   // Update document title
   document.title = seoData.title;
-  console.log('🔥 document.title set to:', document.title);
-  
-  // Debug: Monitor title changes after we set it
-  setTimeout(() => {
-    if (document.title !== seoData.title) {
-      console.error('🚨 TITLE WAS OVERRIDDEN! Expected:', seoData.title, 'Actual:', document.title);
-    } else {
-      console.log('✅ Title still correct after 1s:', document.title);
-    }
-  }, 1000);
-  
-  // Also check immediately after React's next tick
-  setTimeout(() => {
-    if (document.title !== seoData.title) {
-      console.error('🚨 TITLE OVERRIDDEN IMMEDIATELY! Expected:', seoData.title, 'Actual:', document.title);
-    }
-  }, 0);
 
   // Update meta description
   updateMetaTag('name', 'description', seoData.description);

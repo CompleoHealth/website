@@ -8,7 +8,7 @@ frontend:
         - cp .env client/.env || echo "No .env file to copy"
     build:
       commands:
-        - VITE_STRAPI_URL=https://18.201.155.94 VITE_GA_MEASUREMENT_ID=G-4C9XEXTQ93 npx vite build
+        - VITE_STRAPI_URL=https://cms.compleohealth.com VITE_GA_MEASUREMENT_ID=G-4C9XEXTQ93 VITE_CONTACT_API_ENDPOINT=https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com/prod/contact npx vite build
   artifacts:
     baseDirectory: dist/public
     files:

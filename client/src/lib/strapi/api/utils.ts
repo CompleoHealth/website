@@ -51,7 +51,13 @@ export const createQueryString = (populateObject: any) => {
  * Handle API errors with consistent logging and formatting
  */
 export const handleApiError = (error: any, context: string) => {
-  // Error handling without console logs
+  if (DEBUG_MODE) {
+    console.error(`[CMS Error] ${context}:`, error?.message || error);
+    if (error?.response) {
+      console.error(`[CMS Error] Response:`, error.response.data);
+      console.error(`[CMS Error] Status:`, error.response.status);
+    }
+  }
   return null;
 };
 
@@ -59,8 +65,9 @@ export const handleApiError = (error: any, context: string) => {
  * Debug logger that only logs in debug mode
  */
 export const debugLog = (message: string, data?: any) => {
-  // No-op debug logger - all console logs removed
-  return;
+  if (DEBUG_MODE) {
+    console.log(`[CMS Debug] ${message}`, data || '');
+  }
 };
 
 /**

@@ -5,9 +5,11 @@
 
 ## Current State
 - **Frontend:** Working on Flowency AWS Amplify (`https://main.d3psxuxgpqkedx.amplifyapp.com`)
-- **CMS:** Working on Flowency AWS Lightsail (`https://18.201.155.94`)
-- **Contact Forms:** Working via AWS Lambda
-- **Ready for:** Production deployment to Compleo AWS
+- **CMS:** ✅ DEPLOYED on Compleo AWS Lightsail (`http://35.178.98.91:1337`)
+  - Awaiting DNS: `cms.compleohealth.com` → `35.178.98.91`
+  - SSL/HTTPS ready to configure once DNS propagates
+- **Contact Forms:** Working via AWS Lambda (Flowency account)
+- **Ready for:** Lambda, SES, and Amplify deployment to Compleo AWS
 
 ---
 
@@ -18,7 +20,12 @@
 **Priority:** HIGH  
 - [ ] Create new Google Analytics 4 account for Compleo
 - [ ] Get measurement ID (format: `G-XXXXXXXXXX`)
-- [ ] Replace `G-4C9XEXTQ93` in all environment files
+- [ ] Replace `G-4C9XEXTQ93` in all environment files:
+  - `client/.env`
+  - `amplify.yml`
+  - Amplify environment variables in AWS Console
+  
+**⚠️ CURRENT STATUS:** Using temporary Flowency GA ID `G-4C9XEXTQ93` - **MUST UPDATE BEFORE PRODUCTION**
 
 ### 2. GitHub Repository
 **Owner:** Jason/Compleo  
@@ -38,108 +45,134 @@
 
 ## Compleo AWS Setup Tasks
 
-### 1. AWS Lightsail (Strapi CMS)
-**Owner:** Jason (with Compleo AWS access)  
+### 1. AWS Lightsail (Strapi CMS) ✅ COMPLETED
+**Instance Details:**
+- **Name:** WebsiteCMS-Ubuntu-1
+- **Specs:** 4 GB RAM, 2 vCPUs, 80 GB SSD
+- **OS:** Ubuntu 22.04 LTS
+- **Region:** London, Zone A (eu-west-2a)
+- **Static IP:** 35.178.98.91 (compleohealth-cms-ip)
+- **Private IP:** 172.26.15.181
 
-#### Create Instance
+**Firewall Configuration:**
+- Port 22: SSH (Any IPv4)
+- Port 80: HTTP (Any IPv4)
+- Port 443: HTTPS (Any IPv4)
+- Port 1337: Strapi (Any IPv4)
+
+**Deployment Status:**
 ```bash
-# Ubuntu 22.04 LTS, 2GB RAM minimum (4GB recommended)
-# Static IP required
-# Open ports: 22 (SSH), 80 (HTTP), 443 (HTTPS), 1337 (Strapi)
+# ✅ Node.js 22.19.0 installed via NodeSource
+# ✅ PostgreSQL database (strapidb) configured
+# ✅ PM2 process manager running (173 restarts resolved by installing pg module)
+# ✅ Nginx reverse proxy configured for cms.compleohealth.com
+# ✅ Certbot installed and ready for SSL
+
+# Current location: /home/ubuntu/CompleoHealthCMS
+# PM2 status: strapi app running on port 1337
+# Access: http://35.178.98.91:1337/admin
 ```
 
-#### Install Requirements
+**Remaining Steps:**
 ```bash
-# Core dependencies
-sudo apt update && sudo apt upgrade -y
-sudo apt install nodejs npm nginx git -y
-sudo npm install -g pm2
+# Once DNS propagates (cms.compleohealth.com → 35.178.98.91):
+sudo certbot --nginx -d cms.compleohealth.com
 
-# Clone and setup CMS
-git clone [compleo-repo-url] /opt/strapi-cms
-cd /opt/strapi-cms
-npm install --production
-
-# Environment configuration
-cp .env.example .env
-# Edit .env with production database and JWT secrets
-
-# Start with PM2
-pm2 start npm --name strapi -- start
-pm2 startup
-pm2 save
+# This will automatically:
+# - Obtain Let's Encrypt SSL certificate
+# - Configure HTTPS on port 443
+# - Set up auto-renewal via cron
 ```
 
-#### SSL Setup (Self-signed for now)
-```bash
-# Generate self-signed certificate
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout /etc/ssl/private/strapi.key \
-  -out /etc/ssl/certs/strapi.crt
+### 2. AWS Lambda (Contact Forms) ✅ DEPLOYED
+**Status:** Function created and API Gateway configured
 
-# Configure Nginx reverse proxy
-# Copy nginx config from Flowency setup
-```
-
-### 2. AWS Lambda (Contact Forms)
-**Owner:** Jason (with Compleo AWS access)  
-
-#### Create Lambda Function
-- Runtime: Node.js 20.x
-- Handler: index.handler
-- Timeout: 30 seconds
-- Environment variables:
-  - `TO_EMAIL`: Compleo contact email
-  - `FROM_EMAIL`: noreply@compleohealth.com (requires SES verification)
-
-#### Create API Gateway
-- REST API
-- POST method for `/contact`
-- Enable CORS
-- Deploy to "Production" stage
-
-### 3. AWS Amplify (Frontend)
-**Owner:** Jason (with Compleo AWS access)  
-
-#### Connect Repository
-- Source: GitHub (Compleo repository)
-- Branch: main
-- Build settings: Use existing `amplify.yml`
+#### Lambda Function Details
+- **Name:** CompleoHealthContactForm
+- **Runtime:** Node.js 20.x
+- **Handler:** index.handler
+- **Timeout:** 30 seconds
+- **Region:** eu-west-2
+- **Code:** Deployed from `lambda/contact-email/index.js`
 
 #### Environment Variables
+- `TO_EMAIL`: **⚠️ CURRENTLY SET TO PERSONAL EMAIL FOR TESTING**
+  - **TODO:** Change to `info@compleohealth.com` before go-live
+- `FROM_EMAIL`: `noreply@compleohealth.com` (requires SES verification)
+- `CC_EMAIL`: (optional)
+- `ALLOWED_ORIGINS`: `*` (restrict to production domain later)
+- `AWS_REGION`: `eu-west-2`
+
+#### IAM Permissions
+- ✅ SES permissions added via inline policy
+- Policy name: CompleoHealthContactFormSESPolicy
+
+#### API Gateway Configuration ✅ DEPLOYED
+- **API Name:** CompleoHealthContactAPI
+- **Resource:** `/contact`
+- **Methods:** POST, OPTIONS (for CORS)
+- **Integration:** Lambda proxy
+- **Stage:** prod
+- **Endpoint:** `https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com/prod`
+- **Contact URL:** `https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com/prod/contact`
+
+**⚠️ TESTING STATUS:** 
+- Lambda function fixed (AWS SDK v3)
+- API responding correctly
+- **BLOCKED:** Email sending requires SES domain verification
+- **RESUME TESTING:** Once DNS records propagate and SES verifies compleohealth.com
+
+### 3. AWS Amplify (Frontend) 🔄 IN PROGRESS
+**Owner:** Jason (with Compleo AWS access)  
+
+#### Repository Configuration
+- **Source:** GitHub (`flowency-live/CompleoHealthWeb` - temporary)
+- **Branch:** main
+- **Build settings:** Uses `amplify.yml` 
+- **TODO:** Migrate to Compleo GitHub organization later
+
+#### Environment Variables ✅ CONFIGURED
 ```
-VITE_STRAPI_URL=https://[new-lightsail-ip]
-VITE_GA_MEASUREMENT_ID=[new-ga-id]
+VITE_STRAPI_URL=https://cms.compleohealth.com
+VITE_GA_MEASUREMENT_ID=G-4C9XEXTQ93  # ⚠️ TEMPORARY - needs Compleo GA ID
+VITE_CONTACT_API_ENDPOINT=https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com/prod/contact
 ```
 
-#### Build & Deploy
-- Trigger initial deployment
-- Verify all pages load correctly
-- Test CMS content displays
+#### Deployment Status
+- [🔄] Initial deployment in progress
+- [ ] Verify all pages load correctly
+- [ ] Test CMS content displays
+- [ ] Test contact forms (after SES verification)
 
 ---
 
 ## DNS & Domain Tasks (Fact3 Required)
 
-### 1. Email Setup (SES)
+### 1. Email Setup (SES) 🔄 IN PROGRESS
 **Owner:** Fact3  
 **Why Fact3:** Requires domain verification via DNS records  
 
-- [ ] Add domain to AWS SES
-- [ ] Add verification TXT records to DNS
-- [ ] Add DKIM records to DNS
-- [ ] Configure SPF records
-- [ ] Verify domain in SES console
-- [ ] Move out of SES sandbox (if needed)
+- [✅] Add domain to AWS SES (compleohealth.com)
+- [✅] DNS records sent to Fact3:
+  - 3 CNAME records for DKIM
+  - 1 MX record for mail.compleohealth.com
+  - 2 TXT records (SPF and DMARC)
+- [⏳] Awaiting DNS propagation and SES verification
+- [ ] Move out of SES sandbox (for production)
+- [✅] Personal email verified for testing
 
 ### 2. Domain Pointing
 **Owner:** Fact3  
 **Why Fact3:** Controls compleohealth.com DNS  
 
-#### After Testing Complete:
+#### CMS Subdomain ✅ COMPLETE:
+- [✅] Create A record: `cms.compleohealth.com` → `35.178.98.91`
+- [✅] DNS propagated and confirmed
+- [🔄] Ready for SSL: `sudo certbot --nginx -d cms.compleohealth.com`
+
+#### After Frontend Testing Complete:
 - [ ] Point `compleohealth.com` to Amplify app
 - [ ] Point `www.compleohealth.com` to Amplify app
-- [ ] Create `cms.compleohealth.com` → Lightsail IP (optional)
 - [ ] Update SSL certificates after domain pointing
 
 ---
@@ -221,11 +254,13 @@ build:
 
 ## Go-Live Sequence
 
-### Day 1: Infrastructure Setup
-1. Create all AWS resources in Compleo account
-2. Deploy CMS with content
-3. Deploy frontend application
-4. Configure monitoring
+### Day 1: Infrastructure Setup ✅ CMS COMPLETE
+1. ✅ Lightsail CMS instance created and configured
+2. ✅ Strapi deployed with PostgreSQL database
+3. ⏳ Awaiting DNS for SSL certificate
+4. 🔄 Next: Lambda functions for contact forms
+5. 🔄 Next: Amplify for frontend deployment
+6. 🔄 Next: SES for email configuration
 
 ### Day 2: Testing
 1. Complete all pre-DNS testing
