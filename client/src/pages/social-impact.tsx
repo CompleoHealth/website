@@ -198,7 +198,7 @@ export default function SocialImpact() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center relative">
         <div className="absolute inset-0 flex items-center justify-center opacity-5">
           <img 
-            src="/images/logo/compleo-health-logo-teal.svg" 
+            src="/images/shared/logo-full.svg" 
             alt="Watermark Compleo Health Logo" 
             className="w-96 h-96"
           />
