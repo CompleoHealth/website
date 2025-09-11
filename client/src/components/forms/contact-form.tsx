@@ -48,7 +48,7 @@ export default function ContactForm({ prefilledMessage, equipmentName }: Contact
 
   const createContactMutation = useMutation({
     mutationFn: async (data: ContactFormData) => {
-      const response = await fetch('https://27jqynn952.execute-api.us-east-1.amazonaws.com/Testing/contact', {
+      const response = await fetch(import.meta.env.VITE_CONTACT_API_ENDPOINT || 'https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com/prod/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

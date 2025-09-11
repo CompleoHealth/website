@@ -4,12 +4,14 @@
 ---
 
 ## Current State
-- **Frontend:** Working on Flowency AWS Amplify (`https://main.d3psxuxgpqkedx.amplifyapp.com`)
-- **CMS:** ✅ DEPLOYED on Compleo AWS Lightsail (`http://35.178.98.91:1337`)
-  - Awaiting DNS: `cms.compleohealth.com` → `35.178.98.91`
-  - SSL/HTTPS ready to configure once DNS propagates
-- **Contact Forms:** Working via AWS Lambda (Flowency account)
-- **Ready for:** Lambda, SES, and Amplify deployment to Compleo AWS
+- **Frontend:** ✅ DEPLOYED on Compleo AWS Amplify (`https://main.d1bsx82x8pqvhg.amplifyapp.com`)
+  - All pages working, CMS connected, ready for custom domain
+- **CMS:** ✅ DEPLOYED on Compleo AWS Lightsail (`https://cms.compleohealth.com`)
+  - SSL certificate active, DNS configured
+- **Contact Forms:** ✅ DEPLOYED Lambda & API Gateway (Compleo AWS)
+  - Awaiting SES verification to enable email sending
+- **Email Service:** 🔄 SES verification in progress (DNS records added)
+- **Ready for:** Custom domain configuration and final go-live
 
 ---
 
@@ -138,11 +140,21 @@ VITE_GA_MEASUREMENT_ID=G-4C9XEXTQ93  # ⚠️ TEMPORARY - needs Compleo GA ID
 VITE_CONTACT_API_ENDPOINT=https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com/prod/contact
 ```
 
-#### Deployment Status
-- [🔄] Initial deployment in progress
-- [ ] Verify all pages load correctly
-- [ ] Test CMS content displays
-- [ ] Test contact forms (after SES verification)
+#### Deployment Status ✅ COMPLETE
+- [✅] Initial deployment successful
+- [✅] CMS content loading correctly from `https://cms.compleohealth.com`
+- [✅] All pages verified working
+- [✅] Content Security Policy fixed
+- [✅] Website URL: `https://main.d1bsx82x8pqvhg.amplifyapp.com/`
+- [⚠️] **SSL Note:** Amplify subdomain shows "Not Secure" - this will resolve with custom domain
+- [🔄] Contact forms (awaiting SES verification)
+- [ ] Custom domain configuration pending
+
+**Technical Notes:**
+- **Amplify App ID:** `d1bsx82x8pqvhg`
+- **GitHub Branch:** `main` (flowency-live/CompleoHealthWeb - temporary)
+- **Environment Variables:** Configured in Amplify console
+- **Build Settings:** Uses `amplify.yml` from repository
 
 ---
 
@@ -155,9 +167,10 @@ VITE_CONTACT_API_ENDPOINT=https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com
 - [✅] Add domain to AWS SES (compleohealth.com)
 - [✅] DNS records sent to Fact3:
   - 3 CNAME records for DKIM
-  - 1 MX record for mail.compleohealth.com
-  - 2 TXT records (SPF and DMARC)
-- [⏳] Awaiting DNS propagation and SES verification
+  - 1 MX record for mail.compleohealth.com  
+  - 1 TXT record (SPF) - ⚠️ DMARC record NOT changed (Fact3 keeping existing)
+- [✅] DNS records added by Fact3
+- [🔄] Checking SES verification status
 - [ ] Move out of SES sandbox (for production)
 - [✅] Personal email verified for testing
 
@@ -170,10 +183,17 @@ VITE_CONTACT_API_ENDPOINT=https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com
 - [✅] DNS propagated and confirmed
 - [🔄] Ready for SSL: `sudo certbot --nginx -d cms.compleohealth.com`
 
-#### After Frontend Testing Complete:
-- [ ] Point `compleohealth.com` to Amplify app
-- [ ] Point `www.compleohealth.com` to Amplify app
-- [ ] Update SSL certificates after domain pointing
+#### Main Domain Configuration (Next Step):
+- [ ] Add custom domain in Amplify console (`compleohealth.com`)
+- [ ] Configure both root and www domains
+- [ ] Get DNS records from Amplify for Fact3
+- [ ] Point DNS to Amplify (via Fact3)
+- [ ] SSL certificates will be automatically provisioned by Amplify
+
+**SSL Behavior:**
+- **Current:** `.amplifyapp.com` subdomain shows "Not Secure" (Amplify limitation)
+- **After custom domain:** Automatic SSL certificate via AWS Certificate Manager
+- **Result:** Full HTTPS with valid SSL certificate
 
 ---
 
@@ -254,13 +274,13 @@ build:
 
 ## Go-Live Sequence
 
-### Day 1: Infrastructure Setup ✅ CMS COMPLETE
-1. ✅ Lightsail CMS instance created and configured
-2. ✅ Strapi deployed with PostgreSQL database
-3. ⏳ Awaiting DNS for SSL certificate
-4. 🔄 Next: Lambda functions for contact forms
-5. 🔄 Next: Amplify for frontend deployment
-6. 🔄 Next: SES for email configuration
+### Infrastructure Deployment ✅ COMPLETE
+1. ✅ Lightsail CMS: `https://cms.compleohealth.com`
+2. ✅ Lambda & API Gateway: Contact form processing
+3. ✅ Amplify Frontend: `https://main.d1bsx82x8pqvhg.amplifyapp.com`
+4. ✅ All services connected and communicating
+5. 🔄 SES verification: Awaiting DNS propagation
+6. 🔄 Custom domain: Ready to configure
 
 ### Day 2: Testing
 1. Complete all pre-DNS testing
@@ -298,6 +318,29 @@ If issues occur after DNS switch:
 **DNS/Domain:** Fact3  
 **AWS Account:** Compleo designated admin  
 **Emergency:** Establish escalation path  
+
+---
+
+## Current Deployment Summary
+
+### ✅ COMPLETED SERVICES
+| Service | Status | URL/Endpoint | Notes |
+|---------|--------|-------------|--------|
+| **Lightsail CMS** | ✅ Live | `https://cms.compleohealth.com` | SSL active, content loading |
+| **Lambda Functions** | ✅ Live | `CompleoHealthContactForm` | AWS SDK v3, SES permissions |
+| **API Gateway** | ✅ Live | `https://4xccwo5gph.execute-api.eu-west-2.amazonaws.com/prod/contact` | CORS configured |
+| **Amplify Frontend** | ✅ Live | `https://main.d1bsx82x8pqvhg.amplifyapp.com` | All pages working |
+
+### 🔄 IN PROGRESS
+| Service | Status | Blocker | Next Step |
+|---------|--------|---------|-----------|
+| **SES Email** | DNS Added | DKIM verification | Wait for propagation |
+| **Custom Domain** | Ready | Pending decision | Add domain in Amplify |
+
+### ⚠️ IMPORTANT NOTES
+- **SSL "Not Secure":** Amplify subdomains show this - resolves with custom domain
+- **Google Analytics:** Using temporary Flowency ID - needs Compleo GA ID
+- **Repository:** Currently using `flowency-live/CompleoHealthWeb` - migrate to Compleo org later
 
 ---
 
