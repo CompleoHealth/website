@@ -164,25 +164,5 @@
     },
     "tags": ["Premium", "Cardiac", "Efficient"],
     "isComingSoon": false
-  },
-  {
-    "id": "canon-aquilion-one",
-    "name": "Aquilion ONE Genesis CT",
-    "manufacturer": "Canon",
-    "type": "CT",
-    "imageUrl": "",
-    "description": "Next-generation dynamic volume CT with industry-leading spatial resolution and reduced radiation dose requirements.",
-    "specifications": {
-      "technology": "Dynamic Volume CT",
-      "keyFeatures": [
-        "Industry-leading spatial resolution",
-        "Reduced radiation dose",
-        "Dynamic volume scanning",
-        "Breakthrough technology",
-        "Advanced clinical applications"
-      ]
-    },
-    "tags": ["Coming Soon", "Dynamic Volume", "Low Dose"],
-    "isComingSoon": true
   }
 ]
