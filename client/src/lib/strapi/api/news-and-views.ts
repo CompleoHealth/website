@@ -37,26 +37,29 @@ class NewsAndViewsAPI {
    */
   async getNewsAndViewsPage(): Promise<NewsAndViewsPage | null> {
     try {
-      // Simplified populate query to match working pages pattern
+      // Use simple populate=* pattern like sustainability page for safety
       const queryString = 'populate=*';
-      
+
       // Log the query string in debug mode
-      
+      debugLog('News and Views query string:', queryString);
+
       const response = await axios.get(`${this.baseURL}/news-and-views-page?${queryString}`, {
         timeout: this.timeout
       });
 
       // Log the raw response in debug mode
+      debugLog('News and Views raw response:', response.data);
 
       // Extract data from the Strapi response following the established pattern
-      // Looking at the console logs, we can see the data structure is correct
-      // but we need to return just the data object without the meta information
       const responseData = response.data.data;
-      
+
       // Log the extracted data in debug mode
-      
+      debugLog('News and Views extracted data:', responseData);
+
       return responseData;
     } catch (error) {
+      // Follow sustainability page error handling pattern - always return null on error
+      debugLog('News and Views API error:', error);
       handleApiError(error, 'getNewsAndViewsPage');
       return null;
     }

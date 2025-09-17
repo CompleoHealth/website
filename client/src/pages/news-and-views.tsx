@@ -93,19 +93,13 @@ export default function NewsAndViews() {
       try {
         setLoading(true);
         const pageResult = await fetchNewsAndViewsPageData();
-        
-        if (pageResult) {
-          // Set the page data and log success
-          setPageData(pageResult);
-          setError(null);
-        } else {
-          // No data returned from API
-          setError('Failed to load page data');
-        }
+
+        setPageData(pageResult); // pageResult can be null, that's fine - we have fallbacks
+        setError(null);
+        setLoading(false);
       } catch (err) {
-        // Error handled through state management
+        // Error handling without console logs - follow about page pattern
         setError('Failed to load page data');
-      } finally {
         setLoading(false);
       }
     };
@@ -124,21 +118,8 @@ export default function NewsAndViews() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="bg-compleo-teal text-white px-4 py-2 rounded hover:bg-compleo-deep-teal"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // Note: Following about page pattern - don't block page render on API errors
+  // If there's an error, pageData will be null and we'll use fallback data
 
 
 
@@ -215,7 +196,8 @@ export default function NewsAndViews() {
               </p>
       
               <div className="grid md:grid-cols-2 gap-8 mt-12">
-                {newsItems.map((item, index) => {
+                {/* Use CMS data if available, fallback to static JSON */}
+                {(pageData?.newsArticles && pageData.newsArticles.length > 0 ? pageData.newsArticles : newsItems).map((item, index) => {
                   
                   return (
                     <a key={index} href={item.url} target="_blank" rel="noopener noreferrer" className="block h-full">
@@ -289,14 +271,15 @@ export default function NewsAndViews() {
                 {pageData?.eventsDescription || eventsSection.description}
               </p>
               <div className="grid grid-cols-2 gap-6 mt-12">
-                {events.map((event, index) => (
+                {/* Use CMS data if available, fallback to static JSON */}
+                {(pageData?.events && pageData.events.length > 0 ? pageData.events : events).map((event, index) => (
                   <a key={index} href={event.url} target="_blank" rel="noopener noreferrer" className="block h-full">
                     <Card className="relative bg-white hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden group cursor-pointer h-full animate-slide-in-up" style={{ animationDelay: `${index * 150}ms` }}>
                       <div className="absolute inset-0 bg-compleo-deep-teal opacity-0 group-hover:opacity-25 transition-opacity duration-300 z-10"></div>
                       <div className="relative h-full">
                         <div className="overflow-hidden">
-                          <img 
-                            src={event.image} 
+                          <img
+                            src={event.imageUrl || event.image} 
                             alt={event.title}
                             className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
                           />
@@ -347,7 +330,11 @@ export default function NewsAndViews() {
             </div>
 
             <div className="grid lg:grid-cols-3 gap-8 mb-12 mt-12">
-              {linkedinPosts.map((postUrl, index) => (
+              {/* Use CMS data if available, fallback to static data */}
+              {(pageData?.linkedinPosts && pageData.linkedinPosts.length > 0
+                ? pageData.linkedinPosts.map(post => post.embedUrl)
+                : linkedinPosts
+              ).map((postUrl, index) => (
                 <div key={index} className="bg-gray-50 rounded-xl overflow-hidden shadow-lg">
                   <iframe 
                     src={postUrl} 

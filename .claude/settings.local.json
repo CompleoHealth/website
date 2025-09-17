@@ -20,7 +20,12 @@
       "Bash(git rm:*)",
       "Bash(npm audit:*)",
       "Bash(find:*)",
-      "Bash(npm outdated:*)"
+      "Bash(npm outdated:*)",
+      "Bash(git branch:*)",
+      "Bash(sed:*)",
+      "Bash(git checkout:*)",
+      "Bash(timeout:*)",
+      "Bash(npx kill-port:*)"
     ],
     "deny": [],
     "ask": []

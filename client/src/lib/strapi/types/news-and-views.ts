@@ -20,7 +20,7 @@ export interface StrapiEvent {
   title: string;
   date: string;
   location: string;
-  imageUrl: string;
+  imageUrl?: string;
   url: string;
   // Legacy JSON compatibility fields (optional)
   image?: string;
@@ -41,7 +41,7 @@ export interface StrapiPillCTA {
 /**
  * Complete News and Views Page Structure
  * Following exact proven pattern from other service pages
- * Note: Collections (news items, events, LinkedIn posts) are NOT managed by CMS
+ * Now with CMS-managed collections for news, events, and LinkedIn posts
  */
 export interface NewsAndViewsPage {
   // Hero section
@@ -51,26 +51,26 @@ export interface NewsAndViewsPage {
   heroDescription: string;
   beeCardTitle: string;
   beeCardDescription: string;
-  
+
   // News section
   newsTitle: string;
   newsDescription: string;
   newsBadgeText: string;
-  // Note: newsItems are NOT managed by CMS, they come from static JSON
-  
+  newsArticles?: StrapiNewsItem[];  // CMS-managed news items (optional for backward compatibility)
+
   // Events section
   eventsTitle: string;
   eventsDescription: string;
   eventsBadgeText: string;
-  // Note: events are NOT managed by CMS, they come from static JSON
-  
+  events?: StrapiEvent[];  // CMS-managed events (optional for backward compatibility)
+
   // Social section
   socialTitle: string;
   socialDescription: string;
   socialBadgeText: string;
   linkedinUrl: string;
-  // Note: linkedinPosts are NOT managed by CMS, they come from static TS
-  
+  linkedinPosts?: StrapiLinkedInPost[];  // CMS-managed LinkedIn posts (optional for backward compatibility)
+
   // CTA section
   ctaSection: StrapiPillCTA;
 }
