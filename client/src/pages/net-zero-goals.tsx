@@ -20,6 +20,10 @@ import {
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import netZeroData from '@/../../shared/data/net-zero-goals.json';
 
+// CMS imports
+import { netZeroGoalsApi } from '@/lib/strapi/api/net-zero-goals';
+import { StrapiNetZeroGoalsPage } from '@/lib/strapi/types/net-zero-goals';
+
 // Icon mapping for dynamic icons
 const getIcon = (iconName: string) => {
   const icons: { [key: string]: any } = {
@@ -38,7 +42,8 @@ const getIcon = (iconName: string) => {
 
 // Timeline item type for better type safety
 interface TimelineItem {
-  id: string;
+  id?: string;
+  item_id?: string;
   date: string;
   category: string;
   type: string;
@@ -52,9 +57,37 @@ export default function NetZeroGoals() {
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
   const { elementRef: timelineRef, isVisible: timelineInView } = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
 
+  // CMS State Management
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [cmsData, setCmsData] = useState<StrapiNetZeroGoalsPage | null>(null);
+
+  // Data to use (CMS first, then JSON fallback)
+  const dataToUse = cmsData || netZeroData;
+
   useEffect(() => {
     const timer = setTimeout(() => setShouldAnimate(true), 300);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Fetch CMS data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const pageData = await netZeroGoalsApi.getNetZeroGoalsPage();
+
+        if (pageData) {
+          setCmsData(pageData);
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const getCategoryColor = (category: string) => {
@@ -86,6 +119,7 @@ export default function NetZeroGoals() {
     <>
       <ScrollProgress />
       <Header />
+
       
       <main className="min-h-screen bg-gray-200">
         {/* Hero Section */}
@@ -93,34 +127,34 @@ export default function NetZeroGoals() {
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className={`text-center transition-all duration-700 ${heroInView && shouldAnimate ? 'animate-fade-in-up opacity-100' : 'opacity-0 translate-y-8'}`}>
-              <Link href={netZeroData.hero.backButton.href}>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+              <Link href={dataToUse.hero?.backButton?.url || dataToUse.hero?.backButton?.href || '#'}>
+                <Button
+                  variant="ghost"
+                  size="sm"
                   className="mb-6 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  {netZeroData.hero.backButton.text}
+                  {dataToUse.hero?.backButton?.text || 'Back'}
                 </Button>
               </Link>
               
               <h1 className="text-3xl lg:text-4xl font-black mb-4 tracking-tight">
-                Net Zero <span className="text-white">{netZeroData.hero.titleHighlight}</span>
+                {dataToUse.hero?.title || 'Net Zero'} {dataToUse.hero?.titleHighlight && <span className="text-white">{dataToUse.hero.titleHighlight}</span>}
               </h1>
-              
+
               <p className="text-lg lg:text-xl text-white/90 mb-6 max-w-3xl mx-auto leading-relaxed">
-                {netZeroData.hero.subtitle}
+                {dataToUse.hero?.subtitle || 'Our commitment to net zero goals'}
               </p>
-              
+
               <div className="flex justify-center">
-                <a 
-                  href={netZeroData.hero.nhsStrategyButton.href}
+                <a
+                  href={dataToUse.hero?.nhsStrategyButton?.url || dataToUse.hero?.nhsStrategyButton?.href || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-all duration-300 text-base font-semibold shadow-lg hover:shadow-xl border-2 border-blue-500"
                 >
-                  {React.createElement(getIcon(netZeroData.hero.nhsStrategyButton.icon) || FileText, { className: "h-5 w-5 mr-2" })}
-                  {netZeroData.hero.nhsStrategyButton.text}
+                  {React.createElement(getIcon(dataToUse.hero?.nhsStrategyButton?.icon) || FileText, { className: "h-5 w-5 mr-2" })}
+                  {dataToUse.hero?.nhsStrategyButton?.text || 'View NHS Strategy'}
                 </a>
               </div>
             </div>
@@ -136,24 +170,22 @@ export default function NetZeroGoals() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center mb-12">
               <h2 className="text-2xl lg:text-3xl font-bold text-white mb-4">
-                {netZeroData.timeline.title}
+                {dataToUse.timeline?.title || 'Timeline'}
               </h2>
               <p className="text-base text-gray-200 max-w-2xl mx-auto">
-                {netZeroData.timeline.subtitle}
+                {dataToUse.timeline?.subtitle || 'Our sustainability journey'}
               </p>
             </div>
-
-            
 
             {/* Timeline */}
             <div className="relative">
               {/* Timeline line */}
               <div className="absolute left-1/2 transform -translate-x-0.5 w-1 bg-gradient-to-b from-green-500 via-green-600 to-green-700 h-full shadow-lg"></div>
-              
+
               <div className="space-y-8">
-                {netZeroData.timelineItems.map((item: TimelineItem, index: number) => (
-                  <div 
-                    key={item.id} 
+                {(dataToUse.timelineItems || []).map((item: TimelineItem, index: number) => (
+                  <div
+                    key={item.id || item.item_id}
                     className="relative"
                   >
                     {/* Timeline marker */}
@@ -233,17 +265,17 @@ export default function NetZeroGoals() {
         <section className="py-12 bg-compleo-beige">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-compleo-deep-teal mb-6">
-              {netZeroData.cta.title}
+              {dataToUse.cta?.title || 'Get in Touch'}
             </h2>
             <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-              {netZeroData.cta.subtitle}
+              {dataToUse.cta?.subtitle || 'Contact us to learn more'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {netZeroData.cta.buttons.map((button, index) => {
-                const IconComponent = getIcon(button.icon);
-                const isPrimary = button.variant === 'primary';
+              {(dataToUse.cta?.buttons || []).map((button, index) => {
+                const IconComponent = getIcon(button?.icon);
+                const isPrimary = button?.variant === 'primary';
                 return (
-                  <Link key={index} href={button.href}>
+                  <Link key={index} href={button?.url || button?.href || '#'}>
                     <Button 
                       size="lg" 
                       className={isPrimary 
@@ -252,7 +284,7 @@ export default function NetZeroGoals() {
                       }
                     >
                       {IconComponent && <IconComponent className="h-5 w-5 mr-2" />}
-                      {button.text}
+                      {button?.text || 'Learn More'}
                     </Button>
                   </Link>
                 );
