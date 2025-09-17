@@ -28,7 +28,9 @@
       "Bash(npx kill-port:*)",
       "WebFetch(domain:docs.strapi.io)",
       "WebSearch",
-      "Bash(/bashes)"
+      "Bash(/bashes)",
+      "Bash(taskkill:*)",
+      "Bash(npm run strapi:*)"
     ],
     "deny": [],
     "ask": []
