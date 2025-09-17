@@ -12,8 +12,11 @@ import { useEffect, useState } from 'react';
 // CMS imports
 import { ourTeamApi } from '@/lib/strapi/api/our-team';
 import { globalSettingsApi } from '@/lib/strapi/api/global-settings';
+import { teamApi } from '@/lib/strapi/api/team';
 import { StrapiOurTeamPage } from '@/lib/strapi/types/our-team';
 import { StrapiGlobalSettings } from '@/lib/strapi/types/global-settings';
+import { CMSTeamMember } from '@/lib/strapi/types/team';
+import { STRAPI_URL } from '@/lib/strapi/api/config';
 
 // Import team data (stays as operational data)
 import { TEAM_MEMBERS } from '@/../../shared/team-data';
@@ -24,8 +27,9 @@ export default function OurTeam() {
   const [error, setError] = useState<string | null>(null);
   const [pageData, setPageData] = useState<StrapiOurTeamPage | null>(null);
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
+  const [cmsTeamMembers, setCmsTeamMembers] = useState<CMSTeamMember[] | null>(null);
 
-  const leadership = TEAM_MEMBERS; // Stays as operational data
+  const leadership = cmsTeamMembers && cmsTeamMembers.length > 0 ? cmsTeamMembers : TEAM_MEMBERS;
 
   // Fetch CMS data (following proven pattern from about.tsx)
   useEffect(() => {
@@ -33,18 +37,20 @@ export default function OurTeam() {
       try {
         setIsLoading(true);
         
-        // Parallel API calls for page data and global settings
-        const [ourTeamPageData, globalSettingsData] = await Promise.all([
+        // Parallel API calls for page data, global settings, and team members
+        const [ourTeamPageData, globalSettingsData, teamMembersData] = await Promise.all([
           ourTeamApi.getOurTeamPage(),
-          globalSettingsApi.getGlobalSettings()
+          globalSettingsApi.getGlobalSettings(),
+          teamApi.getTeamMembers()
         ]);
         
-        
+
         setPageData(ourTeamPageData as any); // Type assertion for flexibility
         setGlobalSettings(globalSettingsData);
+        setCmsTeamMembers(teamMembersData);
         setIsLoading(false);
       } catch (err) {
-        console.error('❌ Error fetching Our Team CMS data:', err);
+        // Error fetching Our Team CMS data - failing silently in production
         setError('Failed to load page content');
         setIsLoading(false);
       }
@@ -158,28 +164,33 @@ export default function OurTeam() {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {leadership.map((leader, index) => (
-                <Link key={index} href={`/team-member/${leader.id}`}>
-                  <Card className="overflow-hidden group cursor-pointer transform transition-all duration-300">
-                    <CardContent className="p-0">
-                      <div className="relative overflow-hidden">
-                        <img 
-                          src={leader.image}
-                          alt={leader.name}
-                          className="w-full h-96 object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        {/* Brand green fade-up overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-compleo-teal via-compleo-teal/60 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500"></div>
-                        
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 z-10">
-                          <h3 className="text-xl font-bold text-white group-hover:text-compleo-yellow transition-colors duration-300">{leader.name}</h3>
-                          <p className="text-gray-200 group-hover:text-white transition-colors duration-300">{leader.role}</p>
+              {leadership.map((leader, index) => {
+                const leaderId = (leader as any).id_slug || (leader as any).id;
+                const leaderImage = (leader as any).image?.url ? `${STRAPI_URL}${(leader as any).image.url}` : (leader as any).image;
+
+                return (
+                  <Link key={index} href={`/team-member/${leaderId}`}>
+                    <Card className="overflow-hidden group cursor-pointer transform transition-all duration-300">
+                      <CardContent className="p-0">
+                        <div className="relative overflow-hidden">
+                          <img
+                            src={leaderImage}
+                            alt={leader.name}
+                            className="w-full h-96 object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                          {/* Brand green fade-up overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-compleo-teal via-compleo-teal/60 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500"></div>
+
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 z-10">
+                            <h3 className="text-xl font-bold text-white group-hover:text-compleo-yellow transition-colors duration-300">{leader.name}</h3>
+                            <p className="text-gray-200 group-hover:text-white transition-colors duration-300">{leader.role}</p>
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>

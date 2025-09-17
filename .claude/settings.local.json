@@ -25,7 +25,10 @@
       "Bash(sed:*)",
       "Bash(git checkout:*)",
       "Bash(timeout:*)",
-      "Bash(npx kill-port:*)"
+      "Bash(npx kill-port:*)",
+      "WebFetch(domain:docs.strapi.io)",
+      "WebSearch",
+      "Bash(/bashes)"
     ],
     "deny": [],
     "ask": []
