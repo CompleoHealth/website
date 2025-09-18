@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
-import { Search, CalendarCheck } from 'lucide-react';
+import { Link, useLocation } from 'wouter';
+import { Search, CalendarCheck, Play, Pause } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { ImpactStatistics } from '@/components/common/impact-statistics';
@@ -15,12 +16,30 @@ interface HeroSectionProps {
 
 export default function HeroSection({ heroData, impactStats, impactStatsTitle }: HeroSectionProps) {
   const { elementRef, shouldAnimate } = useIntersectionObserver();
+  const [, setLocation] = useLocation();
+
+  // Video controls state - WCAG 2.1 AA compliance
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Video toggle function - WCAG 2.1 AA compliance
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
   
   return (
     <section ref={elementRef} className="relative bg-compleo-deep-teal text-white overflow-hidden">
       {/* Background Video */}
       <div className="absolute inset-0">
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
@@ -42,6 +61,20 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
             aria-label="Generic Medical Equipment"
           />
         </video>
+
+        {/* Video Control Button - WCAG 2.1 AA Compliance */}
+        <button
+          onClick={toggleVideo}
+          className="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2"
+          aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
+          title={isVideoPlaying ? "Pause video" : "Play video"}
+        >
+          {isVideoPlaying ? (
+            <Pause className="h-5 w-5" />
+          ) : (
+            <Play className="h-5 w-5" />
+          )}
+        </button>
       </div>
       <div className="relative max-w-7xl mx-auto container-padding section-padding-lg">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
@@ -54,10 +87,14 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
             </p>
             <div className="flex flex-row gap-3 sm:gap-6">
               {heroData?.primaryButton ? (
-                <Link href={heroData.primaryButton?.url || "/services"} onClick={() => trackCTAClick(`${heroData.primaryButton?.text || 'EXPLORE'} - Home Hero`, '/')}>
-                  <Button 
-                    size="lg" 
+                <Link href={heroData.primaryButton?.url || "/services"} tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white btn-lg hover-scale border-2 border-white/40 hover:border-white/60 backdrop-blur-sm w-36 sm:w-56 h-auto py-4 sm:py-6 px-4 sm:px-8 shadow-2xl hover:shadow-3xl transition-all duration-500 rounded-xl"
+                    onClick={() => {
+                      trackCTAClick(`${heroData.primaryButton?.text || 'EXPLORE'} - Home Hero`, '/');
+                      setLocation(heroData.primaryButton?.url || "/services");
+                    }}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-2">
                       <div className="bg-white/20 rounded-full p-1 sm:p-2 transition-all duration-300 group-hover:bg-white/30 group-hover:scale-110">
@@ -72,10 +109,14 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
                   </Button>
                 </Link>
               ) : (
-                <Link href="/services" onClick={() => trackCTAClick('EXPLORE Our Solutions - Home Hero', '/')}>
-                  <Button 
-                    size="lg" 
+                <Link href="/services" tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white btn-lg hover-scale border-2 border-white/40 hover:border-white/60 backdrop-blur-sm w-36 sm:w-56 h-auto py-4 sm:py-6 px-4 sm:px-8 shadow-2xl hover:shadow-3xl transition-all duration-500 rounded-xl"
+                    onClick={() => {
+                      trackCTAClick('EXPLORE Our Solutions - Home Hero', '/');
+                      setLocation("/services");
+                    }}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-2">
                       <div className="bg-white/20 rounded-full p-1 sm:p-2 transition-all duration-300 group-hover:bg-white/30 group-hover:scale-110">
@@ -92,10 +133,14 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
               )}
               
               {heroData?.secondaryButton ? (
-                <Link href={heroData.secondaryButton?.url || "/case-studies"} onClick={() => trackCTAClick(`${heroData.secondaryButton?.text || 'READ'} - Home Hero`, '/')}>
-                  <Button 
-                    size="lg" 
+                <Link href={heroData.secondaryButton?.url || "/case-studies"} tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group relative bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal btn-lg hover-scale border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm w-36 sm:w-56 h-auto py-4 sm:py-6 px-4 sm:px-8 shadow-2xl hover:shadow-3xl transition-all duration-500 rounded-xl"
+                    onClick={() => {
+                      trackCTAClick(`${heroData.secondaryButton?.text || 'READ'} - Home Hero`, '/');
+                      setLocation(heroData.secondaryButton?.url || "/case-studies");
+                    }}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-2">
                       <div className="bg-compleo-deep-teal/20 rounded-full p-1 sm:p-2 transition-all duration-300 group-hover:bg-compleo-deep-teal/30 group-hover:scale-110">
@@ -110,10 +155,14 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
                   </Button>
                 </Link>
               ) : (
-                <Link href="/case-studies" onClick={() => trackCTAClick('READ Our Case Studies - Home Hero', '/')}>
-                  <Button 
-                    size="lg" 
+                <Link href="/case-studies" tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group relative bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal btn-lg hover-scale border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm w-36 sm:w-56 h-auto py-4 sm:py-6 px-4 sm:px-8 shadow-2xl hover:shadow-3xl transition-all duration-500 rounded-xl"
+                    onClick={() => {
+                      trackCTAClick('READ Our Case Studies - Home Hero', '/');
+                      setLocation("/case-studies");
+                    }}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-2">
                       <div className="bg-compleo-deep-teal/20 rounded-full p-1 sm:p-2 transition-all duration-300 group-hover:bg-compleo-deep-teal/30 group-hover:scale-110">

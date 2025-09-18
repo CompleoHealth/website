@@ -143,11 +143,11 @@ export default function Home() {
           subtitle={pageData?.LocationMap?.subtitle}
         />
         
-        <CurvedCtaPanel 
-          title={pageData?.CurvedCTA?.title}
-          description={pageData?.CurvedCTA?.description}
-          buttonText={pageData?.CurvedCTA?.buttonText}
-          buttonHref={pageData?.CurvedCTA?.buttonHref}
+        <CurvedCtaPanel
+          title={pageData?.CurvedCTA?.title || "Ready to Partner with Compleo?"}
+          description={pageData?.CurvedCTA?.description || "Let's discuss how we can support your diagnostic imaging needs and transform services to improve patient outcomes together."}
+          buttonText={pageData?.CurvedCTA?.buttonText || "Partner With Us"}
+          buttonHref={pageData?.CurvedCTA?.buttonHref || "/contact"}
           imageSrc={pageData?.CurvedCTA?.imageSrc}
         />
         

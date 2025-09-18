@@ -17,7 +17,7 @@
   --card-foreground: hsl(20, 14.3%, 4.1%);
   --border: hsl(20, 5.9%, 90%);
   --input: hsl(20, 5.9%, 90%);
-  --primary: rgb(0, 169, 144);
+  --primary: rgb(0, 135, 115);
   --primary-foreground: rgb(255, 255, 255);
   --secondary: rgb(247, 249, 228);
   --secondary-foreground: rgb(15, 46, 46);
@@ -25,12 +25,12 @@
   --accent-foreground: rgb(15, 46, 46);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: rgb(0, 169, 144);
+  --ring: rgb(0, 135, 115);
   --radius: 0.5rem;
 
   /* Compleo Health Brand Colors */
   --compleo-deep-teal: rgb(15, 46, 46);
-  --compleo-teal: rgb(0, 169, 144);
+  --compleo-teal: rgb(0, 135, 115);
   --compleo-yellow: rgb(247, 249, 228);
   --compleo-white: rgb(255, 255, 255);
   --compleo-beige: rgb(242, 237, 230);
@@ -525,9 +525,15 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Enhanced Focus States */
+/* Enhanced Focus States - WCAG AA Compliant */
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all duration-200;
+  transition: all 0.2s ease-in-out;
+}
+
+.focus-ring:focus-visible {
+  outline: 3px solid #0066cc !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 4px #0066cc !important;
 }
 
 /* Professional Typography */
@@ -766,11 +772,72 @@ html {
   }
 }
 
-/* Accessibility improvements */
+/* Enhanced Accessibility - WCAG AA Focus Indicators */
 @layer base {
-  .focus-visible:focus {
-    outline: 2px solid #00a990;
-    outline-offset: 2px;
+  /* Reset all default focus styles to prevent double focus */
+  *:focus {
+    outline: none;
+  }
+
+  /* High-contrast focus indicators for specific interactive elements only */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid #0066cc !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 1px #ffffff, 0 0 0 4px #0066cc !important;
+  }
+
+  /* Prevent focus on non-interactive containers */
+  div:focus,
+  span:focus,
+  section:focus,
+  main:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Links wrapping buttons should not be focusable - handle this at component level with tabIndex={-1} */
+
+  /* Enhanced focus for form elements */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    border-color: var(--compleo-teal) !important;
+    box-shadow: 0 0 0 1px #ffffff, 0 0 0 3px #0066cc, 0 0 0 4px var(--compleo-teal) !important;
+  }
+
+  /* Fix dropdown menu focus indicators - specific targeting for desktop navigation dropdowns */
+  .desktop-nav-1200 .absolute.bg-white.shadow-xl a:focus-visible,
+  .desktop-nav-1200 .absolute.bg-white.shadow-xl a:focus,
+  div.absolute.bg-white.shadow-xl a:focus-visible,
+  div.absolute.bg-white.shadow-xl a:focus {
+    outline: 3px solid #0066cc !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 1px #ffffff, 0 0 0 4px #0066cc !important;
+    border-radius: 8px !important;
+    margin: 2px !important;
+  }
+
+  /* Style the content div inside focused dropdown links */
+  .desktop-nav-1200 .absolute.bg-white.shadow-xl a:focus-visible > div,
+  .desktop-nav-1200 .absolute.bg-white.shadow-xl a:focus > div,
+  div.absolute.bg-white.shadow-xl a:focus-visible > div,
+  div.absolute.bg-white.shadow-xl a:focus > div {
+    background-color: rgba(0, 102, 204, 0.1) !important;
+    border-left-color: #0066cc !important;
+  }
+
+  /* Service card focus indicators - full card border */
+  .service-card-link:focus-visible {
+    outline: 4px solid #0066cc !important;
+    outline-offset: 2px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 6px #0066cc !important;
   }
   
   .sr-only {

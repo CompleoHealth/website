@@ -2,8 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Leaf, Recycle, Heart, Users, TreePine, Award, MapPin, Target, HandHeart, UserCheck, Network, Zap } from 'lucide-react';
-import { Link } from 'wouter';
+import { Leaf, Recycle, Heart, Users, TreePine, Award, MapPin, Target, HandHeart, UserCheck, Network, Zap, Play, Pause } from 'lucide-react';
+import { Link, useLocation } from 'wouter';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import BackToTop from '@/components/common/back-to-top';
@@ -14,7 +14,7 @@ import { SEOHead } from '@/components/common/seo-head';
 import { SEO_DATA } from '@/lib/seo-data';
 
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 // CMS Integration imports - Following proven pattern
 import { sustainabilityApi } from '@/lib/strapi/api/sustainability';
@@ -136,12 +136,29 @@ const ctaContent = {
 export default function SocialImpact() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
-  
+
   // CMS Integration state - Following proven pattern from equipment-details
   const [pageData, setPageData] = useState<SustainabilityPage | null>(null);
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [, setLocation] = useLocation();
+
+  // Video controls state - WCAG 2.1 AA compliance
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Video toggle function - WCAG 2.1 AA compliance
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setShouldAnimate(true), 300);
@@ -192,20 +209,22 @@ export default function SocialImpact() {
     fetchData();
   }, []);
 
-  // Loading state with logo watermark - Following proven pattern
+  // Loading state - Following proven pattern from home page
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center relative">
-        <div className="absolute inset-0 flex items-center justify-center opacity-5">
-          <img 
-            src="/images/shared/logo-full.svg" 
-            alt="Watermark Compleo Health Logo" 
-            className="w-96 h-96"
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center relative overflow-hidden">
+        {/* Large Compleo Logo Watermark with Subtle Growth Animation */}
+        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <img
+            src="/images/shared/logo-loading.png"
+            alt="Compleo Health Logo"
+            className="w-[768px] h-auto max-w-[70vw] max-h-[40vh] object-contain animate-logo-grow"
           />
         </div>
-        <div className="relative z-10 text-center">
-          <EnhancedSkeleton className="w-12 h-12 rounded-full mx-auto mb-4" />
-          <p className="text-compleo-gray font-medium">Loading...</p>
+        {/* Loading Spinner */}
+        <div className="text-center text-compleo-deep-teal relative z-10 mt-32">
+          <div className="w-12 h-12 border-4 border-compleo-teal/30 border-t-compleo-teal rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg font-medium">Loading...</p>
         </div>
       </div>
     );
@@ -223,37 +242,54 @@ export default function SocialImpact() {
       <SEOHead {...SEO_DATA.sustainability} />
       <ScrollProgress />
       <Header />
-      <main className="animate-fade-in-up">
+      <main id="main-content" className="animate-fade-in-up">
         {/* Hero Section */}
         <section ref={heroRef} className="py-20 bg-compleo-deep-teal text-white relative overflow-hidden">
           {/* Background Video */}
           <div className="absolute inset-0">
             <video
+              ref={videoRef}
               autoPlay
               loop
               muted
               playsInline
               className="w-full h-full object-cover opacity-40"
+              aria-label="Background video showing environmental sustainability and healthcare technology"
             >
               <source src="/videos/environment-hero.mp4" type="video/mp4" />
               {/* Fallback for browsers that don't support video */}
-              <div 
+              <div
                 className="w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: "url('https://images.unsplash.com/photo-1569163139394-de44cb5894c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
                 }}
               />
             </video>
+
+            {/* Video Control Button - WCAG 2.1 AA Compliance */}
+            <button
+              onClick={toggleVideo}
+              className="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2"
+              aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
+              title={isVideoPlaying ? "Pause video" : "Play video"}
+            >
+              {isVideoPlaying ? (
+                <Pause className="h-5 w-5" />
+              ) : (
+                <Play className="h-5 w-5" />
+              )}
+            </button>
           </div>
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className={`transition-all duration-700 ${shouldAnimate ? 'animate-slide-in-left opacity-100' : 'opacity-0 translate-x-[-50px]'}`}>
               <h1 className="heading-1 mb-4">{pageData?.heroTitle || heroContent.title}</h1>
               <p className="body-large text-gray-200 max-w-3xl mx-auto mb-6">{pageData?.heroSubtitle || heroContent.subtitle}</p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href={pageData?.primaryButton?.url || heroContent.primaryButton.href}>
-                <Button 
-                  size="lg" 
+              <Link href={pageData?.primaryButton?.url || heroContent.primaryButton.href} tabIndex={-1}>
+                <Button
+                  size="lg"
                   className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-48 h-auto"
+                  onClick={() => setLocation(pageData?.primaryButton?.url || heroContent.primaryButton.href)}
                 >
                   <div className="flex flex-col items-center gap-1.5">
                     <div className="bg-white/20 rounded-full p-1">
@@ -267,10 +303,11 @@ export default function SocialImpact() {
                   <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </Button>
               </Link>
-              <Link href={pageData?.secondaryButton?.url || heroContent.secondaryButton.href}>
-                <Button 
-                  size="lg" 
+              <Link href={pageData?.secondaryButton?.url || heroContent.secondaryButton.href} tabIndex={-1}>
+                <Button
+                  size="lg"
                   className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-48 h-auto"
+                  onClick={() => setLocation(pageData?.secondaryButton?.url || heroContent.secondaryButton.href)}
                 >
                 <div className="flex flex-col items-center gap-1.5">
                   <div className="bg-compleo-deep-teal/20 rounded-full p-1">

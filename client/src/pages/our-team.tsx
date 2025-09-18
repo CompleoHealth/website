@@ -5,7 +5,7 @@ import ScrollProgress from '@/components/common/scroll-progress';
 import TrustSignals from '@/components/common/trust-signals';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { MessageSquare, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -28,6 +28,7 @@ export default function OurTeam() {
   const [pageData, setPageData] = useState<StrapiOurTeamPage | null>(null);
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
   const [cmsTeamMembers, setCmsTeamMembers] = useState<CMSTeamMember[] | null>(null);
+  const [, setLocation] = useLocation();
 
   // Sort team members by display_order (fallback client-side sorting)
   const leadership = cmsTeamMembers && cmsTeamMembers.length > 0
@@ -116,10 +117,11 @@ export default function OurTeam() {
                 {pageData?.Hero?.subtitle || "Meet the passionate professionals driving healthcare innovation and excellence across the UK."}
               </p>
               <div className="flex flex-row gap-3 sm:gap-6 justify-center">
-                <Link href="/work-with-us">
-                  <Button 
-                    size="lg" 
+                <Link href="/work-with-us" tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                    onClick={() => setLocation('/work-with-us')}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-white/20 rounded-full p-1">
@@ -133,10 +135,11 @@ export default function OurTeam() {
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </Button>
                 </Link>
-                <Link href="/contact">
-                  <Button 
-                    size="lg" 
+                <Link href="/contact" tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                    onClick={() => setLocation('/contact')}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-compleo-deep-teal/20 rounded-full p-1">
@@ -220,7 +223,7 @@ export default function OurTeam() {
                   ).map((value, index) => (
                     <div key={index} className="flex items-start gap-4">
                       <div className="bg-compleo-teal/10 p-3 rounded-lg">
-                        <svg className="h-6 w-6 text-compleo-teal" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-6 w-6 text-compleo-teal" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           {index === 0 && <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>}
                           {index === 1 && <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>}
                           {index === 2 && <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A3.01 3.01 0 0 0 17.1 7c-.5 0-.96.18-1.31.47l-5.11 4.24A1.004 1.004 0 0 0 11 12.5v8.5c0 .55.45 1 1 1s1-.45 1-1v-7h2.5l2.5 7.5h1.5c.83 0 1.5-.67 1.5-1.5z"/>}

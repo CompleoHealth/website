@@ -79,10 +79,11 @@ export default class ErrorBoundary extends Component<Props, State> {
                   <RefreshCw className="mr-2 h-4 w-4" />
                   Try Again
                 </Button>
-                <Link href="/">
-                  <Button 
+                <Link href="/" tabIndex={-1}>
+                  <Button
                     variant="outline"
                     className="border-compleo-deep-teal text-compleo-deep-teal hover:bg-compleo-deep-teal hover:text-white"
+                    onClick={() => window.location.href = '/'}
                   >
                     <Home className="mr-2 h-4 w-4" />
                     Go Home

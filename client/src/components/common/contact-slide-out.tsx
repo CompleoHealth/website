@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { X, MapPin, Phone, Mail, Clock, ExternalLink } from 'lucide-react';
 import { LinkedInBadge } from '@/components/common/linkedin-badge';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { trackCTAClick, trackPhoneClick, trackEmailClick } from '@/lib/analytics';
 import { strapiApi } from '@/lib/strapi';
 import { StrapiContactPanel } from '@/lib/strapi/types/global-settings';
@@ -17,6 +17,7 @@ export function ContactSlideOut({ isOpen, onClose }: ContactSlideOutProps) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [contactPanelData, setContactPanelData] = useState<StrapiContactPanel | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [, setLocation] = useLocation();
 
   // Fetch contact panel data from CMS
   useEffect(() => {
@@ -328,12 +329,14 @@ export function ContactSlideOut({ isOpen, onClose }: ContactSlideOutProps) {
           
           {/* Footer CTA */}
           <div className="p-6 border-t border-white/20">
-            <Link href="/contact" onClick={() => {
-              trackCTAClick('Complete Contact Form', 'contact-slideout');
-              onClose();
-            }}>
-              <Button 
+            <Link href="/contact" tabIndex={-1}>
+              <Button
                 className="w-full bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                onClick={() => {
+                  trackCTAClick('Complete Contact Form', 'contact-slideout');
+                  onClose();
+                  setLocation('/contact');
+                }}
               >
                 {contactPanelData?.contactFormButtonText || "Complete a Contact Form"}
                 <ExternalLink className="ml-2 h-5 w-5" />

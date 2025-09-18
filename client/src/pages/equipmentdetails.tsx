@@ -7,10 +7,10 @@ import Breadcrumb from '@/components/common/breadcrumb';
 import ScrollProgress from '@/components/common/scroll-progress';
 import PillCTA from '@/components/common/pill-cta';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
-import { MessageSquare, Truck, MapPin, Clock, Shield } from 'lucide-react';
+import { Link, useLocation } from 'wouter';
+import { MessageSquare, Truck, MapPin, Clock, Shield, Play, Pause } from 'lucide-react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { SEOHead } from '@/components/common/seo-head';
 import { SEO_DATA } from '@/lib/seo-data';
 
@@ -23,12 +23,19 @@ import { StrapiGlobalSettings } from '@/lib/strapi/types/global-settings';
 export default function EquipmentDetails() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
+  const [, setLocation] = useLocation();
   
   // CMS Integration state - Following proven pattern
   const [pageData, setPageData] = useState<EquipmentDetailsPage | null>(null);
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Video controls state - WCAG 2.1 AA compliance
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const [isVideo2Playing, setIsVideo2Playing] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const video2Ref = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setShouldAnimate(true), 300);
@@ -75,6 +82,42 @@ export default function EquipmentDetails() {
     }
   }, []);
 
+  // Video toggle functions - WCAG 2.1 AA compliance
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
+  const toggleVideo2 = () => {
+    if (video2Ref.current) {
+      if (isVideo2Playing) {
+        video2Ref.current.pause();
+      } else {
+        video2Ref.current.play();
+      }
+      setIsVideo2Playing(!isVideo2Playing);
+    }
+  };
+
+  // Keyboard support for video control
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.code === 'Space' && event.target === document.body) {
+        event.preventDefault();
+        toggleVideo();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isVideoPlaying]);
+
   const breadcrumbItems = [
     { label: 'Services', href: '/services' },
     { label: 'Equipment Details' }
@@ -114,6 +157,7 @@ export default function EquipmentDetails() {
           {/* Background Video */}
           <div className="absolute inset-0">
             <video
+              ref={videoRef}
               autoPlay
               loop
               muted
@@ -124,13 +168,27 @@ export default function EquipmentDetails() {
               <source src="/videos/OrkneyDelivery.mp4" type="video/mp4" />
               <p>Your browser does not support the video element. This video shows a mobile MRI scanner being transported to NHS Orkney and positioned for operational use.</p>
               {/* Fallback for browsers that don't support video */}
-              <div 
+              <div
                 className="w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: "url('/images/services/mobile-imaging-hero.jpg')"
                 }}
               />
             </video>
+
+            {/* Video Control Button - WCAG 2.1 AA Compliance */}
+            <button
+              onClick={toggleVideo}
+              className="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2"
+              aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
+              title={isVideoPlaying ? "Pause video" : "Play video"}
+            >
+              {isVideoPlaying ? (
+                <Pause className="h-5 w-5" />
+              ) : (
+                <Play className="h-5 w-5" />
+              )}
+            </button>
           </div>
           <div className="max-w-7xl mx-auto container-padding text-center relative z-10">
             <div className={`transition-all duration-700 ${shouldAnimate ? 'animate-slide-in-left opacity-100' : 'opacity-0 translate-x-[-50px]'}`}>
@@ -162,10 +220,11 @@ export default function EquipmentDetails() {
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </Button>
-                <Link href="/contact">
-                  <Button 
-                    size="lg" 
+                <Link href="/contact" tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                    onClick={() => setLocation('/contact')}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-compleo-deep-teal/20 rounded-full p-1">
@@ -270,6 +329,7 @@ export default function EquipmentDetails() {
           {/* Background Video */}
           <div className="absolute inset-0 z-0">
             <video
+              ref={video2Ref}
               autoPlay
               muted
               loop
@@ -282,6 +342,20 @@ export default function EquipmentDetails() {
                 type="video/mp4"
               />
             </video>
+
+            {/* Video Control Button - WCAG 2.1 AA Compliance */}
+            <button
+              onClick={toggleVideo2}
+              className="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2"
+              aria-label={isVideo2Playing ? "Pause background video" : "Play background video"}
+              title={isVideo2Playing ? "Pause video" : "Play video"}
+            >
+              {isVideo2Playing ? (
+                <Pause className="h-5 w-5" />
+              ) : (
+                <Play className="h-5 w-5" />
+              )}
+            </button>
           </div>
           
           {/* Hero Content */}

@@ -2,10 +2,11 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import BackToTop from '@/components/common/back-to-top';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 
 export default function NotFound() {
+  const [, setLocation] = useLocation();
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
@@ -21,8 +22,11 @@ export default function NotFound() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/">
-              <Button className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:shadow-xl hover:scale-105 text-white font-bold px-8 py-3 rounded-xl shadow-xl border-2 border-compleo-teal/20 backdrop-blur-sm transition-all duration-300">
+            <Link href="/" tabIndex={-1}>
+              <Button
+                className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:shadow-xl hover:scale-105 text-white font-bold px-8 py-3 rounded-xl shadow-xl border-2 border-compleo-teal/20 backdrop-blur-sm transition-all duration-300"
+                onClick={() => setLocation('/')}
+              >
                 <Home className="mr-2 h-4 w-4" />
                 Go Home
               </Button>

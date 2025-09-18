@@ -5,7 +5,7 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { equipmentData, getEquipmentByManufacturer, EquipmentItem } from '@shared/equipment-data';
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 
 interface ManufacturerSectionProps {
   manufacturer: string;
@@ -75,6 +75,7 @@ interface EquipmentCardProps {
 
 function EquipmentCard({ item, index, shouldAnimate }: EquipmentCardProps) {
   const isComingSoon = item.isComingSoon || item.tags.includes('Coming Soon');
+  const [, setLocation] = useLocation();
   
   return (
     <Card 
@@ -160,21 +161,20 @@ function EquipmentCard({ item, index, shouldAnimate }: EquipmentCardProps) {
 
         {/* CTA Button */}
         {isComingSoon ? (
-          <Button 
+          <Button
             className="w-full bg-gray-400 text-white cursor-not-allowed"
             disabled
           >
             Coming Soon
           </Button>
         ) : (
-          <Link href={`/contact?equipment=${encodeURIComponent(item.name)}`}>
-            <Button 
-              className="w-full bg-compleo-teal hover:bg-compleo-deep-teal text-white transition-colors"
-              aria-label={`Learn more about ${item.name} and request information`}
-            >
-              Learn More
-            </Button>
-          </Link>
+          <Button
+            className="w-full bg-compleo-teal hover:bg-compleo-deep-teal text-white transition-colors"
+            aria-label={`Learn more about ${item.name} and request information`}
+            onClick={() => setLocation(`/contact?equipment=${encodeURIComponent(item.name)}#contact-form`)}
+          >
+            Learn More
+          </Button>
         )}
       </CardContent>
     </Card>

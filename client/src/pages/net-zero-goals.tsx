@@ -5,7 +5,7 @@ import BackToTop from '@/components/common/back-to-top';
 import ScrollProgress from '@/components/common/scroll-progress';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { 
   Target, 
   Leaf, 
@@ -56,6 +56,7 @@ export default function NetZeroGoals() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
   const { elementRef: timelineRef, isVisible: timelineInView } = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+  const [, setLocation] = useLocation();
 
   // CMS State Management
   const [isLoading, setIsLoading] = useState(true);
@@ -130,11 +131,12 @@ export default function NetZeroGoals() {
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className={`text-center transition-all duration-700 ${heroInView && shouldAnimate ? 'animate-fade-in-up opacity-100' : 'opacity-0 translate-y-8'}`}>
-              <Link href={dataToUse.hero?.backButton?.url || dataToUse.hero?.backButton?.href || '#'}>
+              <Link href={dataToUse.hero?.backButton?.url || dataToUse.hero?.backButton?.href || '#'} tabIndex={-1}>
                 <Button
                   variant="ghost"
                   size="sm"
                   className="mb-6 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300"
+                  onClick={() => setLocation(dataToUse.hero?.backButton?.url || dataToUse.hero?.backButton?.href || '#')}
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   {dataToUse.hero?.backButton?.text || 'Back'}
@@ -281,13 +283,14 @@ export default function NetZeroGoals() {
                 const IconComponent = getIcon(button?.icon);
                 const isPrimary = button?.variant === 'primary' || index === 0;
                 return (
-                  <Link key={index} href={button?.url || button?.href || '#'}>
+                  <Link key={index} href={button?.url || button?.href || '#'} tabIndex={-1}>
                     <Button
                       size="lg"
                       className={isPrimary
                         ? "bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
                         : "bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-yellow/40 hover:border-compleo-yellow/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
                       }
+                      onClick={() => setLocation(button?.url || button?.href || '#')}
                     >
                       {IconComponent && <IconComponent className="h-5 w-5 mr-2" />}
                       {button?.text || 'Learn More'}

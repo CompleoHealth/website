@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import ServiceCard from '@/components/services/service-card';
 import { StrapiValueCard } from '@/lib/strapi/types/common';
 
@@ -56,6 +56,7 @@ export default function HealthcareSolutions({
   buttonText = "View All Services",
   buttonHref = "/services"
 }: HealthcareSolutionsProps = {}) {
+  const [, setLocation] = useLocation();
 
   // Use CMS data first, fallback to static data
   const solutionsList = solutions && solutions.length > 0 
@@ -99,8 +100,12 @@ export default function HealthcareSolutions({
         </div>
         
         <div className="text-center mt-8">
-          <Link href={buttonHref}>
-            <Button size="lg" className="bg-compleo-deep-teal hover:bg-compleo-teal text-white">
+          <Link href={buttonHref} tabIndex={-1}>
+            <Button
+              size="lg"
+              className="bg-compleo-deep-teal hover:bg-compleo-teal text-white"
+              onClick={() => setLocation(buttonHref)}
+            >
               {buttonText}
             </Button>
           </Link>

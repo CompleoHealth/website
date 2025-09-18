@@ -23,7 +23,7 @@ export default function ServiceCard({
   href,
 }: ServiceCardProps) {
   return (
-    <Link href={href} className="h-full" aria-label={`Learn more about ${title}`}>
+    <Link href={href} className="h-full focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-lg block" aria-label={`Learn more about ${title}`}>
       <Card className="group border-2 border-gray-100 shadow-xl hover:shadow-2xl hover:border-compleo-teal/20 transition-all duration-300 bg-gradient-to-br from-white to-gray-50/40 hover:from-white hover:to-compleo-teal/5 overflow-hidden relative cursor-pointer h-full flex flex-col">
         {/* Full card overlay */}
         <div className="absolute inset-0 bg-compleo-deep-teal opacity-0 group-hover:opacity-25 transition-opacity duration-300 z-30 pointer-events-none"></div>
@@ -64,7 +64,7 @@ export default function ServiceCard({
             {/* Link Section */}
             <strong className="inline-flex items-center text-compleo-teal font-semibold body-base mt-auto">
               Learn More
-              <svg className="w-3 h-3 ml-1 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3 ml-1 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </strong>

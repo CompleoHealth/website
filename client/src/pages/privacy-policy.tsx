@@ -208,7 +208,7 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen bg-white">
       <ScrollProgress />
       <Header />
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section ref={heroRef} className="bg-compleo-deep-teal text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
