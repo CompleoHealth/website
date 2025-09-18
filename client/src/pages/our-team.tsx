@@ -29,7 +29,10 @@ export default function OurTeam() {
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
   const [cmsTeamMembers, setCmsTeamMembers] = useState<CMSTeamMember[] | null>(null);
 
-  const leadership = cmsTeamMembers && cmsTeamMembers.length > 0 ? cmsTeamMembers : TEAM_MEMBERS;
+  // Sort team members by display_order (fallback client-side sorting)
+  const leadership = cmsTeamMembers && cmsTeamMembers.length > 0
+    ? [...cmsTeamMembers].sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
+    : TEAM_MEMBERS;
 
   // Fetch CMS data (following proven pattern from about.tsx)
   useEffect(() => {

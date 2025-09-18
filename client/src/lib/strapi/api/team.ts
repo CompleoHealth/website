@@ -31,8 +31,8 @@ class TeamAPI {
    */
   async getTeamMembers(): Promise<CMSTeamMember[] | null> {
     try {
-      // Use simple populate=* pattern for safety
-      const queryString = 'populate=*';
+      // Use simple populate=* pattern for safety with sorting by display_order
+      const queryString = 'populate=*&sort=display_order:asc';
 
       // Log the query string in debug mode
       debugLog('Team members query string:', queryString);

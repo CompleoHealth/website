@@ -10,6 +10,7 @@ export interface CMSTeamMember {
   };
   bio?: string;
   linkedin?: string;
+  display_order?: number;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
