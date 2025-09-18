@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'wouter';
-import { Search, CalendarCheck } from 'lucide-react';
+import { Search, CalendarCheck, Play, Pause } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { ImpactStatistics } from '@/components/common/impact-statistics';
@@ -16,12 +17,29 @@ interface HeroSectionProps {
 export default function HeroSection({ heroData, impactStats, impactStatsTitle }: HeroSectionProps) {
   const { elementRef, shouldAnimate } = useIntersectionObserver();
   const [, setLocation] = useLocation();
+
+  // Video controls state - WCAG 2.1 AA compliance
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Video toggle function - WCAG 2.1 AA compliance
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
   
   return (
     <section ref={elementRef} className="relative bg-compleo-deep-teal text-white overflow-hidden">
       {/* Background Video */}
       <div className="absolute inset-0">
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
@@ -43,6 +61,20 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
             aria-label="Generic Medical Equipment"
           />
         </video>
+
+        {/* Video Control Button - WCAG 2.1 AA Compliance */}
+        <button
+          onClick={toggleVideo}
+          className="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2"
+          aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
+          title={isVideoPlaying ? "Pause video" : "Play video"}
+        >
+          {isVideoPlaying ? (
+            <Pause className="h-5 w-5" />
+          ) : (
+            <Play className="h-5 w-5" />
+          )}
+        </button>
       </div>
       <div className="relative max-w-7xl mx-auto container-padding section-padding-lg">
         <div className="grid lg:grid-cols-2 gap-8 items-center">

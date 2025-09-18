@@ -3,11 +3,12 @@ import React from 'react';
 export function HeroArcs() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <svg 
+      <svg
         className="absolute inset-0 w-full h-full"
         viewBox="0 0 1200 400"
         preserveAspectRatio="xMidYMid slice"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         {/* Arc Paths - Positioned at edges with 45-degree curves */}
         <defs>

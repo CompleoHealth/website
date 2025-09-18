@@ -446,7 +446,7 @@ export default function About() {
 
               {/* Connecting Lines - Subtle */}
               <div className="absolute inset-0 pointer-events-none hidden lg:block">
-                <svg className="w-full h-full opacity-10" viewBox="0 0 800 600">
+                <svg className="w-full h-full opacity-10" viewBox="0 0 800 600" aria-hidden="true">
                   <defs>
                     <linearGradient id="valueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" stopColor="#00A990" />

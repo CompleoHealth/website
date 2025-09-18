@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -48,6 +48,24 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
       consent: false,
     },
   });
+
+  // Update form values when props change
+  useEffect(() => {
+    if (equipmentName || prefilledMessage) {
+      form.reset({
+        type: 'b2b',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        organization: '',
+        role: '',
+        serviceInterest: equipmentName || '',
+        message: prefilledMessage || '',
+        consent: false,
+      });
+    }
+  }, [equipmentName, prefilledMessage, form]);
 
   const createContactMutation = useMutation({
     mutationFn: async (data: EnhancedContactFormData) => {
@@ -124,6 +142,32 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
       <CardContent className="p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Error Summary - WCAG 2.1 AA Compliance */}
+            {Object.keys(form.formState.errors).length > 0 && (
+              <div
+                role="alert"
+                className="bg-red-600/90 border border-red-400 text-white px-4 py-3 rounded-lg mb-6"
+                aria-live="polite"
+              >
+                <h3 className="font-bold text-lg mb-2">Please correct the following errors:</h3>
+                <ul className="list-disc list-inside space-y-1">
+                  {Object.entries(form.formState.errors).map(([field, error]) => (
+                    <li key={field} className="text-sm">
+                      <strong>{field === 'firstName' ? 'First Name' :
+                                field === 'lastName' ? 'Last Name' :
+                                field === 'email' ? 'Email' :
+                                field === 'phone' ? 'Phone' :
+                                field === 'organization' ? 'Organization' :
+                                field === 'serviceInterest' ? 'Service Interest' :
+                                field === 'role' ? 'How did you hear about us?' :
+                                field === 'message' ? 'Additional Information' :
+                                field === 'consent' ? 'Consent' : field}:</strong> {error?.message}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Name Fields */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <FormField
@@ -154,6 +198,7 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                             boxShadow: 'none'
                           }}
                           aria-describedby={form.formState.errors.firstName ? 'firstName-error' : undefined}
+                          aria-invalid={form.formState.errors.firstName ? 'true' : 'false'}
                         />
                       </div>
                     </FormControl>
@@ -190,6 +235,7 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                             boxShadow: 'none'
                           }}
                           aria-describedby={form.formState.errors.lastName ? 'lastName-error' : undefined}
+                          aria-invalid={form.formState.errors.lastName ? 'true' : 'false'}
                         />
                       </div>
                     </FormControl>
@@ -230,6 +276,7 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                             boxShadow: 'none'
                           }}
                           aria-describedby={form.formState.errors.email ? 'email-error' : undefined}
+                          aria-invalid={form.formState.errors.email ? 'true' : 'false'}
                         />
                       </div>
                     </FormControl>
@@ -253,6 +300,7 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                         placeholder=""
                         className="bg-white border-0 text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-2 focus:ring-compleo-yellow focus:border-transparent transition-all duration-200"
                         aria-describedby={form.formState.errors.phone ? 'phone-error' : undefined}
+                        aria-invalid={form.formState.errors.phone ? 'true' : 'false'}
                       />
                     </FormControl>
                     <FormMessage className="text-compleo-yellow" />
@@ -366,6 +414,7 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                           boxShadow: 'none'
                         }}
                         aria-describedby={form.formState.errors.organization ? 'organization-error' : undefined}
+                        aria-invalid={form.formState.errors.organization ? 'true' : 'false'}
                       />
                     </div>
                   </FormControl>

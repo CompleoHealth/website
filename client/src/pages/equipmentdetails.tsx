@@ -8,9 +8,9 @@ import ScrollProgress from '@/components/common/scroll-progress';
 import PillCTA from '@/components/common/pill-cta';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'wouter';
-import { MessageSquare, Truck, MapPin, Clock, Shield } from 'lucide-react';
+import { MessageSquare, Truck, MapPin, Clock, Shield, Play, Pause } from 'lucide-react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { SEOHead } from '@/components/common/seo-head';
 import { SEO_DATA } from '@/lib/seo-data';
 
@@ -30,6 +30,12 @@ export default function EquipmentDetails() {
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Video controls state - WCAG 2.1 AA compliance
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const [isVideo2Playing, setIsVideo2Playing] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const video2Ref = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setShouldAnimate(true), 300);
@@ -76,6 +82,42 @@ export default function EquipmentDetails() {
     }
   }, []);
 
+  // Video toggle functions - WCAG 2.1 AA compliance
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
+  const toggleVideo2 = () => {
+    if (video2Ref.current) {
+      if (isVideo2Playing) {
+        video2Ref.current.pause();
+      } else {
+        video2Ref.current.play();
+      }
+      setIsVideo2Playing(!isVideo2Playing);
+    }
+  };
+
+  // Keyboard support for video control
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.code === 'Space' && event.target === document.body) {
+        event.preventDefault();
+        toggleVideo();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isVideoPlaying]);
+
   const breadcrumbItems = [
     { label: 'Services', href: '/services' },
     { label: 'Equipment Details' }
@@ -115,6 +157,7 @@ export default function EquipmentDetails() {
           {/* Background Video */}
           <div className="absolute inset-0">
             <video
+              ref={videoRef}
               autoPlay
               loop
               muted
@@ -125,13 +168,27 @@ export default function EquipmentDetails() {
               <source src="/videos/OrkneyDelivery.mp4" type="video/mp4" />
               <p>Your browser does not support the video element. This video shows a mobile MRI scanner being transported to NHS Orkney and positioned for operational use.</p>
               {/* Fallback for browsers that don't support video */}
-              <div 
+              <div
                 className="w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: "url('/images/services/mobile-imaging-hero.jpg')"
                 }}
               />
             </video>
+
+            {/* Video Control Button - WCAG 2.1 AA Compliance */}
+            <button
+              onClick={toggleVideo}
+              className="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2"
+              aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
+              title={isVideoPlaying ? "Pause video" : "Play video"}
+            >
+              {isVideoPlaying ? (
+                <Pause className="h-5 w-5" />
+              ) : (
+                <Play className="h-5 w-5" />
+              )}
+            </button>
           </div>
           <div className="max-w-7xl mx-auto container-padding text-center relative z-10">
             <div className={`transition-all duration-700 ${shouldAnimate ? 'animate-slide-in-left opacity-100' : 'opacity-0 translate-x-[-50px]'}`}>
@@ -272,6 +329,7 @@ export default function EquipmentDetails() {
           {/* Background Video */}
           <div className="absolute inset-0 z-0">
             <video
+              ref={video2Ref}
               autoPlay
               muted
               loop
@@ -284,6 +342,20 @@ export default function EquipmentDetails() {
                 type="video/mp4"
               />
             </video>
+
+            {/* Video Control Button - WCAG 2.1 AA Compliance */}
+            <button
+              onClick={toggleVideo2}
+              className="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2"
+              aria-label={isVideo2Playing ? "Pause background video" : "Play background video"}
+              title={isVideo2Playing ? "Pause video" : "Play video"}
+            >
+              {isVideo2Playing ? (
+                <Pause className="h-5 w-5" />
+              ) : (
+                <Play className="h-5 w-5" />
+              )}
+            </button>
           </div>
           
           {/* Hero Content */}

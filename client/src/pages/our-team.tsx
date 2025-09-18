@@ -220,7 +220,7 @@ export default function OurTeam() {
                   ).map((value, index) => (
                     <div key={index} className="flex items-start gap-4">
                       <div className="bg-compleo-teal/10 p-3 rounded-lg">
-                        <svg className="h-6 w-6 text-compleo-teal" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-6 w-6 text-compleo-teal" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           {index === 0 && <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>}
                           {index === 1 && <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>}
                           {index === 2 && <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A3.01 3.01 0 0 0 17.1 7c-.5 0-.96.18-1.31.47l-5.11 4.24A1.004 1.004 0 0 0 11 12.5v8.5c0 .55.45 1 1 1s1-.45 1-1v-7h2.5l2.5 7.5h1.5c.83 0 1.5-.67 1.5-1.5z"/>}

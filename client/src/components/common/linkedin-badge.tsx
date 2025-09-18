@@ -24,7 +24,7 @@ export function LinkedInBadge({ variant = 'header', className = '' }: LinkedInBa
   // Contact slide-out version
   return (
     <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-      <SiLinkedin className="h-5 w-5 text-compleo-yellow" />
+      <SiLinkedin className="h-5 w-5 text-compleo-yellow" aria-label="LinkedIn icon" />
     </div>
   );
 }

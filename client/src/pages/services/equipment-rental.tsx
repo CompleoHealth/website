@@ -7,9 +7,9 @@ import ScrollProgress from '@/components/common/scroll-progress';
 import PillCTA from '@/components/common/pill-cta';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'wouter';
-import { MessageSquare, Truck, Zap, Wrench, Calendar, PoundSterling, Clock, Settings, RotateCcw, Cpu, Users, RefreshCw } from 'lucide-react';
+import { MessageSquare, Truck, Zap, Wrench, Calendar, PoundSterling, Clock, Settings, RotateCcw, Cpu, Users, RefreshCw, Play, Pause } from 'lucide-react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { SEOHead } from '@/components/common/seo-head';
 import { trackCTAClick } from '@/lib/analytics';
 import { SEO_DATA } from '@/lib/seo-data';
@@ -30,6 +30,21 @@ export default function EquipmentRentals() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Video controls state - WCAG 2.1 AA compliance
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Video toggle function - WCAG 2.1 AA compliance
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
 
   // Extract service details with static fallbacks - Following proven pattern from clinical insourcing page  
   const serviceDetails = pageData ? {
@@ -297,6 +312,7 @@ export default function EquipmentRentals() {
           {/* Background Video */}
           <div className="absolute inset-0 z-0">
             <video
+              ref={videoRef}
               autoPlay
               muted
               loop
@@ -318,6 +334,20 @@ export default function EquipmentRentals() {
                 aria-label="Mobile MRI scanner being transported to NHS Orkney facility and positioned for operational use"
               />
             </video>
+
+            {/* Video Control Button - WCAG 2.1 AA Compliance */}
+            <button
+              onClick={toggleVideo}
+              className="absolute bottom-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white focus-visible:ring-offset-2"
+              aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
+              title={isVideoPlaying ? "Pause video" : "Play video"}
+            >
+              {isVideoPlaying ? (
+                <Pause className="h-5 w-5" />
+              ) : (
+                <Play className="h-5 w-5" />
+              )}
+            </button>
           </div>
           
           {/* Content */}

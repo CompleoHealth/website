@@ -161,22 +161,20 @@ function EquipmentCard({ item, index, shouldAnimate }: EquipmentCardProps) {
 
         {/* CTA Button */}
         {isComingSoon ? (
-          <Button 
+          <Button
             className="w-full bg-gray-400 text-white cursor-not-allowed"
             disabled
           >
             Coming Soon
           </Button>
         ) : (
-          <Link href={`/contact?equipment=${encodeURIComponent(item.name)}`} tabIndex={-1}>
-            <Button
-              className="w-full bg-compleo-teal hover:bg-compleo-deep-teal text-white transition-colors"
-              aria-label={`Learn more about ${item.name} and request information`}
-              onClick={() => setLocation(`/contact?equipment=${encodeURIComponent(item.name)}`)}
-            >
-              Learn More
-            </Button>
-          </Link>
+          <Button
+            className="w-full bg-compleo-teal hover:bg-compleo-deep-teal text-white transition-colors"
+            aria-label={`Learn more about ${item.name} and request information`}
+            onClick={() => setLocation(`/contact?equipment=${encodeURIComponent(item.name)}#contact-form`)}
+          >
+            Learn More
+          </Button>
         )}
       </CardContent>
     </Card>
