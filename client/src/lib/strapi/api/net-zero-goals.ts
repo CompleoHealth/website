@@ -43,8 +43,8 @@ class NetZeroGoalsAPI {
    */
   async getNetZeroGoalsPage(): Promise<StrapiNetZeroGoalsPage | null> {
     try {
-      // Use simple populate=* pattern for safety like working examples
-      const queryString = 'populate=*';
+      // Use deep population for nested components
+      const queryString = 'populate[hero][populate]=*&populate[timeline][populate]=*&populate[timelineItems][populate]=*&populate[cta][populate][buttons][populate]=*';
 
       // Log the query string in debug mode
       debugLog('Net Zero Goals query string:', queryString);

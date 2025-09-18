@@ -64,6 +64,9 @@ export default function NetZeroGoals() {
 
   // Data to use (CMS first, then JSON fallback)
   const dataToUse = cmsData || netZeroData;
+  console.log('CMS Data:', cmsData);
+  console.log('JSON Data:', netZeroData);
+  console.log('Data to Use:', dataToUse);
 
   useEffect(() => {
     const timer = setTimeout(() => setShouldAnimate(true), 300);
@@ -271,14 +274,17 @@ export default function NetZeroGoals() {
               {dataToUse.cta?.subtitle || 'Contact us to learn more'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {console.log('CTA Data:', dataToUse.cta)}
+              {console.log('CTA Buttons:', dataToUse.cta?.buttons)}
               {(dataToUse.cta?.buttons || []).map((button, index) => {
+                console.log('Button:', button);
                 const IconComponent = getIcon(button?.icon);
-                const isPrimary = button?.variant === 'primary';
+                const isPrimary = button?.variant === 'primary' || index === 0;
                 return (
                   <Link key={index} href={button?.url || button?.href || '#'}>
-                    <Button 
-                      size="lg" 
-                      className={isPrimary 
+                    <Button
+                      size="lg"
+                      className={isPrimary
                         ? "bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
                         : "bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-yellow/40 hover:border-compleo-yellow/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
                       }
