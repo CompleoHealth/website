@@ -101,20 +101,6 @@ export default function CookiePolicy() {
           When you submit information via forms (e.g., contact forms or comment fields), cookies may be set to remember your details for future use.
         </p>
 
-        <h3 className="text-2xl font-bold text-compleo-deep-teal mt-8 mb-4">Manage Your Data</h3>
-        <p className="text-gray-700 leading-relaxed mb-4">
-          You have full control over your data stored by our website. Use our data management tool to view, export, or delete information we store locally in your browser.
-        </p>
-
-        <div className="mt-6">
-          <a
-            href="/manage-cookies"
-            className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:bg-gradient-to-br hover:from-compleo-deep-teal hover:via-compleo-deep-teal hover:to-compleo-deep-teal text-white font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-teal/40 hover:border-compleo-teal/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 inline-flex items-center gap-2"
-          >
-            <Database className="w-5 h-5" />
-            Manage Your Data
-          </a>
-        </div>
 
         <h4 className="text-xl font-semibold text-compleo-deep-teal mt-6 mb-3">2. Site Preference Cookies</h4>
         <p className="text-gray-700 leading-relaxed">
@@ -170,6 +156,28 @@ export default function CookiePolicy() {
           <Card className="bg-white shadow-xl border-2 border-gray-100">
             <CardContent className="p-8">
               {renderContent()}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Manage Your Data Section - Outside CMS Content */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+          <Card className="bg-gradient-to-br from-compleo-teal/5 via-compleo-teal/5 to-compleo-deep-teal/10 shadow-lg border-2 border-compleo-teal/20">
+            <CardContent className="p-8 text-center">
+              <div className="flex justify-center mb-6">
+                <BrandedIcon icon={Database} variant="primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-compleo-deep-teal mb-4">Manage Your Data</h3>
+              <p className="text-gray-700 leading-relaxed mb-6 max-w-2xl mx-auto">
+                You have full control over your data stored by our website. Use our data management tool to view, export, or delete information we store locally in your browser.
+              </p>
+              <a
+                href="/manage-cookies"
+                className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:bg-gradient-to-br hover:from-compleo-deep-teal hover:via-compleo-deep-teal hover:to-compleo-deep-teal text-white font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-teal/40 hover:border-compleo-teal/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 inline-flex items-center gap-2"
+              >
+                <Database className="w-5 h-5" />
+                Manage Your Data
+              </a>
             </CardContent>
           </Card>
         </div>
