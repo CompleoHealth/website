@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { trackCTAClick } from '@/lib/analytics';
 
 interface PillCTAProps {
@@ -24,6 +24,7 @@ export default function PillCTA({
   primaryButton,
   secondaryButton
 }: PillCTAProps) {
+  const [, setLocation] = useLocation();
   return (
     <section className="bg-white">
       {/* Recreate exact pill design structure with custom height */}
@@ -39,8 +40,15 @@ export default function PillCTA({
                 <p className="text-xl text-gray-300 mb-8">{description}</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-start">
                   {primaryButton.href ? (
-                    <Link href={primaryButton.href} onClick={() => trackCTAClick(`${primaryButton.text} - Pill CTA`, window.location.pathname)}>
-                      <Button size="lg" className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-6 py-2 sm:px-8 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105">
+                    <Link href={primaryButton.href} tabIndex={-1}>
+                      <Button
+                        size="lg"
+                        className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-6 py-2 sm:px-8 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                        onClick={() => {
+                          trackCTAClick(`${primaryButton.text} - Pill CTA`, window.location.pathname);
+                          setLocation(primaryButton.href!);
+                        }}
+                      >
                         {primaryButton.text}
                       </Button>
                     </Link>
@@ -59,8 +67,15 @@ export default function PillCTA({
                   
                   {secondaryButton && (
                     secondaryButton.href ? (
-                      <Link href={secondaryButton.href} onClick={() => trackCTAClick(`${secondaryButton.text} - Pill CTA`, window.location.pathname)}>
-                        <Button size="lg" className="bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold px-6 py-2 sm:px-8 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-yellow/40 hover:border-compleo-yellow/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                      <Link href={secondaryButton.href} tabIndex={-1}>
+                        <Button
+                          size="lg"
+                          className="bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold px-6 py-2 sm:px-8 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-yellow/40 hover:border-compleo-yellow/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 text-sm sm:text-base"
+                          onClick={() => {
+                            trackCTAClick(`${secondaryButton.text} - Pill CTA`, window.location.pathname);
+                            setLocation(secondaryButton.href!);
+                          }}
+                        >
                           {secondaryButton.text}
                         </Button>
                       </Link>

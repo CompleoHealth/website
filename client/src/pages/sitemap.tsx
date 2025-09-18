@@ -57,7 +57,7 @@ export default function SitemapPage() {
     <div className="min-h-screen bg-white">
       <ScrollProgress />
       <Header />
-      <main>
+      <main id="main-content">
         {/* Header */}
         <div className="bg-compleo-deep-teal text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

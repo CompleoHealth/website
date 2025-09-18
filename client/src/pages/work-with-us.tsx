@@ -8,7 +8,7 @@ import { SEOHead } from '@/components/common/seo-head';
 import { SEO_DATA } from '@/lib/seo-data';
 import { Button } from '@/components/ui/button';
 
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { 
   Users, 
   Heart, 
@@ -55,6 +55,7 @@ export default function WorkWithUs() {
   const [error, setError] = useState<string | null>(null);
   const [pageData, setPageData] = useState<StrapiWorkWithUsPage | null>(null);
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
+  const [, setLocation] = useLocation();
 
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
 
@@ -178,8 +179,15 @@ export default function WorkWithUs() {
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </Button>
-                  <Link href="/contact" onClick={() => trackCTAClick('CONTACT Us - Work With Us Hero', '/work-with-us')}>
-                    <Button size="lg" className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold text-sm sm:text-lg px-4 sm:px-8 py-4 sm:py-4 rounded-xl shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 border-compleo-deep-teal/50 hover:border-compleo-deep-teal/80 hover-scale w-36 sm:w-48 h-auto">
+                  <Link href="/contact" tabIndex={-1}>
+                    <Button
+                      size="lg"
+                      className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold text-sm sm:text-lg px-4 sm:px-8 py-4 sm:py-4 rounded-xl shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 border-compleo-deep-teal/50 hover:border-compleo-deep-teal/80 hover-scale w-36 sm:w-48 h-auto"
+                      onClick={() => {
+                        trackCTAClick('CONTACT Us - Work With Us Hero', '/work-with-us');
+                        setLocation('/contact');
+                      }}
+                    >
                       <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                         <div className="bg-compleo-deep-teal/20 rounded-full p-1">
                           {getIcon('Mail') && 

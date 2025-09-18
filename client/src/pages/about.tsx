@@ -9,7 +9,7 @@ import { SEO_DATA } from '@/lib/seo-data';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { 
   Users, 
   Target, 
@@ -107,6 +107,7 @@ const ctaContent = {
 
 export default function About() {
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
+  const [, setLocation] = useLocation();
   const { elementRef: storyRef, isVisible: storyInView } = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
   
   // State for CMS data
@@ -215,10 +216,14 @@ export default function About() {
                 </h1>
                 <p className="body-large text-gray-200 mb-6 leading-relaxed">{pageData?.heroSubtitle || heroContent.subtitle}</p>
                 <div className="flex flex-row gap-3 sm:gap-6">
-                  <Link href={pageData?.heroPrimaryButton_href || heroContent.primaryButton.href} onClick={() => trackCTAClick(pageData?.heroPrimaryButton_trackingLabel || heroContent.primaryButton.trackingLabel, '/about')}>
-                    <Button 
-                      size="lg" 
+                  <Link href={pageData?.heroPrimaryButton_href || heroContent.primaryButton.href} tabIndex={-1}>
+                    <Button
+                      size="lg"
                       className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                      onClick={() => {
+                        trackCTAClick(pageData?.heroPrimaryButton_trackingLabel || heroContent.primaryButton.trackingLabel, '/about');
+                        setLocation(pageData?.heroPrimaryButton_href || heroContent.primaryButton.href);
+                      }}
                     >
                       <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                         <div className="bg-white/20 rounded-full p-1">
@@ -232,10 +237,14 @@ export default function About() {
                       <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </Button>
                   </Link>
-                  <Link href={pageData?.heroSecondaryButton_href || heroContent.secondaryButton.href} onClick={() => trackCTAClick(pageData?.heroSecondaryButton_trackingLabel || heroContent.secondaryButton.trackingLabel, '/about')}>
-                    <Button 
-                      size="lg" 
+                  <Link href={pageData?.heroSecondaryButton_href || heroContent.secondaryButton.href} tabIndex={-1}>
+                    <Button
+                      size="lg"
                       className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                      onClick={() => {
+                        trackCTAClick(pageData?.heroSecondaryButton_trackingLabel || heroContent.secondaryButton.trackingLabel, '/about');
+                        setLocation(pageData?.heroSecondaryButton_href || heroContent.secondaryButton.href);
+                      }}
                     >
                       <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                         <div className="bg-compleo-deep-teal/20 rounded-full p-1">
@@ -472,8 +481,11 @@ export default function About() {
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{pageData?.ctaTitle || ctaContent.title}</h2>
                     <p className="text-xl text-gray-300 mb-8">{pageData?.ctaDescription || ctaContent.description}</p>
                     <div className="flex justify-start">
-                      <Link href={pageData?.ctaButtonHref || ctaContent.buttonHref}>
-                        <Button className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105">
+                      <Link href={pageData?.ctaButtonHref || ctaContent.buttonHref} tabIndex={-1}>
+                        <Button
+                          className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                          onClick={() => setLocation(pageData?.ctaButtonHref || ctaContent.buttonHref)}
+                        >
                           {pageData?.ctaButtonText || ctaContent.buttonText}
                         </Button>
                       </Link>

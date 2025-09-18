@@ -17,11 +17,12 @@ import {
   TrendingUp,
   Users
 } from 'lucide-react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 
 export default function CaseStudy() {
   const params = useParams();
   const caseStudy = caseStudiesData.caseStudies.find(study => study.id === params.id as string);
+  const [, setLocation] = useLocation();
 
   // Redirect NHS Devon case study back to case studies page (quote only)
   if (params.id === 'nhs-devon') {
@@ -36,8 +37,11 @@ export default function CaseStudy() {
             <p className="text-xl text-compleo-gray mb-8">
               The NHS Devon case study contains testimonial content only. Please view it on the main case studies page.
             </p>
-            <Link href="/case-studies">
-              <Button className="bg-compleo-teal hover:bg-compleo-teal/90 text-white">
+            <Link href="/case-studies" tabIndex={-1}>
+              <Button
+                className="bg-compleo-teal hover:bg-compleo-teal/90 text-white"
+                onClick={() => setLocation('/case-studies')}
+              >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Case Studies
               </Button>
@@ -61,8 +65,11 @@ export default function CaseStudy() {
             <p className="text-xl text-compleo-gray mb-8">
               The case study you're looking for doesn't exist or has been moved.
             </p>
-            <Link href="/case-studies">
-              <Button className="bg-compleo-teal hover:bg-compleo-teal/90 text-white">
+            <Link href="/case-studies" tabIndex={-1}>
+              <Button
+                className="bg-compleo-teal hover:bg-compleo-teal/90 text-white"
+                onClick={() => setLocation('/case-studies')}
+              >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Case Studies
               </Button>
@@ -222,8 +229,11 @@ export default function CaseStudy() {
         {/* Back to Case Studies */}
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Link href="/case-studies">
-              <Button className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105">
+            <Link href="/case-studies" tabIndex={-1}>
+              <Button
+                className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                onClick={() => setLocation('/case-studies')}
+              >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Case Studies
               </Button>

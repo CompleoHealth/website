@@ -6,7 +6,7 @@ import Breadcrumb from '@/components/common/breadcrumb';
 import ScrollProgress from '@/components/common/scroll-progress';
 import PillCTA from '@/components/common/pill-cta';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { MessageSquare, Settings, Shield, Clock, HeartHandshake, PoundSterling, Cpu, Users, TrendingUp } from 'lucide-react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { useEffect, useState } from 'react';
@@ -21,6 +21,7 @@ import type { StrapiGlobalSettings } from '@/lib/strapi/types/global-settings';
 export default function ManagedEquipment() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
+  const [, setLocation] = useLocation();
   
   // CMS Data State - Following proven pattern from home/services pages
   const [pageData, setPageData] = useState<ManagedEquipmentPage | null>(null);
@@ -179,10 +180,14 @@ export default function ManagedEquipment() {
               </h1>
               <p className="body-large text-gray-200 max-w-3xl mx-auto mb-8">{heroContent.subtitle}</p>
               <div className="flex flex-row gap-3 sm:gap-6 justify-center">
-                <Link href={heroContent.button1.href} onClick={() => trackCTAClick(heroContent.button1.analytics, '/services/managed-equipment')}>
-                  <Button 
-                    size="lg" 
+                <Link href={heroContent.button1.href} tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                    onClick={() => {
+                      trackCTAClick(heroContent.button1.analytics, '/services/managed-equipment');
+                      setLocation(heroContent.button1.href);
+                    }}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-white/20 rounded-full p-1">
@@ -196,10 +201,14 @@ export default function ManagedEquipment() {
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </Button>
                 </Link>
-                <Link href={heroContent.button2.href} onClick={() => trackCTAClick(heroContent.button2.analytics, '/services/managed-equipment')}>
-                  <Button 
-                    size="lg" 
+                <Link href={heroContent.button2.href} tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                    onClick={() => {
+                      trackCTAClick(heroContent.button2.analytics, '/services/managed-equipment');
+                      setLocation(heroContent.button2.href);
+                    }}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-compleo-deep-teal/20 rounded-full p-1">

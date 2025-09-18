@@ -7,7 +7,7 @@ import Breadcrumb from '@/components/common/breadcrumb';
 import ScrollProgress from '@/components/common/scroll-progress';
 import PillCTA from '@/components/common/pill-cta';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { MessageSquare, Truck, MapPin, Clock, Shield } from 'lucide-react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { useEffect, useState } from 'react';
@@ -23,6 +23,7 @@ import { StrapiGlobalSettings } from '@/lib/strapi/types/global-settings';
 export default function EquipmentDetails() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
+  const [, setLocation] = useLocation();
   
   // CMS Integration state - Following proven pattern
   const [pageData, setPageData] = useState<EquipmentDetailsPage | null>(null);
@@ -162,10 +163,11 @@ export default function EquipmentDetails() {
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </Button>
-                <Link href="/contact">
-                  <Button 
-                    size="lg" 
+                <Link href="/contact" tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                    onClick={() => setLocation('/contact')}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-compleo-deep-teal/20 rounded-full p-1">

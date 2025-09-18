@@ -129,7 +129,7 @@ export default function NewsAndViews() {
     <div className="min-h-screen bg-gray-50">
       <SEOHead {...SEO_DATA.newsAndViews} />
       <Header />
-      <main className="animate-fade-in-up">
+      <main id="main-content" className="animate-fade-in-up">
         {/* Tabloid Hero Section */}
         <section ref={heroRef} className="relative section-padding-lg bg-[rgb(15,46,46)]">
           <div className="max-w-7xl mx-auto container-padding">
@@ -335,15 +335,48 @@ export default function NewsAndViews() {
                 ? pageData.linkedinPosts.map(post => post.embedUrl)
                 : linkedinPosts
               ).map((postUrl, index) => (
-                <div key={index} className="bg-gray-50 rounded-xl overflow-hidden shadow-lg">
-                  <iframe 
-                    src={postUrl} 
-                    height="500" 
-                    width="100%" 
-                    frameBorder="0" 
-                    allowFullScreen 
+                <div
+                  key={index}
+                  className="bg-gray-50 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 relative group"
+                  role="link"
+                  tabIndex={0}
+                  aria-label={`View LinkedIn post ${index + 1} on LinkedIn`}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      // Extract the post URL and open in new tab
+                      const match = postUrl.match(/\/embed\/([^?]+)/);
+                      if (match) {
+                        window.open(`https://www.linkedin.com/posts/${match[1]}`, '_blank');
+                      }
+                    }
+                  }}
+                  onClick={() => {
+                    // Extract the post URL and open in new tab
+                    const match = postUrl.match(/\/embed\/([^?]+)/);
+                    if (match) {
+                      window.open(`https://www.linkedin.com/posts/${match[1]}`, '_blank');
+                    }
+                  }}
+                >
+                  {/* Overlay to prevent iframe interaction */}
+                  <div className="absolute inset-0 z-10 bg-transparent group-hover:bg-black/5 transition-colors duration-300"></div>
+
+                  {/* View on LinkedIn indicator */}
+                  <div className="absolute top-2 right-2 z-20 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-xs font-medium text-compleo-deep-teal">View on LinkedIn →</span>
+                  </div>
+
+                  <iframe
+                    src={`${postUrl}${postUrl.includes('?') ? '&' : '?'}hideGDPRConsent=true&hideLinkedInConsentBanner=true&consent=false`}
+                    height="500"
+                    width="100%"
+                    frameBorder="0"
+                    allowFullScreen
                     title={`Compleo Health LinkedIn Post ${index + 1}`}
-                    className="w-full"
+                    className="w-full pointer-events-none"
+                    tabIndex={-1}
+                    aria-hidden="true"
                   />
                 </div>
               ))}

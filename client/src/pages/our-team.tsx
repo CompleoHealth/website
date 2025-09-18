@@ -5,7 +5,7 @@ import ScrollProgress from '@/components/common/scroll-progress';
 import TrustSignals from '@/components/common/trust-signals';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { MessageSquare, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -28,6 +28,7 @@ export default function OurTeam() {
   const [pageData, setPageData] = useState<StrapiOurTeamPage | null>(null);
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
   const [cmsTeamMembers, setCmsTeamMembers] = useState<CMSTeamMember[] | null>(null);
+  const [, setLocation] = useLocation();
 
   const leadership = cmsTeamMembers && cmsTeamMembers.length > 0 ? cmsTeamMembers : TEAM_MEMBERS;
 
@@ -113,10 +114,11 @@ export default function OurTeam() {
                 {pageData?.Hero?.subtitle || "Meet the passionate professionals driving healthcare innovation and excellence across the UK."}
               </p>
               <div className="flex flex-row gap-3 sm:gap-6 justify-center">
-                <Link href="/work-with-us">
-                  <Button 
-                    size="lg" 
+                <Link href="/work-with-us" tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                    onClick={() => setLocation('/work-with-us')}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-white/20 rounded-full p-1">
@@ -130,10 +132,11 @@ export default function OurTeam() {
                     <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </Button>
                 </Link>
-                <Link href="/contact">
-                  <Button 
-                    size="lg" 
+                <Link href="/contact" tabIndex={-1}>
+                  <Button
+                    size="lg"
                     className="group bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal px-4 sm:px-8 py-4 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-deep-teal/30 hover:border-compleo-deep-teal/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-36 sm:w-48 h-auto"
+                    onClick={() => setLocation('/contact')}
                   >
                     <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                       <div className="bg-compleo-deep-teal/20 rounded-full p-1">

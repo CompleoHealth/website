@@ -9,7 +9,7 @@ import { SEO_DATA } from '@/lib/seo-data';
 
 import CurvedSectionHeader from '@/components/common/curved-section-header';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { MessageSquare, Stethoscope } from 'lucide-react';
 
 import { ImpactStatistics } from '@/components/common/impact-statistics';
@@ -25,6 +25,7 @@ export default function ServicesPage() {
   const [error, setError] = useState<string | null>(null);
   const [pageData, setPageData] = useState<StrapiServicesPage | null>(null);
   const [globalSettings, setGlobalSettings] = useState<StrapiGlobalSettings | null>(null);
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     const fetchPageData = async () => {
@@ -253,10 +254,14 @@ export default function ServicesPage() {
               </p>
             </div>
             <div className="flex justify-center items-center">
-              <Link href={heroContent.button1.href} onClick={() => trackCTAClick('CONTACT Us - Services Hero', '/services')}>
-                <Button 
-                  size="lg" 
+              <Link href={heroContent.button1.href} tabIndex={-1}>
+                <Button
+                  size="lg"
                   className="group relative bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white px-6 sm:px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 w-44 sm:w-48 h-auto"
+                  onClick={() => {
+                    trackCTAClick('CONTACT Us - Services Hero', '/services');
+                    setLocation(heroContent.button1.href);
+                  }}
                 >
                   <div className="flex flex-col items-center gap-1 sm:gap-1.5">
                     <div className="bg-white/20 rounded-full p-1">
@@ -390,13 +395,21 @@ export default function ServicesPage() {
                       {pageData?.CurvedPill_CTA?.description || "Join the 30+ NHS Trusts who trust Compleo Health."}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-start">
-                      <Link href={pageData?.CurvedPill_CTA?.primaryButton_Href || "/contact"}>
-                        <Button size="lg" className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-6 py-2 sm:px-8 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105">
+                      <Link href={pageData?.CurvedPill_CTA?.primaryButton_Href || "/contact"} tabIndex={-1}>
+                        <Button
+                          size="lg"
+                          className="bg-gradient-to-br from-compleo-teal via-compleo-teal to-compleo-deep-teal hover:from-compleo-teal/90 hover:via-compleo-teal/90 hover:to-compleo-deep-teal/90 text-white font-bold px-6 py-2 sm:px-8 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-white/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                          onClick={() => setLocation(pageData?.CurvedPill_CTA?.primaryButton_Href || "/contact")}
+                        >
                           {pageData?.CurvedPill_CTA?.primaryButton_text || "Contact Us"}
                         </Button>
                       </Link>
-                      <Link href={pageData?.CurvedPill_CTA?.secondaryButton_Href || "tel:+441618841303"}>
-                        <Button size="lg" className="bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold px-6 py-2 sm:px-8 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-yellow/40 hover:border-compleo-yellow/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                      <Link href={pageData?.CurvedPill_CTA?.secondaryButton_Href || "tel:+441618841303"} tabIndex={-1}>
+                        <Button
+                          size="lg"
+                          className="bg-compleo-yellow hover:bg-compleo-yellow/90 text-compleo-deep-teal font-bold px-6 py-2 sm:px-8 sm:py-3 rounded-xl shadow-xl hover:shadow-2xl border-2 border-compleo-yellow/40 hover:border-compleo-yellow/60 backdrop-blur-sm transition-all duration-300 hover:scale-105 text-sm sm:text-base"
+                          onClick={() => setLocation(pageData?.CurvedPill_CTA?.secondaryButton_Href || "tel:+441618841303")}
+                        >
                           {pageData?.CurvedPill_CTA?.secondaryButton_text || "Call: +44 (0)161 884 1303"}
                         </Button>
                       </Link>
