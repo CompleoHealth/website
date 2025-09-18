@@ -30,7 +30,8 @@
       "WebSearch",
       "Bash(/bashes)",
       "Bash(taskkill:*)",
-      "Bash(npm run strapi:*)"
+      "Bash(npm run strapi:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

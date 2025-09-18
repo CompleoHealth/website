@@ -8,9 +8,11 @@ import TrustSignals from '@/components/common/trust-signals';
 import { FileText, Download, ExternalLink, Eye } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { BrandedIcon } from '@/components/ui/branded-icons';
-
-
 import { useState, useEffect } from 'react';
+
+// CMS imports
+import { policyDocumentsApi } from '@/lib/strapi/api/policy-documents';
+import { StrapiPolicyDocument } from '@/lib/strapi/types/policy-document';
 
 interface PolicyDocument {
   name: string;
@@ -20,6 +22,7 @@ interface PolicyDocument {
   size?: string;
   webPageRoute?: string; // For pages that have web content
   hasWebContent?: boolean;
+  documentUrl?: string; // URL from CMS
 }
 
 export default function PoliciesPage() {
@@ -33,11 +36,63 @@ export default function PoliciesPage() {
     { label: 'Policy Documents' }
   ];
 
-  // Load policy documents from the policies folder
+  // Load policy documents from CMS or fallback to static data
   useEffect(() => {
     const loadPolicyDocuments = async () => {
       try {
-        // Check for available policy documents in the public/policies folder
+        // Try to fetch from CMS first
+        const cmsDocuments = await policyDocumentsApi.getAllPolicyDocuments();
+        console.log('CMS Policy Documents:', cmsDocuments);
+
+        if (cmsDocuments && cmsDocuments.length > 0) {
+          // Map CMS data to our interface
+          const mappedDocuments: PolicyDocument[] = cmsDocuments.map(doc => ({
+            name: doc.name,
+            filename: doc.document?.name || '',
+            description: doc.description,
+            lastUpdated: new Date(doc.lastUpdated).toLocaleDateString('en-GB', {
+              month: 'long',
+              year: 'numeric'
+            }),
+            size: doc.size || `${Math.round((doc.document?.size || 0) / 1024)} KB`,
+            hasWebContent: false,
+            documentUrl: doc.document?.url || undefined
+          }));
+          setPolicyDocuments(mappedDocuments);
+        } else {
+          // Fallback to static data if CMS fails or returns empty
+          const availablePolicies: PolicyDocument[] = [
+            {
+              name: 'Corporate Social Responsibility',
+              filename: 'csr-policy.pdf',
+              description: 'Our commitment to making a positive social and economic contribution to healthcare',
+              lastUpdated: 'April 2024',
+              size: '245 KB',
+              hasWebContent: false
+            },
+            {
+              name: 'Carbon Reduction Plan',
+              filename: 'carbon-reduction-plan-2024.pdf',
+              description: 'Our strategy and commitments to achieve Net Zero carbon emissions',
+              lastUpdated: 'July 2024',
+              size: '485 KB',
+              hasWebContent: false
+            },
+            {
+              name: 'Modern Slavery Statement',
+              filename: 'anti-slavery-statement-may-2025.pdf',
+              description: 'Our commitment to preventing modern slavery in our operations and supply chain',
+              lastUpdated: 'May 2025',
+              size: '224 KB',
+              hasWebContent: false
+            }
+          ];
+
+          setPolicyDocuments(availablePolicies);
+        }
+      } catch (error) {
+        console.error('Error loading policy documents:', error);
+        // Fallback to static data on error
         const availablePolicies: PolicyDocument[] = [
           {
             name: 'Corporate Social Responsibility',
@@ -66,8 +121,6 @@ export default function PoliciesPage() {
         ];
 
         setPolicyDocuments(availablePolicies);
-      } catch (error) {
-        console.error('Error loading policy documents:', error);
       }
     };
 
@@ -125,10 +178,14 @@ export default function PoliciesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {policyDocuments.map((policy, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className="bg-white shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-compleo-teal/20 group cursor-pointer h-full"
-                onClick={() => window.open(`/policies/${policy.filename}`, '_blank')}
+                onClick={() => {
+                  // Use CMS URL if available, otherwise fallback to public folder
+                  const url = policy.documentUrl || `/policies/${policy.filename}`;
+                  window.open(url, '_blank');
+                }}
               >
                 <CardContent className="p-8 flex flex-col h-full">
                   {/* Icon Header */}
