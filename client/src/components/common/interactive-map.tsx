@@ -156,11 +156,20 @@ function InteractiveMap({
         // Add markers for each location (no popup functionality)
         locations.forEach(location => {
           const marker = L.marker([location.lat, location.lng], {
-            icon: createCustomIcon(location.type)
+            icon: createCustomIcon(location.type),
+            interactive: false, // Disable all interactions
+            keyboard: false,    // Disable keyboard access
+            riseOnHover: false  // Disable hover effects
           }).addTo(map);
 
           // Remove all interactive elements - markers are display-only
-          // No popup binding, no click handlers, no keyboard accessibility
+          // Explicitly disable tabbing on marker elements
+          const markerElement = marker.getElement();
+          if (markerElement) {
+            markerElement.setAttribute('tabindex', '-1');
+            markerElement.setAttribute('aria-hidden', 'true');
+            markerElement.style.pointerEvents = 'none';
+          }
         });
 
         mapInstanceRef.current = map;
