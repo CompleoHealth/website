@@ -30,6 +30,7 @@
 
   /* Compleo Health Brand Colors */
   --compleo-deep-teal: rgb(15, 46, 46);
+  --compleo-teal-dark: rgb(0, 110, 95);
   --compleo-teal: rgb(0, 135, 115);
   --compleo-yellow: rgb(247, 249, 228);
   --compleo-white: rgb(255, 255, 255);
@@ -618,6 +619,10 @@ html {
     background-color: var(--compleo-deep-teal);
   }
   
+  .bg-compleo-teal-dark {
+    background-color: var(--compleo-teal-dark);
+  }
+
   .bg-compleo-teal {
     background-color: var(--compleo-teal);
   }
@@ -638,6 +643,10 @@ html {
     color: var(--compleo-deep-teal);
   }
   
+  .text-compleo-teal-dark {
+    color: var(--compleo-teal-dark);
+  }
+
   .text-compleo-teal {
     color: var(--compleo-teal);
   }

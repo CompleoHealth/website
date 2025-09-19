@@ -48,9 +48,11 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
           width="1920"
           height="1080"
           style={{ aspectRatio: '16/9' }}
+          role="presentation"
           aria-label="Mobile MRI scanner unit being transported on flatbed truck, carefully positioned and lowered into place at healthcare facility, demonstrating Compleo Health's relocatable diagnostic imaging services"
         >
           <source src="/videos/hero-background.mp4" type="video/mp4" />
+          <track kind="captions" src="data:text/vtt," label="No audio - decorative background video" default />
           <p>Your browser does not support the video element. This video shows a mobile MRI scanner unit being transported on a flatbed truck and carefully positioned at a healthcare facility, demonstrating our relocatable diagnostic imaging delivery process.</p>
           {/* Fallback for browsers that don't support video */}
           <div 

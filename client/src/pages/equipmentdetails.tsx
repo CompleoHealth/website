@@ -163,9 +163,11 @@ export default function EquipmentDetails() {
               muted
               playsInline
               className="w-full h-full object-cover opacity-40"
+              role="presentation"
               aria-label="Mobile MRI scanner unit being transported on ferry and truck to remote NHS Orkney facility, carefully positioned and lowered into place, demonstrating healthcare delivery to remote locations"
             >
               <source src="/videos/OrkneyDelivery.mp4" type="video/mp4" />
+              <track kind="captions" src="data:text/vtt," label="No audio - decorative background video" default />
               <p>Your browser does not support the video element. This video shows a mobile MRI scanner unit being transported on ferry and truck to remote NHS Orkney facility and carefully positioned for operational use, demonstrating our capability to deliver healthcare services to remote locations.</p>
               {/* Fallback for browsers that don't support video */}
               <div
@@ -335,12 +337,14 @@ export default function EquipmentDetails() {
               loop
               playsInline
               className="absolute inset-0 w-full h-full object-cover opacity-30"
+              role="presentation"
               aria-label="Background video showing medical equipment in clinical setting"
             >
               <source
                 src="https://videos.compleohealth.com/videos/compleo-health-hero-video.mp4"
                 type="video/mp4"
               />
+              <track kind="captions" src="data:text/vtt," label="No audio - decorative background video" default />
             </video>
 
             {/* Video Control Button - WCAG 2.1 AA Compliance */}

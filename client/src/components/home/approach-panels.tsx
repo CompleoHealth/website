@@ -103,7 +103,7 @@ export default function ApproachPanels({
                   isDark ? 'bg-compleo-yellow' : 'bg-compleo-teal'
                 }`}></div>
                 <div>
-                  <h4 className="heading-4 mb-1">{bullet.title}</h4>
+                  <h3 className="heading-4 mb-1">{bullet.title}</h3>
                   <p className={`body-small ${isDark ? 'text-gray-200' : 'text-compleo-gray'}`}>
                     {bullet.description}
                   </p>

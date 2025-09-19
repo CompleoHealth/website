@@ -41,7 +41,7 @@ export const DesktopNavigation = ({
           <Link href="/">
             <span className={`px-3 py-2 text-base font-medium transition-all duration-300 whitespace-nowrap relative group block ${
               isActive('/')
-                ? 'text-compleo-teal'
+                ? 'text-compleo-teal-dark'
                 : 'text-compleo-deep-teal hover:text-compleo-teal'
             }`}>
               Home
@@ -60,7 +60,7 @@ export const DesktopNavigation = ({
             <button
               className={`px-3 py-2 text-base font-medium transition-all duration-300 whitespace-nowrap flex items-center gap-1 relative group ${
                 location.startsWith('/services')
-                  ? 'text-compleo-teal'
+                  ? 'text-compleo-teal-dark'
                   : 'text-compleo-deep-teal hover:text-compleo-teal'
               }`}
               aria-expanded={servicesDropdownOpen}
@@ -111,7 +111,7 @@ export const DesktopNavigation = ({
               <span
                 className={`px-3 py-2 text-base font-medium transition-all duration-300 whitespace-nowrap relative group ${
                   isActive(item.href)
-                    ? 'text-compleo-teal'
+                    ? 'text-compleo-teal-dark'
                     : 'text-compleo-deep-teal hover:text-compleo-teal'
                 }`}
               >
@@ -132,7 +132,7 @@ export const DesktopNavigation = ({
             <button
               className={`px-3 py-2 text-base font-medium transition-all duration-300 whitespace-nowrap flex items-center gap-1 relative group ${
                 aboutPages.some(page => location === page.href)
-                  ? 'text-compleo-teal'
+                  ? 'text-compleo-teal-dark'
                   : 'text-compleo-deep-teal hover:text-compleo-teal'
               }`}
               aria-expanded={aboutDropdownOpen}
