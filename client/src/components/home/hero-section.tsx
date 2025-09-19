@@ -55,11 +55,12 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
           <track kind="captions" src="data:text/vtt," label="No audio - decorative background video" default />
           <p>Your browser does not support the video element. This video shows a mobile MRI scanner unit being transported on a flatbed truck and carefully positioned at a healthcare facility, demonstrating our relocatable diagnostic imaging delivery process.</p>
           {/* Fallback for browsers that don't support video */}
-          <div 
+          <div
             className="w-full h-full bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: "url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
             }}
+            role="img"
             aria-label="Generic Medical Equipment"
           />
         </video>

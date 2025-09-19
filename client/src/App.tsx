@@ -22,7 +22,7 @@ const Services = lazy(() => import("@/pages/services"));
 
 const About = lazy(() => import("@/pages/about"));
 const Contact = lazy(() => import("@/pages/contact"));
-const SocialImpact = lazy(() => import("@/pages/social-impact"));
+const Sustainability = lazy(() => import("@/pages/sustainability"));
 const CaseStudies = lazy(() => import("@/pages/case-studies"));
 const CaseStudy = lazy(() => import("@/pages/case-study"));
 const WorkWithUs = lazy(() => import("@/pages/work-with-us"));
@@ -93,7 +93,7 @@ function Router() {
         <Route path="/equipment-details" component={EquipmentDetails} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
-        <Route path="/sustainability" component={SocialImpact} />
+        <Route path="/sustainability" component={Sustainability} />
         <Route path="/net-zero-goals" component={NetZeroGoals} />
         <Route path="/news-and-views" component={NewsAndViews} />
         <Route path="/case-studies" component={CaseStudies} />

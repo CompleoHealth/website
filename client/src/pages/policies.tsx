@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 // CMS imports
 import { policyDocumentsApi } from '@/lib/strapi/api/policy-documents';
 import { StrapiPolicyDocument } from '@/lib/strapi/types/policy-document';
+import { STRAPI_URL } from '@/lib/strapi/api/config';
 
 interface PolicyDocument {
   name: string;
@@ -56,7 +57,7 @@ export default function PoliciesPage() {
             }),
             size: doc.size || `${Math.round((doc.document?.size || 0) / 1024)} KB`,
             hasWebContent: false,
-            documentUrl: doc.document?.url || undefined
+            documentUrl: doc.document?.url ? `${STRAPI_URL}${doc.document.url}` : undefined
           }));
           setPolicyDocuments(mappedDocuments);
         } else {

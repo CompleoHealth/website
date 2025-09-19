@@ -84,9 +84,9 @@ export default function Footer() {
           {footerSections.map((section) => (
             <div key={section.title}>
               <div className="h-12 flex items-end mb-2">
-                <h4 className="text-lg font-bold text-compleo-yellow">
+                <h3 className="text-lg font-bold text-compleo-yellow">
                   {section.title}
-                </h4>
+                </h3>
               </div>
               <div className="w-full h-0.5 bg-gradient-to-r from-compleo-yellow to-compleo-teal rounded-full mb-4"></div>
               <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-gray-300">

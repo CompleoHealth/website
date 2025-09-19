@@ -133,7 +133,7 @@ const ctaContent = {
 
 
 
-export default function SocialImpact() {
+export default function Sustainability() {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { elementRef: heroRef, isVisible: heroInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
 
