@@ -184,28 +184,19 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                       First Name <span style={{color: '#ef4444', fontWeight: '700', fontSize: '16px'}}>*</span>
                     </FormLabel>
                     <FormControl>
-                      <div style={{
-                        border: form.formState.errors.firstName ? '3px solid #ef4444' : '2px solid transparent',
-                        borderRadius: '8px',
-                        boxShadow: form.formState.errors.firstName ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none',
-                        backgroundColor: form.formState.errors.firstName ? '#fef7f7' : 'transparent',
-                        padding: '3px',
-                        transition: 'all 0.3s ease'
-                      }}>
-                        <Input
-                          {...field}
-                          placeholder=""
-                          className="bg-white border-0 text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-0 focus:outline-none transition-all duration-200"
-                          style={{
-                            backgroundColor: form.formState.errors.firstName ? '#fef7f7' : 'white',
-                            border: 'none',
-                            outline: 'none',
-                            boxShadow: 'none'
-                          }}
-                          aria-describedby={form.formState.errors.firstName ? 'firstName-error' : undefined}
-                          aria-invalid={form.formState.errors.firstName ? 'true' : 'false'}
-                        />
-                      </div>
+                      <Input
+                        {...field}
+                        placeholder=""
+                        className="bg-white text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-2 focus:ring-compleo-yellow focus:border-transparent transition-all duration-200"
+                        style={{
+                          backgroundColor: form.formState.errors.firstName ? '#fef7f7' : 'white',
+                          border: form.formState.errors.firstName ? '3px solid #ef4444' : '2px solid #e5e7eb',
+                          borderRadius: '8px',
+                          boxShadow: form.formState.errors.firstName ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none'
+                        }}
+                        aria-describedby={form.formState.errors.firstName ? 'firstName-error' : undefined}
+                        aria-invalid={form.formState.errors.firstName ? 'true' : 'false'}
+                      />
                     </FormControl>
                     <FormMessage className="text-compleo-yellow" />
                   </FormItem>
@@ -221,28 +212,19 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                       Last Name <span style={{color: '#ef4444', fontWeight: '700', fontSize: '16px'}}>*</span>
                     </FormLabel>
                     <FormControl>
-                      <div style={{
-                        border: form.formState.errors.lastName ? '3px solid #ef4444' : '2px solid transparent',
-                        borderRadius: '8px',
-                        boxShadow: form.formState.errors.lastName ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none',
-                        backgroundColor: form.formState.errors.lastName ? '#fef7f7' : 'transparent',
-                        padding: '3px',
-                        transition: 'all 0.3s ease'
-                      }}>
-                        <Input
-                          {...field}
-                          placeholder=""
-                          className="bg-white border-0 text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-0 focus:outline-none transition-all duration-200"
-                          style={{
-                            backgroundColor: form.formState.errors.lastName ? '#fef7f7' : 'white',
-                            border: 'none',
-                            outline: 'none',
-                            boxShadow: 'none'
-                          }}
-                          aria-describedby={form.formState.errors.lastName ? 'lastName-error' : undefined}
-                          aria-invalid={form.formState.errors.lastName ? 'true' : 'false'}
-                        />
-                      </div>
+                      <Input
+                        {...field}
+                        placeholder=""
+                        className="bg-white text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-2 focus:ring-compleo-yellow focus:border-transparent transition-all duration-200"
+                        style={{
+                          backgroundColor: form.formState.errors.lastName ? '#fef7f7' : 'white',
+                          border: form.formState.errors.lastName ? '3px solid #ef4444' : '2px solid #e5e7eb',
+                          borderRadius: '8px',
+                          boxShadow: form.formState.errors.lastName ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none'
+                        }}
+                        aria-describedby={form.formState.errors.lastName ? 'lastName-error' : undefined}
+                        aria-invalid={form.formState.errors.lastName ? 'true' : 'false'}
+                      />
                     </FormControl>
                     <FormMessage className="text-compleo-yellow" />
                   </FormItem>
@@ -261,29 +243,20 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                       Email Address <span style={{color: '#ef4444', fontWeight: '700', fontSize: '16px'}}>*</span>
                     </FormLabel>
                     <FormControl>
-                      <div style={{
-                        border: form.formState.errors.email ? '3px solid #ef4444' : '2px solid transparent',
-                        borderRadius: '8px',
-                        boxShadow: form.formState.errors.email ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none',
-                        backgroundColor: form.formState.errors.email ? '#fef7f7' : 'transparent',
-                        padding: '3px',
-                        transition: 'all 0.3s ease'
-                      }}>
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder=""
-                          className="bg-white border-0 text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-0 focus:outline-none transition-all duration-200"
-                          style={{
-                            backgroundColor: form.formState.errors.email ? '#fef7f7' : 'white',
-                            border: 'none',
-                            outline: 'none',
-                            boxShadow: 'none'
-                          }}
-                          aria-describedby={form.formState.errors.email ? 'email-error' : undefined}
-                          aria-invalid={form.formState.errors.email ? 'true' : 'false'}
-                        />
-                      </div>
+                      <Input
+                        {...field}
+                        type="email"
+                        placeholder=""
+                        className="bg-white text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-2 focus:ring-compleo-yellow focus:border-transparent transition-all duration-200"
+                        style={{
+                          backgroundColor: form.formState.errors.email ? '#fef7f7' : 'white',
+                          border: form.formState.errors.email ? '3px solid #ef4444' : '2px solid #e5e7eb',
+                          borderRadius: '8px',
+                          boxShadow: form.formState.errors.email ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none'
+                        }}
+                        aria-describedby={form.formState.errors.email ? 'email-error' : undefined}
+                        aria-invalid={form.formState.errors.email ? 'true' : 'false'}
+                      />
                     </FormControl>
                     <FormMessage className="text-compleo-yellow" />
                   </FormItem>
@@ -325,28 +298,19 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                       How can we help you? <span style={{color: '#ef4444', fontWeight: '700', fontSize: '16px'}}>*</span>
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <div style={{
-                        border: form.formState.errors.serviceInterest ? '3px solid #ef4444' : '2px solid transparent',
-                        borderRadius: '8px',
-                        boxShadow: form.formState.errors.serviceInterest ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none',
-                        backgroundColor: form.formState.errors.serviceInterest ? '#fef7f7' : 'transparent',
-                        padding: '3px',
-                        transition: 'all 0.3s ease'
-                      }}>
-                        <FormControl>
-                          <SelectTrigger
-                            className="bg-white border-0 text-gray-900 h-12 text-lg focus:ring-0 focus:outline-none"
-                            style={{
-                              backgroundColor: form.formState.errors.serviceInterest ? '#fef7f7' : 'white',
-                              border: 'none',
-                              outline: 'none',
-                              boxShadow: 'none'
-                            }}
-                          >
-                            <SelectValue placeholder="Please Select" />
-                          </SelectTrigger>
-                        </FormControl>
-                      </div>
+                      <FormControl>
+                        <SelectTrigger
+                          className="bg-white text-gray-900 h-12 text-lg focus:ring-2 focus:ring-compleo-yellow focus:border-transparent"
+                          style={{
+                            backgroundColor: form.formState.errors.serviceInterest ? '#fef7f7' : 'white',
+                            border: form.formState.errors.serviceInterest ? '3px solid #ef4444' : '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            boxShadow: form.formState.errors.serviceInterest ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none'
+                          }}
+                        >
+                          <SelectValue placeholder="Please Select" />
+                        </SelectTrigger>
+                      </FormControl>
                       <SelectContent>
                         <SelectItem value="managed-equipment">Managed Equipment Services</SelectItem>
                         <SelectItem value="clinical-insourcing">Clinical Insourcing</SelectItem>
@@ -400,28 +364,19 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                     Organisation <span style={{color: '#ef4444', fontWeight: '700', fontSize: '16px'}}>*</span>
                   </FormLabel>
                   <FormControl>
-                    <div style={{
-                      border: form.formState.errors.organization ? '3px solid #ef4444' : '2px solid transparent',
-                      borderRadius: '8px',
-                      boxShadow: form.formState.errors.organization ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none',
-                      backgroundColor: form.formState.errors.organization ? '#fef7f7' : 'transparent',
-                      padding: '3px',
-                      transition: 'all 0.3s ease'
-                    }}>
-                      <Input
-                        {...field}
-                        placeholder=""
-                        className="bg-white border-0 text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-0 focus:outline-none transition-all duration-200"
-                        style={{
-                          backgroundColor: form.formState.errors.organization ? '#fef7f7' : 'white',
-                          border: 'none',
-                          outline: 'none',
-                          boxShadow: 'none'
-                        }}
-                        aria-describedby={form.formState.errors.organization ? 'organization-error' : undefined}
-                        aria-invalid={form.formState.errors.organization ? 'true' : 'false'}
-                      />
-                    </div>
+                    <Input
+                      {...field}
+                      placeholder=""
+                      className="bg-white text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-2 focus:ring-compleo-yellow focus:border-transparent transition-all duration-200"
+                      style={{
+                        backgroundColor: form.formState.errors.organization ? '#fef7f7' : 'white',
+                        border: form.formState.errors.organization ? '3px solid #ef4444' : '2px solid #e5e7eb',
+                        borderRadius: '8px',
+                        boxShadow: form.formState.errors.organization ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none'
+                      }}
+                      aria-describedby={form.formState.errors.organization ? 'organization-error' : undefined}
+                      aria-invalid={form.formState.errors.organization ? 'true' : 'false'}
+                    />
                   </FormControl>
                   <FormMessage className="text-compleo-yellow" />
                 </FormItem>

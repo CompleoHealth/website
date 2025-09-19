@@ -128,9 +128,9 @@ export default function Contact() {
                       <h3 className="text-lg font-bold text-compleo-deep-teal mb-2">
                         {method.title}
                       </h3>
-                      <div className="text-compleo-teal font-bold mb-1">
+                      <div className="text-compleo-deep-teal font-bold mb-1">
                         {method.isEmail ? (
-                          <a 
+                          <a
                             href={`mailto:${method.primary}`}
                             className="hover:underline transition-colors duration-300"
                           >
@@ -140,10 +140,10 @@ export default function Contact() {
                           method.primary
                         )}
                       </div>
-                      <div className="text-sm text-compleo-gray mb-2">
+                      <div className="text-sm text-gray-600 mb-2">
                         {method.secondary}
                       </div>
-                      <div className="text-xs text-compleo-gray">
+                      <div className="text-xs text-gray-600">
                         {method.description}
                       </div>
                     </CardContent>

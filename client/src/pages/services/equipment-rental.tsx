@@ -326,11 +326,12 @@ export default function EquipmentRentals() {
               />
               <p>Your browser does not support the video element. This video shows a mobile MRI scanner being transported to NHS Orkney and positioned for operational use.</p>
               {/* Fallback background image */}
-              <div 
+              <div
                 className="w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: `url('${pageData?.videoHeroFallbackImage || '/images/services/mobile-imaging-hero.jpg'}')`
                 }}
+                role="img"
                 aria-label="Mobile MRI scanner being transported to NHS Orkney facility and positioned for operational use"
               />
             </video>

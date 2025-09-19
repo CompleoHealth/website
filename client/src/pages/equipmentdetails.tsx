@@ -341,10 +341,9 @@ export default function EquipmentDetails() {
               aria-label="Background video showing medical equipment in clinical setting"
             >
               <source
-                src="https://videos.compleohealth.com/videos/compleo-health-hero-video.mp4"
+                src="/videos/hero-background.mp4"
                 type="video/mp4"
               />
-              <track kind="captions" src="data:text/vtt," label="No audio - decorative background video" default />
             </video>
 
             {/* Video Control Button - WCAG 2.1 AA Compliance */}

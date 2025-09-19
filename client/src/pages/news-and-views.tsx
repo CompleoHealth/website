@@ -225,7 +225,7 @@ export default function NewsAndViews() {
                             <div>
                               <div className="flex items-center justify-between mb-2">
                                 <span className="text-xs text-gray-500 font-medium">{(item.domain || 'NEWS').toUpperCase()}</span>
-                                <Badge className="bg-compleo-teal text-white text-xs">
+                                <Badge className="bg-compleo-deep-teal text-white text-xs">
                                   {item.category}
                                 </Badge>
                               </div>
@@ -240,8 +240,8 @@ export default function NewsAndViews() {
                             </div>
                             
                             <div className="flex items-center justify-between mt-auto">
-                              <span className="text-xs text-gray-500">{item.readTime}</span>
-                              <div className="flex items-center text-xs text-compleo-teal">
+                              <span className="text-xs text-gray-600 font-medium">{item.readTime}</span>
+                              <div className="flex items-center text-xs text-gray-700 font-medium">
                                 <Calendar className="h-3 w-3 mr-1" />
                                 {new Date(item.date).toLocaleDateString('en-GB')}
                               </div>

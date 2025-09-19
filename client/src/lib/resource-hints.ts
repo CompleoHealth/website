@@ -77,14 +77,22 @@ export function addResourceHints(): void {
 
 export function preloadCriticalImages(): void {
   if (typeof document === 'undefined') return;
-  
-  const criticalImages = [
-    '/images/home/hero-background.jpg',
+
+  // Only preload images that are actually used on the current page
+  const currentPath = window.location.pathname;
+  const criticalImages: string[] = [];
+
+  // Only preload hero background on home page
+  if (currentPath === '/') {
+    criticalImages.push('/images/home/hero-background.jpg');
+  }
+
+  // Always preload key certification logos (small files, used in footer)
+  criticalImages.push(
     '/images/certifications/iso-9001-dnv.png',
-    '/images/certifications/cqc-logo.png',
-    '/images/certifications/cyber-essentials-plus.png'
-  ];
-  
+    '/images/certifications/cqc-logo.png'
+  );
+
   criticalImages.forEach(src => {
     const link = document.createElement('link');
     link.rel = 'preload';
