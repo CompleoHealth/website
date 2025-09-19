@@ -202,8 +202,8 @@ export default function Contact() {
                             ))}
                           </ul>
                           
-                          <Button 
-                            className="bg-compleo-deep-teal hover:bg-compleo-teal text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl text-sm sm:text-base w-full sm:w-auto"
+                          <Button
+                            className="bg-compleo-deep-teal hover:bg-compleo-teal text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl text-sm sm:text-base w-full sm:w-auto transition-all duration-300 hover:scale-105"
                             onClick={() => {
                               document.getElementById('contact-form')?.scrollIntoView({ 
                                 behavior: 'smooth',

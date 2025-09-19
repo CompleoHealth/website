@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import ScrollProgress from '@/components/common/scroll-progress';
 import { useNavigationData } from '@/hooks/use-navigation-data';
@@ -15,6 +15,39 @@ export default function Header() {
   // Use extracted hooks and data
   const { location, navigation, aboutPages, servicePages, isActive } = useNavigationData();
   useMobileHeaderPositioning();
+
+  // Prevent focus on page content when mobile menu is open
+  useEffect(() => {
+    const mainElement = document.getElementById('main-content');
+    const footerElement = document.querySelector('footer');
+    const desktopNavElement = document.querySelector('.desktop-nav-1200');
+
+    if (isMobileMenuOpen) {
+      // Make page content inert when menu is open (but NOT the mobile hamburger button)
+      if (mainElement) mainElement.setAttribute('inert', 'true');
+      if (footerElement) footerElement.setAttribute('inert', 'true');
+      if (desktopNavElement) desktopNavElement.setAttribute('inert', 'true');
+
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore page content when menu is closed
+      if (mainElement) mainElement.removeAttribute('inert');
+      if (footerElement) footerElement.removeAttribute('inert');
+      if (desktopNavElement) desktopNavElement.removeAttribute('inert');
+
+      // Restore body scroll
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup function
+    return () => {
+      if (mainElement) mainElement.removeAttribute('inert');
+      if (footerElement) footerElement.removeAttribute('inert');
+      if (desktopNavElement) desktopNavElement.removeAttribute('inert');
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <>
@@ -60,11 +93,13 @@ export default function Header() {
                 }
               `}</style>
               
-              <button 
-                className="p-3 min-w-[60px] min-h-[60px] bg-transparent border-none outline-none focus:outline-none menutoggle"
+              <button
+                className="p-3 min-w-[60px] min-h-[60px] bg-transparent border-none outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-compleo-teal focus-visible:ring-offset-2 rounded menutoggle"
                 onClick={() => {
                   setIsMobileMenuOpen(!isMobileMenuOpen);
                 }}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-navigation-menu"
               >
                 <div className={`icon-left ${isMobileMenuOpen ? 'open' : ''}`} />
                 <div className={`icon-right ${isMobileMenuOpen ? 'open' : ''}`} />

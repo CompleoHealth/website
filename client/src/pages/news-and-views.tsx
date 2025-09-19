@@ -200,15 +200,16 @@ export default function NewsAndViews() {
                 {(pageData?.newsArticles && pageData.newsArticles.length > 0 ? pageData.newsArticles : newsItems).map((item, index) => {
                   
                   return (
-                    <a key={index} href={item.url} target="_blank" rel="noopener noreferrer" className="block h-full">
-                      <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer bg-white border border-gray-200 rounded-lg h-full animate-slide-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                    <article key={index}>
+                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="block h-full">
+                        <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer bg-white border border-gray-200 rounded-lg h-full animate-slide-in-up" style={{ animationDelay: `${index * 100}ms` }}>
                         {/* Open Graph style layout */}
                         <div className="flex h-40">
                           {/* Left side - Image */}
                           <div className="w-24 h-40 flex-shrink-0 bg-gray-100 rounded-l-lg flex items-center justify-center overflow-hidden">
-                            <img 
-                              src={item.image || '/images/news/default-news.jpg'} 
-                              alt={item.domain || 'News Source'}
+                            <img
+                              src={item.image || '/images/news/default-news.jpg'}
+                              alt={`Featured image for article: ${item.title} - ${item.category} news from ${item.domain || 'healthcare industry'}`}
                               className="w-full h-full object-contain p-2"
                               onError={(e) => {
                                 e.currentTarget.style.display = 'none';
@@ -247,8 +248,9 @@ export default function NewsAndViews() {
                             </div>
                           </div>
                         </div>
-                      </Card>
-                    </a>
+                        </Card>
+                      </a>
+                    </article>
                   );
                 })}
               </div>

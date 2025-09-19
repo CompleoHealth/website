@@ -18,16 +18,18 @@ interface ImpactStatisticsProps {
   gridCols?: 2 | 3 | 6;
   textColor?: 'yellow' | 'teal' | 'white' | 'dark';
   statistics?: StrapiImpactStatistic[]; // CMS-driven statistics (required)
+  headingLevel?: 'h2' | 'h3' | 'h4'; // Allow proper heading hierarchy
 }
 
-export function ImpactStatistics({ 
+export function ImpactStatistics({
   variant = 'panel',
   className = '',
   title = 'Our Impact',
   showTitle = true,
   gridCols = 3,
   textColor = 'teal',
-  statistics: cmsStatistics
+  statistics: cmsStatistics,
+  headingLevel = 'h3'
 }: ImpactStatisticsProps) {
   // Use CMS statistics with hardcoded fallback
   const statistics = cmsStatistics || [
@@ -124,12 +126,15 @@ export function ImpactStatistics({
 
   const variantClasses = getVariantClasses();
 
+  // Create dynamic heading element based on headingLevel prop
+  const HeadingElement = headingLevel;
+
   return (
     <div className={className}>
       {showTitle && (
-        <h3 className={`text-2xl font-bold mb-6 ${colors.title}`}>
+        <HeadingElement className={`text-2xl font-bold mb-6 ${colors.title}`}>
           {title}
-        </h3>
+        </HeadingElement>
       )}
       <div className={`grid ${getGridClasses()} gap-6 lg:gap-8 ${variantClasses.container}`}>
         {statistics.map((stat, index) => (

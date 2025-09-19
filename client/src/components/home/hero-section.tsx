@@ -48,10 +48,10 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
           width="1920"
           height="1080"
           style={{ aspectRatio: '16/9' }}
-          aria-label="Relocatable MRI Scanner being delivered, positioned and prepared for operational use at NHS facility"
+          aria-label="Mobile MRI scanner unit being transported on flatbed truck, carefully positioned and lowered into place at healthcare facility, demonstrating Compleo Health's relocatable diagnostic imaging services"
         >
           <source src="/videos/hero-background.mp4" type="video/mp4" />
-          <p>Your browser does not support the video element. This video shows a Relocatable MRI Scanner being delivered and positioned for operational use.</p>
+          <p>Your browser does not support the video element. This video shows a mobile MRI scanner unit being transported on a flatbed truck and carefully positioned at a healthcare facility, demonstrating our relocatable diagnostic imaging delivery process.</p>
           {/* Fallback for browsers that don't support video */}
           <div 
             className="w-full h-full bg-cover bg-center bg-no-repeat"
@@ -182,11 +182,12 @@ export default function HeroSection({ heroData, impactStats, impactStatsTitle }:
 
           {/* Trust Signals */}
           <div className="card-standard bg-white/15 backdrop-blur-sm rounded-2xl card-padding border-2 border-white/30 shadow-xl relative z-10 opacity-100 visible" style={{ display: 'block', visibility: 'visible' }}>
-            <ImpactStatistics 
+            <ImpactStatistics
               variant="hero"
               textColor="yellow"
               gridCols={3}
               title={impactStatsTitle || "Trusted by Healthcare Leaders and Patients"}
+              headingLevel="h2"
               className="text-center"
               statistics={impactStats?.statistics}
             />

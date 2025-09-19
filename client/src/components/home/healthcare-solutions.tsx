@@ -103,7 +103,7 @@ export default function HealthcareSolutions({
           <Link href={buttonHref} tabIndex={-1}>
             <Button
               size="lg"
-              className="bg-compleo-deep-teal hover:bg-compleo-teal text-white"
+              className="bg-compleo-deep-teal hover:bg-compleo-teal text-white transition-all duration-300 hover:scale-105"
               onClick={() => setLocation(buttonHref)}
             >
               {buttonText}

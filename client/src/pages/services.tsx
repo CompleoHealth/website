@@ -365,11 +365,12 @@ export default function ServicesPage() {
                 </div>
               </div>
               <div className="bg-gradient-to-br from-compleo-deep-teal to-compleo-teal rounded-2xl p-8 shadow-2xl border-2 border-compleo-teal/30 animate-slide-in-right">
-                <ImpactStatistics 
+                <ImpactStatistics
                   variant="hero"
                   textColor="yellow"
                   gridCols={3}
                   title={pageData?.impactStatsTitle || "Trusted by Healthcare Leaders and Patients"}
+                  headingLevel="h3"
                   statistics={globalSettings?.ImpactStatistics?.statistics}
                 />
               </div>

@@ -13,7 +13,7 @@ export function LinkedInBadge({ variant = 'header', className = '' }: LinkedInBa
         href="https://www.linkedin.com/company/compleohealth/" 
         target="_blank" 
         rel="noopener noreferrer"
-        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 linkedin-header-button ${className}`}
+        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 linkedin-header-button ${className}`}
         aria-label="Follow us on LinkedIn"
       >
         <SiLinkedin className="h-5 w-5 text-white" />

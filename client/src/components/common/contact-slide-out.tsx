@@ -361,9 +361,9 @@ export function ContactSlideOutTrigger({ isMobile = false }: { isMobile?: boolea
           trackCTAClick('Contact Us Today - Slide Out', window.location.pathname);
           setIsOpen(true);
         }}
-        className={isMobile 
-          ? "bg-white hover:bg-gray-100 text-compleo-deep-teal font-normal text-sm px-6 py-2 transition-all duration-300"
-          : "bg-compleo-deep-teal hover:bg-compleo-teal text-white font-normal text-base px-6 py-2.5 transition-all duration-300 hover:shadow-xl"
+        className={isMobile
+          ? "bg-white hover:bg-gray-100 text-compleo-deep-teal font-normal text-sm px-6 py-2 transition-all duration-300 hover:scale-105"
+          : "bg-compleo-deep-teal hover:bg-compleo-teal text-white font-normal text-base px-6 py-2.5 transition-all duration-300 hover:shadow-xl hover:scale-105"
         }
         aria-label="Open contact information panel"
       >

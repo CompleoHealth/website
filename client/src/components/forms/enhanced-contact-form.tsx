@@ -138,10 +138,15 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
   };
 
   return (
-    <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl">
+    <Card className="bg-white/15 backdrop-blur-md border border-white/20 shadow-2xl">
       <CardContent className="p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Required Fields Indicator */}
+            <div className="text-sm text-white/90 mb-4">
+              <span style={{color: '#ef4444', fontWeight: '700', fontSize: '16px'}}>*</span> indicates required fields
+            </div>
+
             {/* Error Summary - WCAG 2.1 AA Compliance */}
             {Object.keys(form.formState.errors).length > 0 && (
               <div
@@ -297,7 +302,7 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                       <Input
                         {...field}
                         type="tel"
-                        placeholder=""
+                        placeholder="e.g., 07*** ****** or 0161 *** ****"
                         className="bg-white border-0 text-gray-900 placeholder-gray-500 h-12 text-lg focus:ring-2 focus:ring-compleo-yellow focus:border-transparent transition-all duration-200"
                         aria-describedby={form.formState.errors.phone ? 'phone-error' : undefined}
                         aria-invalid={form.formState.errors.phone ? 'true' : 'false'}
@@ -320,16 +325,16 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                       How can we help you? <span style={{color: '#ef4444', fontWeight: '700', fontSize: '16px'}}>*</span>
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <div style={{
-                          border: form.formState.errors.serviceInterest ? '3px solid #ef4444' : '2px solid transparent',
-                          borderRadius: '8px',
-                          boxShadow: form.formState.errors.serviceInterest ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none',
-                          backgroundColor: form.formState.errors.serviceInterest ? '#fef7f7' : 'transparent',
-                          padding: '3px',
-                          transition: 'all 0.3s ease'
-                        }}>
-                          <SelectTrigger 
+                      <div style={{
+                        border: form.formState.errors.serviceInterest ? '3px solid #ef4444' : '2px solid transparent',
+                        borderRadius: '8px',
+                        boxShadow: form.formState.errors.serviceInterest ? '0 0 0 2px rgba(239, 68, 68, 0.2)' : 'none',
+                        backgroundColor: form.formState.errors.serviceInterest ? '#fef7f7' : 'transparent',
+                        padding: '3px',
+                        transition: 'all 0.3s ease'
+                      }}>
+                        <FormControl>
+                          <SelectTrigger
                             className="bg-white border-0 text-gray-900 h-12 text-lg focus:ring-0 focus:outline-none"
                             style={{
                               backgroundColor: form.formState.errors.serviceInterest ? '#fef7f7' : 'white',
@@ -340,8 +345,8 @@ export default function EnhancedContactForm({ prefilledMessage, equipmentName }:
                           >
                             <SelectValue placeholder="Please Select" />
                           </SelectTrigger>
-                        </div>
-                      </FormControl>
+                        </FormControl>
+                      </div>
                       <SelectContent>
                         <SelectItem value="managed-equipment">Managed Equipment Services</SelectItem>
                         <SelectItem value="clinical-insourcing">Clinical Insourcing</SelectItem>

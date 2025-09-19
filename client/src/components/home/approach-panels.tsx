@@ -88,7 +88,7 @@ export default function ApproachPanels({
         )}
         
         <div className="relative z-10">
-          <h3 className="heading-3 mb-4">{panel.title}</h3>
+          <h2 className="heading-2 mb-4">{panel.title}</h2>
           <p className={`body-base mb-4 ${isDark ? 'text-gray-200' : 'text-compleo-gray'}`}>
             {panel.description1}
           </p>

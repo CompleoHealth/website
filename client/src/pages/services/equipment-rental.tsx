@@ -211,7 +211,7 @@ export default function EquipmentRentals() {
       <SEOHead {...SEO_DATA.equipmentRentals} />
       <ScrollProgress />
       <Header />
-      <main className="animate-fade-in-up">
+      <main id="main-content" className="animate-fade-in-up">
         {/* Hero Section */}
         <section className="section-padding bg-compleo-deep-teal text-white">
           <div className="max-w-7xl mx-auto container-padding text-center">

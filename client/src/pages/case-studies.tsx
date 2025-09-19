@@ -194,11 +194,12 @@ export default function CaseStudies() {
               </div>
               
               <div className="bg-gradient-to-br from-compleo-deep-teal to-compleo-teal rounded-2xl p-8 shadow-2xl border-2 border-compleo-yellow/30 ring-2 ring-compleo-yellow/20">
-                <ImpactStatistics 
+                <ImpactStatistics
                   variant="hero"
                   textColor="yellow"
                   gridCols={3}
-                  impactStats={globalSettings?.ImpactStatistics}
+                  headingLevel="h2"
+                  statistics={globalSettings?.ImpactStatistics?.statistics}
                   title={pageData?.impactStatsTitle}
                 />
               </div>
@@ -223,14 +224,14 @@ export default function CaseStudies() {
             {/* Case Studies Grid */}
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {caseStudiesData.caseStudies.map((caseStudy, index) => (
-                <div key={caseStudy.id} className="relative group">
+                <article key={caseStudy.id} className="relative group">
                   {caseStudy.id === 'nhs-devon' ? (
                     <Card className="hover-lift hover-glow transition-all duration-300 bg-white relative overflow-hidden">
                       <div className="absolute inset-0 bg-compleo-deep-teal opacity-0 group-hover:opacity-25 transition-opacity duration-300 z-10 pointer-events-none"></div>
                       <div className="aspect-video bg-white rounded-t-lg overflow-hidden">
-                        <img 
-                          src={caseStudy.image} 
-                          alt={caseStudy.title}
+                        <img
+                          src={caseStudy.image}
+                          alt={`Case study image: ${caseStudy.title} - ${caseStudy.category} implementation at ${caseStudy.trustName}, ${caseStudy.location}`}
                           className="w-full h-full object-contain p-4"
                         />
                       </div>
@@ -270,9 +271,9 @@ export default function CaseStudies() {
                       <Card className="hover-lift hover-glow transition-all duration-300 bg-white cursor-pointer relative overflow-hidden">
                         <div className="absolute inset-0 bg-compleo-deep-teal opacity-0 group-hover:opacity-25 transition-opacity duration-300 z-10"></div>
                         <div className="aspect-video bg-gray-100 rounded-t-lg overflow-hidden">
-                          <img 
-                            src={caseStudy.image} 
-                            alt={caseStudy.title}
+                          <img
+                            src={caseStudy.image}
+                            alt={`Case study image: ${caseStudy.title} - ${caseStudy.category} implementation at ${caseStudy.trustName}, ${caseStudy.location}`}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>
@@ -310,7 +311,7 @@ export default function CaseStudies() {
                       </Card>
                     </Link>
                   )}
-                </div>
+                </article>
               ))}
 
             </div>

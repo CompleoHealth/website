@@ -163,10 +163,10 @@ export default function EquipmentDetails() {
               muted
               playsInline
               className="w-full h-full object-cover opacity-40"
-              aria-label="Mobile MRI scanner being transported to NHS Orkney facility and positioned for operational use"
+              aria-label="Mobile MRI scanner unit being transported on ferry and truck to remote NHS Orkney facility, carefully positioned and lowered into place, demonstrating healthcare delivery to remote locations"
             >
               <source src="/videos/OrkneyDelivery.mp4" type="video/mp4" />
-              <p>Your browser does not support the video element. This video shows a mobile MRI scanner being transported to NHS Orkney and positioned for operational use.</p>
+              <p>Your browser does not support the video element. This video shows a mobile MRI scanner unit being transported on ferry and truck to remote NHS Orkney facility and carefully positioned for operational use, demonstrating our capability to deliver healthcare services to remote locations.</p>
               {/* Fallback for browsers that don't support video */}
               <div
                 className="w-full h-full bg-cover bg-center bg-no-repeat"

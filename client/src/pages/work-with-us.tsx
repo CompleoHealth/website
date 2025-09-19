@@ -151,7 +151,10 @@ export default function WorkWithUs() {
                 <h1 className="heading-1 mb-4">
                   {pageData?.Hero?.title || "Work with us"}
                 </h1>
-                <p className="body-large text-gray-200 mb-6 leading-relaxed">{pageData?.Hero?.subtitle || "Be part of a team that's revolutionising healthcare through innovation, collaboration, and unwavering commitment to patient care."}</p>
+                <p className="body-large text-gray-200 mb-6 leading-relaxed relative">
+                  <span className="relative z-10">{pageData?.Hero?.subtitle || "Be part of a team that's revolutionising healthcare through innovation, collaboration, and unwavering commitment to patient care."}</span>
+                  <span className="absolute inset-0 bg-black/30 rounded-lg -z-10 px-3 py-1"></span>
+                </p>
                 <div className="flex flex-row gap-3 sm:gap-6">
                   <Button 
                     size="lg" 
@@ -208,7 +211,7 @@ export default function WorkWithUs() {
               </div>
               
               <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-[0_25px_60px_rgba(0,0,0,0.4)] border-4 border-white/50">
-                <h3 className="text-2xl font-bold text-compleo-deep-teal mb-6">{pageData?.whyJoinTitle || "Why work with us?"}</h3>
+                <h2 className="text-2xl font-bold text-compleo-deep-teal mb-6">{pageData?.whyJoinTitle || "Why work with us?"}</h2>
                 <div className="space-y-4">
                   {(pageData?.whyJoinPoints && pageData.whyJoinPoints.length > 0 
                     ? pageData.whyJoinPoints.map((point, index) => ({ ...point, icon: 'Users' }))

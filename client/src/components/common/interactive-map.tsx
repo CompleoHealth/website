@@ -184,16 +184,18 @@ function InteractiveMap({
   }, [locations, operatingCountries, center, zoom, onLocationClick]);
 
   return (
-    <div 
-      ref={mapRef} 
-      style={{ 
-        height, 
+    <div
+      ref={mapRef}
+      style={{
+        height,
         width: '100%',
         position: 'relative',
         zIndex: 1
       }}
       className={`map-container ${className}`}
-      aria-label="Interactive map showing service locations"
+      aria-label="Map displaying service locations across the UK and Europe - visual reference only"
+      tabIndex={-1}
+      role="img"
     />
   );
 }

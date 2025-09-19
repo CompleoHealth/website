@@ -39,7 +39,7 @@ export function BrandedIcon({ icon: Icon, variant = 'primary', size = 'md', clas
       
       {/* Icon container */}
       <div className="relative z-10">
-        <Icon className={`${iconSizes[size]} text-white drop-shadow-sm`} />
+        <Icon className={`${iconSizes[size]} text-white drop-shadow-sm`} aria-hidden="true" />
       </div>
     </div>
   );
@@ -60,7 +60,7 @@ export function MedicalIcon({ icon: Icon, className = '' }: { icon: LucideIcon; 
       
       {/* Icon container */}
       <div className="relative z-10">
-        <Icon className="h-10 w-10 text-white drop-shadow-sm" />
+        <Icon className="h-10 w-10 text-white drop-shadow-sm" aria-hidden="true" />
       </div>
     </div>
   );
@@ -82,7 +82,7 @@ export function SustainabilityIcon({ icon: Icon, className = '' }: { icon: Lucid
       
       {/* Icon container */}
       <div className="relative z-10">
-        <Icon className="h-10 w-10 text-white drop-shadow-sm" />
+        <Icon className="h-10 w-10 text-white drop-shadow-sm" aria-hidden="true" />
       </div>
       
       {/* Hover effect */}
@@ -108,7 +108,7 @@ export function TechIcon({ icon: Icon, className = '' }: { icon: LucideIcon; cla
       
       {/* Icon container */}
       <div className="relative z-10">
-        <Icon className="h-10 w-10 text-white drop-shadow-sm" />
+        <Icon className="h-10 w-10 text-white drop-shadow-sm" aria-hidden="true" />
       </div>
     </div>
   );

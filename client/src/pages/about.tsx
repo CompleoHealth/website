@@ -214,7 +214,10 @@ export default function About() {
                 <h1 className="heading-1 mb-4">
                   {pageData?.heroTitle || heroContent.title} <span className="text-compleo-yellow">{pageData?.heroHighlightWord || heroContent.highlightWord}</span>
                 </h1>
-                <p className="body-large text-gray-200 mb-6 leading-relaxed">{pageData?.heroSubtitle || heroContent.subtitle}</p>
+                <p className="body-large text-gray-200 mb-6 leading-relaxed relative">
+                  <span className="relative z-10">{pageData?.heroSubtitle || heroContent.subtitle}</span>
+                  <span className="absolute inset-0 bg-black/30 rounded-lg -z-10 px-3 py-1"></span>
+                </p>
                 <div className="flex flex-row gap-3 sm:gap-6">
                   <Link href={pageData?.heroPrimaryButton_href || heroContent.primaryButton.href} tabIndex={-1}>
                     <Button
@@ -261,11 +264,12 @@ export default function About() {
               </div>
               
               <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-8 shadow-xl border-2 border-white/30 relative z-10">
-                <ImpactStatistics 
+                <ImpactStatistics
                   variant="hero"
                   textColor="yellow"
                   gridCols={3}
                   title={"Trusted by Healthcare Leaders and Patients"}
+                  headingLevel="h2"
                   statistics={globalSettings?.ImpactStatistics?.statistics}
                 />
               </div>

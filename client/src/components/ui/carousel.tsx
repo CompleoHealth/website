@@ -26,9 +26,17 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
+  carouselId: string
 } & CarouselProps
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
+
+// Generate unique IDs for carousel instances
+let carouselIdCounter = 0
+const generateCarouselId = () => {
+  carouselIdCounter += 1
+  return `carousel-content-${carouselIdCounter}`
+}
 
 function useCarousel() {
   const context = React.useContext(CarouselContext)
@@ -56,6 +64,7 @@ const Carousel = React.forwardRef<
     },
     ref
   ) => {
+    const carouselId = React.useMemo(() => generateCarouselId(), [])
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
@@ -135,6 +144,7 @@ const Carousel = React.forwardRef<
           scrollNext,
           canScrollPrev,
           canScrollNext,
+          carouselId,
         }}
       >
         <div
@@ -166,12 +176,13 @@ const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { carouselRef, orientation } = useCarousel()
+  const { carouselRef, orientation, carouselId } = useCarousel()
 
   return (
     <div ref={carouselRef} className="overflow-hidden">
       <div
         ref={ref}
+        id={carouselId}
         className={cn(
           "flex",
           orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
@@ -210,7 +221,7 @@ const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
 >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+  const { orientation, scrollPrev, canScrollPrev, carouselId } = useCarousel()
 
   return (
     <Button
@@ -227,7 +238,7 @@ const CarouselPrevious = React.forwardRef<
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       aria-label="Previous slide"
-      aria-controls="carousel-content"
+      aria-controls={carouselId}
       {...props}
     >
       <ArrowLeft className="h-4 w-4" />
@@ -241,7 +252,7 @@ const CarouselNext = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
 >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-  const { orientation, scrollNext, canScrollNext } = useCarousel()
+  const { orientation, scrollNext, canScrollNext, carouselId } = useCarousel()
 
   return (
     <Button
@@ -258,7 +269,7 @@ const CarouselNext = React.forwardRef<
       disabled={!canScrollNext}
       onClick={scrollNext}
       aria-label="Next slide"
-      aria-controls="carousel-content"
+      aria-controls={carouselId}
       {...props}
     >
       <ArrowRight className="h-4 w-4" />
