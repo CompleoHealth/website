@@ -4,29 +4,30 @@
 
 Based on the Lighthouse performance reports and codebase analysis, several optimization opportunities have been identified to improve the website's loading performance, Core Web Vitals, and overall user experience.
 
-## Current Performance Issues Identified
+## Current Performance Issues Identified (Updated September 19, 2025)
 
-### 1. **JavaScript Bundle Size**
-- **Issue**: Large JavaScript bundles causing slow initial load times
-- **Current State**: All pages use lazy loading, but dependencies could be optimized
-- **Impact**: High Time to Interactive (TTI) and First Contentful Paint (FCP)
+### **CRITICAL: Poor Lighthouse Scores Persist**
+**Latest Results**: Performance score ~45-55 (Target: 90+)
 
-### 2. **Image Optimization**
-- **Issue**: Multiple large, unoptimized JPG images affecting load performance
-- **Current State**: 70+ JPG images ranging from 4KB to 555KB
-- **Large Images Found**:
-  - `doctify-patient-experience-2025.jpg` (555KB)
-  - `about-hero-team.jpg` (411KB)
-  - `careers-hero-background.jpg` (411KB)
-  - `team-hero-background.jpg` (364KB)
-  - `dartford-gravesham-nhs-trust.jpg` (361KB)
+### 1. **Largest Contentful Paint (LCP) - RED**
+- **Issue**: 5.6s+ LCP (Target: <2.5s)
+- **Root Cause**: Large uncompressed images (543KB doctify badge, 400KB+ hero images)
+- **Priority**: CRITICAL - Convert to WebP immediately
 
-### 3. **Dependency Analysis**
-- **Heavy Dependencies**:
-  - Radix UI components (20+ packages)
-  - Framer Motion for animations
-  - Multiple utility libraries
-- **Potential Optimization**: Tree shaking and selective imports
+### 2. **JavaScript Bundle Bloat - ORANGE**
+- **Issue**: 2.1MB+ total bundle size
+- **Main Contributors**: Radix UI (400KB+), TanStack Query, Framer Motion
+- **Impact**: 3.8s+ Time to Interactive
+
+### 3. **Image Optimization - RED**
+- **Issue**: 7+ images >300KB loading simultaneously
+- **Unused Images**: Hero backgrounds preloaded on wrong pages
+- **Missing**: WebP format, responsive sizing, proper compression
+
+### 4. **Render Blocking Resources**
+- **Issue**: CSS and fonts blocking First Paint
+- **Impact**: 2.1s+ First Contentful Paint
+- **Fix Needed**: Critical CSS extraction, font preloading
 
 ## Detailed Recommendations
 

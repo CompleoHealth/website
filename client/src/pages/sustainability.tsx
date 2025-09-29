@@ -105,7 +105,7 @@ const socialImpactInitiatives = [
 
 const ourImpactCards = [
   {
-    imageUrl: "", // CMS-ready field - when populated, displays image; when empty, shows fallback text
+    imageUrl: "/images/sustainability/SupportingFutureGenerations_image_optimized.jpg", // Optimized web version
     title: "Supporting Future Generations",
     text: "Preventive healthcare starts with movement. When young people are empowered to engage in active communities, we don't just improve health outcomes, we build a brighter, stronger future generation.",
     url: null
@@ -527,11 +527,11 @@ export default function Sustainability() {
                     <div className="h-64 relative overflow-hidden">
                       {card.imageUrl ? (
                         <picture>
-                          <source 
-                            media="(max-width: 768px)" 
-                            srcSet={card.imageUrl.replace('.jpg', '-mobile.jpg')}
+                          <source
+                            media="(max-width: 768px)"
+                            srcSet={card.imageUrl.replace('_optimized.jpg', '-mobile.jpg').replace('.jpg', '-mobile.jpg')}
                           />
-                          <img 
+                          <img
                             src={card.imageUrl}
                             alt={`${card.title} - ${card.text.substring(0, 100)}...`}
                             className="w-full h-full object-cover"

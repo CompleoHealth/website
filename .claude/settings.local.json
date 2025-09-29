@@ -33,7 +33,9 @@
       "Bash(npm run strapi:*)",
       "Bash(npm install:*)",
       "Bash(git merge:*)",
-      "Bash(git cherry-pick:*)"
+      "Bash(git cherry-pick:*)",
+      "Bash(magick identify:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []
